@@ -1,0 +1,30 @@
+{
+  "name": "Food_Choise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elchetodelciber/Food_Choise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elchetodelciber/Food_Choise/issues"
+  },
+  "homepage": "https://github.com/elchetodelciber/Food_Choise#readme",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.16.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.7.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
+}
