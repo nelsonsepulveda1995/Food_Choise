@@ -8,5 +8,5 @@ mongoose.connect('mongofd://localhost',{
     useFindAndModify: false
 })
 
-.then(db =<console.log('conectado'))
+.then(db =>console.log('conectado'))
 .cathc(err =>console.log(err))
