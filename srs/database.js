@@ -1,8 +1,8 @@
 //Configuracion de la BD
 
-const mongoose=require('mongosse');
+const mongoose=require('mongoose');
 
-mongoose.connect('mongofd://localhost',{
+mongoose.connect('mongodb://localhost',{ //completar o cambiar la ruta para conctar a la base
     useCreateIndex:true,
     useNewUrlParser: true, 
     useFindAndModify: false

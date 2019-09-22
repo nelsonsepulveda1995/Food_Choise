@@ -12,17 +12,17 @@ require('./database');
 app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.handlebars', exphbs({
-  defaultLayout: 'main',
+  defaultLayout: 'main',   //es el archivo html/handlebars que define el marco comun en todas las vistas
   layoutsDir: path.join(app.get('views'), 'layouts'),
-  partialsDir: path.join(app.get('views'), 'partials'),
+  partialsDir: path.join(app.get('views'), 'partials'), //donde esta el codigo reutilizable html que no es el marco comun
   extname: '.handlebars'
 }));
 app.set('view engine', '.handlebars');
 
 // middlewares
-app.use(express.urlencoded({extended: false}));
-app.use(methodOverride('_method'));
-app.use(session({
+app.use(express.urlencoded({extended: false})); //para entender los datos que el usuario manda al servidor /false: no acepta imagenes (se puede cambiar)
+app.use(methodOverride('_method')); //sirve para que los formularios html puedan usar put o delete ademas de get y push
+app.use(session({  //sirve para gurdar la sesion de los usuarios temporalmente y que al recargar no se pierdan los datos de este
   secret: 'secret',
   resave: true,
   saveUninitialized: true

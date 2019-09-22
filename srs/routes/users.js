@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+//rutas para uso de usuarios ej: registro, ingreso, configuracion,etc
+
 router.get('/users/registro', (req, res) => {
-  res.render('views/users/login');
+  res.render('login');
 });
 
-router.get('/users/ingreso', (req,res) =>{
-  res.render('views/users/ingerso')
-})
 
 module.exports = router;
