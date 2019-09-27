@@ -1,23 +1,16 @@
 {
-  "name": "Food_Choise",
+  "name": "notes-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon srs/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elchetodelciber/Food_Choise.git"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/elchetodelciber/Food_Choise/issues"
-  },
-  "homepage": "https://github.com/elchetodelciber/Food_Choise#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
