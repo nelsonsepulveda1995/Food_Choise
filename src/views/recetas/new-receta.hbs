@@ -13,12 +13,20 @@
             <h3>New note</h3>
         </div>
         <div class="card-body">
-            <form action="/notes/new-note" method="POST">
+            <form action="/notes/new-receta" method="POST">
                 <div class="form-group">
-                    <input type="text" name="title" class="form-control" placeholder="Title" autofocus>
+                    <input type="text" name="title" class="form-control" placeholder="Nombre del Plato" autofocus>
                 </div>
                 <div class="form-group">
-                    <textarea name="description" class="form-control" placeholder="Description"></textarea>
+                    <textarea name="descripcion" class="form-control" placeholder="Descripcion"></textarea>
+                </div>
+                <div class="form-group">
+                    <select name="categoria" id="" class="form-cntrol">
+                        <option value="1">Vegetariana</option>
+                        <option value="2">Internacinal</option>
+                        <option value="3">Ahumada</option>
+                        <option value="4">Regional</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit">Save</button>
