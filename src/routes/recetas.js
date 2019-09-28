@@ -8,11 +8,12 @@ router.get('/recetas', async (req, res) => {
     res.render('recetas/all-recetas', { receta });
 })
 
-router.get('/recetas/add', (req, res) => {
+router.get('/recetas/new', (req, res) => {
     res.render('recetas/new-receta');
 })
 
 router.post('/recetas/new-receta', async (req, res) => {
+    console.log(req.body);
     const { title, descripcion,categoria } = req.body;
     const errors = [];
     if (!title) {
