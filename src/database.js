@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/notes-db-app', {
+mongoose.connect('mongodb://localhost/recipes-db-app', {
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false
