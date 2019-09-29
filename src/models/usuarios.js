@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const UserSchema=new Schema({
     id:{ type:Number, required:true}, //nose sise requiere mas que el id de usuario
+    nombre:{type:String, required: true}
 })
 
 const LoginSchema=new Schema({
