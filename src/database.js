@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
+const keys = require('./keys')
 
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://elias:<elias>@foodchoise-sybkf.gcp.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-    console.log("conectado wey")
-  client.close();
-});
+mongoose.connect(keys.mongodb.dbURI, () =>{
+})
+  .then(db => console.log('Conectado a la base de datos MongoDB'))
+  .catch(err => console.log(err));
 
 /*mongoose.connect('mongodb://localhost/recipes-db-app', {    
     useCreateIndex: true,
