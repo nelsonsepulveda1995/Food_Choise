@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--link al css  -->
-    <link rel="stylesheet" href="../../public/css/main.css">
+    <link rel="stylesheet" href="../css/main.css">
     <!--link para iconos  -->
     <script src="https://kit.fontawesome.com/3b3b828bf0.js" crossorigin="anonymous"></script>
     <!--JQUERY  -->
@@ -23,7 +23,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src="../../public/js/main.js"></script>
+    <script src="../js/main.js"></script>
     <title>Food Choice</title>
 </head>
 
@@ -63,8 +63,8 @@
     </div>
 
     <main class="container">
-        {{> errors }}  <!-- El main recorre en busca de errores en caso de que los alla (faltan datos, longitud demasiado corta, etc) -->
-
+        {{> errors }}  <!-- El main recorre en busaca de errores en caso de que los haya-->
+        {{> userlog }}
         {{{ body }}}
     </main>
 </body>

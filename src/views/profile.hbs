@@ -1,0 +1,23 @@
+<nav>
+        <ul>
+            {{#if user}}
+            <li><a href="/auth/logout">Logout</a></li>            
+            {{else}}
+            <li><a href="/auth/login">login</a></li>               
+            {{/if}}
+
+            <li><a href="/">Homepage</a></li>
+            <li><a href="/profile">Profile</a></li>
+            
+        </ul>
+    </nav>
+    <header>
+        
+        <h1>Bienvenido a tu perfil, {{user.username}}</h1>        
+    </header>
+    <main>
+        <div>
+            <img src="{{user.thumbnail}}" alt="">
+            <p>Esta es tu foto de google.</p>
+        </div>
+    </main>    

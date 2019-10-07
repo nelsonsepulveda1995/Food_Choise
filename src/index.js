@@ -3,11 +3,44 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const cookieSession = require('cookie-session');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const passportSetup = require('./passport-setup')
+const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
+const keys = require('./keys');
+const Usuario = require('./models/user-model');
+//const googleUntil = require('./google-util');
 
 
 //Initializations
 const app = express();
-require('./database');
+//require('./database');
+
+//Cookie Sessions
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys:[keys.session.cookieKey]
+}))
+
+//Inicializacion Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//set up routes
+app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
+
+//connect to mongodb
+mongoose.connect(keys.mongodb.dbURI, {    
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useFindAndModify: false
+})
+    .then(db => console.log('Conectado a MongoDB Atlas'))
+    .catch(err => console.log(err));
+
 
 //Settings 
 app.set('port', process.env.PORT || 3000);
@@ -29,10 +62,13 @@ app.use(session({
     saveUninitialized: true 
 }));
 
-//Global variables
+//create home route
+app.get('/', (req, res) => {
+    res.render('index', {user: req.user});
+});
 
 //Routes
-app.use(require('./routes/index'));
+//app.use(require('./routes/index'));
 app.use(require('./routes/recetas'));
 app.use(require('./routes/users'));
 
