@@ -15,7 +15,7 @@ router.get('/recetas/new', (req, res) => {
 
 router.post('/recetas/new-receta', async (req, res) => {
     console.log(req.body);
-    const { title, descripcion,categoria } = req.body;
+    const { title, descripcion,categoria} = req.body;
     const errors = [];
     if (!title) {
         errors.push({text: 'Please write a title'});
@@ -33,7 +33,8 @@ router.post('/recetas/new-receta', async (req, res) => {
             descripcion
         })
     } else {
-        const newReceta = new Recetas({ title, descripcion, categoria });
+        const owen= req.user.id;
+        const newReceta = new Recetas({ title, owen, descripcion, categoria });
         await newReceta.save();
         res.redirect('/recetas/mis-recetas');
     }
