@@ -56,3 +56,9 @@ body {
     font-size: .75rem;
     text-transform: uppercase;
   }
+
+  .margen{
+    padding-top: 50px;
+    padding-left: 10px;
+    margin: 20px;
+  }

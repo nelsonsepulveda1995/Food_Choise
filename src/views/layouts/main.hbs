@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
+    <!--JQUERY  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!--bootstrap 4  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -14,9 +16,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <!--link para iconos  -->
     <script src="https://kit.fontawesome.com/3b3b828bf0.js" crossorigin="anonymous"></script>
-    <!--JQUERY  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
@@ -29,51 +29,54 @@
 
 <body>
     <!--nav-bar-->
-    <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow " style="background-color: rgb(56, 54, 40);" id="navId">
-        <img src="logo2.png" width="50" height="50">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Food Choice</a>
-            <form class="form-inline my-2 my-lg-2 w-100">
-                <input class="form-control mr-sm-2 col-lg-8" type="text" placeholder="Buscar recetas...">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar recetas</button>
-            </form>
-    </nav>
+    <div class="container col-md-12 col-xs-12"></div>
+        <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow " style="background-color: rgb(56, 54, 40);" id="navId">
+                <img src="logo2.png" width="50" height="50">
+                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Food Choice</a>
+                <form class="form-inline my-2 my-lg-2 w-100">
+                    <input class="form-control mr-sm-2 col-lg-8" type="text" placeholder="Buscar recetas...">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar recetas</button>
+                </form>            
+        </nav>
+    </div>
     <!--/#nav-bar-->
 
     <!--sidebar-->
-            <nav class="col-md-offset-3 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="invisible">°</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="invisible">°</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                            <img src="iconos/home-3x.png">
-                            Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                            <img src="iconos/list-rich-3x.png">
-                            Categorias
-                            </a>
-                        </li>
-                    </ul>
-                    
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-left px-3 mt-4 mb-1 text-muted">
-                        <a class="text">
-                            Mi cuenta
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
+    <div class="container ">
+        <nav class="col-md-offset-3 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link ml-3" href="#">
+                        <a class="invisible">°</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="invisible">°</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                        <img src="iconos/home-3x.png">
+                        Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                        <img src="iconos/list-rich-3x.png">
+                        Categorias
+                        </a>
+                    </li>
+                </ul>
+                        
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-left px-3 mt-4 mb-1 text-muted">
+                <a class="text">
+                Mi cuenta
+                </a>
+                </h6>
+                <ul class="nav flex-column md-2">
+                    <li class="nav-item">
+                    <a class="nav-link ml-3" href="#">
                         <img src="iconos/person-3x.png">
                         Ir al perfil
-                        </a>
+                    </a>
                     </li>
                     <li class="nav-item ml-3">
                         <a class="nav-link" href="#">
@@ -99,16 +102,22 @@
                         Cerrar sesion
                         </a>
                     </li>
-                    </ul>   
-                </div>
-            </nav>
+                </ul>   
+            </div>
+        </nav>
+    </div>
+    
     <!-- /#sidebar -->
 
-    <main class="container">
-        {{> errors }}  <!-- El main recorre en busaca de errores en caso de que los haya-->
-        {{> userlog }}
-        {{{ body }}}
-    </main>
+    <div class="container">
+        <div class="col-md-9 margen">
+            <main>
+                {{> errors }}  <!-- El main recorre en busaca de errores en caso de que los haya-->
+                {{> userlog }}
+                {{{ body }}}
+            </main>
+        </div>
+    </div>
 </body>
 
 </html>
