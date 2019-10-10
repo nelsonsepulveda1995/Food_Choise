@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    
     <!--bootstrap 4  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--link al css  -->
-    <link rel="stylesheet" href="../../public/css/main.css">
+    <link rel="stylesheet" href="css/main.css">
     <!--link para iconos  -->
     <script src="https://kit.fontawesome.com/3b3b828bf0.js" crossorigin="anonymous"></script>
     <!--JQUERY  -->
@@ -23,44 +23,89 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src="../../public/js/main.js"></script>
+
+    
+
+
     <title>Food Choice</title>
 </head>
 
 <body>
-    
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" id="navId">
-        <li class="nav-item">
-            <a href="#tab1Id" class="nav-link active">Recetas</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                aria-expanded="false">Perfil</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#tab2Id">Mis Recetas</a>
-                <a class="dropdown-item" href="#tab3Id">Favoritos</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#tab4Id">Mi perfil</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a href="#tab5Id" class="nav-link">Publicar receta</a>
-        </li>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Buscar recetas...">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar recetas</button>
-        </form>
-    </ul>
+    <!--nav-bar-->
+    <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow " style="background-color: rgb(56, 54, 40);" id="navId">
+        <img src="logo2.png" width="50" height="50">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Food Choice</a>
+            <form class="form-inline my-2 my-lg-2 w-100">
+                <input class="form-control mr-sm-2 col-lg-8" type="text" placeholder="Buscar recetas...">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar recetas</button>
+            </form>
+    </nav>
+    <!--/#nav-bar-->
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="tab1Id" role="tabpanel">Recetas (general)</div>
-        <div class="tab-pane fade" id="tab2Id" role="tabpanel">Recetas del Usuario</div>
-        <div class="tab-pane fade" id="tab3Id" role="tabpanel">Favoritos</div>
-        <div class="tab-pane fade" id="tab4Id" role="tabpanel">Perfil del usuario</div>
-        <div class="tab-pane fade" id="tab5Id" role="tabpanel">Publicar receta (formulario)</div>
-    </div>
+    <!--sidebar-->
+            <nav class="col-md-offset-3 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="invisible">°</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="invisible">°</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                            <img src="iconos/home-3x.png">
+                            Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                            <img src="iconos/list-rich-3x.png">
+                            Categorias
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-left px-3 mt-4 mb-1 text-muted">
+                        <a class="text">
+                            Mi cuenta
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link ml-3" href="#">
+                        <img src="iconos/person-3x.png">
+                        Ir al perfil
+                        </a>
+                    </li>
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="#">
+                        <img src="iconos/book-3x.png">
+                        Mis recetas
+                        </a>
+                    </li>
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="#">
+                        <img src="iconos/plus-3x.png">
+                        Agregar Receta
+                        </a>
+                    </li>
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="#">
+                        <img src="iconos/star-3x.png">
+                        Favoritos
+                        </a>
+                    </li>
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="#">
+                        <img src="iconos/power-standby-3x.png">
+                        Cerrar sesion
+                        </a>
+                    </li>
+                    </ul>   
+                </div>
+            </nav>
+    <!-- /#sidebar -->
 
     <main class="container">
         {{> errors }}  <!-- El main recorre en busca de errores en caso de que los alla (faltan datos, longitud demasiado corta, etc) -->
