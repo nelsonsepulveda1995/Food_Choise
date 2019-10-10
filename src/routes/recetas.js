@@ -9,6 +9,7 @@ router.get('/recetas', async (req, res) => {
 })
 
 router.get('/recetas/new', (req, res) => {
+    
     res.render('recetas/new-receta');
 })
 
@@ -38,9 +39,13 @@ router.post('/recetas/new-receta', async (req, res) => {
     }
 })
 
-router.get('/recetas/mis-recetas', (req, res) => {  //falta agregar el id para la busqueda de recetas
-                                        
-    res.render('recetas/mis-recetas');
+router.get('/recetas/mis-recetas',async (req, res) => {  //falta agregar el id para la busqueda de recetas
+    const usuario=req.user.id;
+    console.log(usuario)
+    const query={owen:usuario};
+    const resultado= await Recetas.find(query);
+
+    res.render('recetas/mis-recetas',{resultado});
 })
 
 //ruta para ingresar a la edicion

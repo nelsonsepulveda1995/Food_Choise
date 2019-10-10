@@ -1,6 +1,23 @@
-<div class="row">
-    <div class="col-lg-8 col-md-8 col-xl-12">
-        <p>Aqui va la lista de recetas</p>
-    </div>
+{{#each Recetas}}
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-xl-12">
+            <div class="card">
+                <header>
+                    <p>{{title}}</p>
+                </header>
 
-</div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-xl-12">
+            <div class="card">
+                <pre>
+                    No has escrito ninguna receta :( 
+                    <button class="btn btn-prumary"><a href="/recetas/new-receta"></a></button>
+                </pre>
+            </div>
+        </div>
+    </div>
+{{/each}}
