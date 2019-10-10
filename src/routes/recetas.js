@@ -44,7 +44,7 @@ router.get('/recetas/mis-recetas', (req, res) => {  //falta agregar el id para l
 })
 
 //ruta para ingresar a la edicion
-router.get('/recetas/editar/:id',(res,req)=>{
+router.get('/recetas/editar/:id',async (res,req)=>{
     const datosEditar= await Recetas.findById(req.params.id);
     res.render('recetas/editar-receta',{datosEditar});
 });
