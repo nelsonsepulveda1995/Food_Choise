@@ -1,0 +1,22 @@
+<nav>
+        <ul>
+            {{#if user}}
+                <li><a href="/auth/logout">Logout</a></li>
+            {{else}}
+                <li><a href="/auth/login">login</a></li>
+            {{/if}}
+            <li><a href="/">Homepage</a></li>
+            <li><a href="/profile">Profile</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>Login using...</h1>
+    </header>
+    <main>
+        <a style="
+            color: #fff;
+            font-size: 18px;
+            padding: 10px;
+            background: #ff5353" 
+            href="/auth/google">Google+</a>
+    </main>   

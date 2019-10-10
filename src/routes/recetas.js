@@ -38,27 +38,45 @@ router.post('/recetas/new-receta', async (req, res) => {
     }
 })
 
-const listacategoria=["","","",""]; //cargar aqui las categorias para la verificacion
-
-router.get('/recetas/mis-recetas/edit:id', (req, res) => {  //falta agregar el id para la busqueda de recetas
-    const x=Recetas.findById(req.params.id);             //revisar!!!
-    rs.render('recetas/editar-receta',{x});
-})
-router.post('/recetas/mis-recetas/edit:id',(req,res) =>{
-    const {title,descripcion,date,categoria}=req.body;
-    const errors=[];
-    if(title.length<2){
-        errors.push({text:'Titulo demasiado corto'})
-    }
-    if(descripcion.length==""){
-        errors.push({text:'Debetener una descripcion'})
-    }
-    if(categoria in listacategoria){
-        errors.push({text:'Error al cargar la categoria'})
-    }
-
+router.get('/recetas/mis-recetas', (req, res) => {  //falta agregar el id para la busqueda de recetas
+                                        
+    res.render('recetas/mis-recetas');
 })
 
+//ruta para ingresar a la edicion
+router.get('/recetas/editar/:id',(res,req)=>{
+    const datosEditar= await Recetas.findById(req.params.id);
+    res.render('recetas/editar-receta',{datosEditar});
+});
+
+router.put('/recetas/editar/:id',async(res,req)=>{
+    const{title,descripcion,categoria}=res.body; //se toma los datos del form
+    const errors = [];
+    if (!title) {
+        errors.push({text: 'Please write a title'});
+    } 
+    if (!descripcion) {
+        errors.push({text: 'Please write a descripcion'});
+    }
+    if (!categoria) {
+        errors.push({text: 'Please select a category'});
+    }
+    if (errors.length > 0) {
+        res.render('recetas/editar-receta', {
+            errors,
+            title,
+            descripcion
+        })
+    } else {
+        await Recetas.findByIdAndUpdate(req.params.id,{title,descripcion,categoria});
+        res.redirect('/recetas/mis-recetas');
+    }
+    
+})
+router.delete('/recetas/delete/:id',async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
+    await Recetas.findByIdAndRemove(req.parms.id);
+    res.redirect('/recetas/mis-recetas');
+})
 
 
 module.exports = router;
