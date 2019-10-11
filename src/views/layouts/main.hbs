@@ -73,19 +73,21 @@
                 </h6>
                 <ul class="nav flex-column md-2">
                     <li class="nav-item">
-                    <a class="nav-link ml-3" href="#">
-                        <img src="iconos/person-3x.png">
-                        Ir al perfil
-                    </a>
+                        <a class="nav-link ml-3" href="/profile">
+                            <img src="iconos/person-3x.png">
+                            Ir al perfil
+                        </a>
                     </li>
+
                     <li class="nav-item ml-3">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/recetas/mis-recetas">
                         <img src="iconos/book-3x.png">
                         Mis recetas
                         </a>
                     </li>
+
                     <li class="nav-item ml-3">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/recetas/new">
                         <img src="iconos/plus-3x.png">
                         Agregar Receta
                         </a>
@@ -96,12 +98,21 @@
                         Favoritos
                         </a>
                     </li>
+                    {{#if user}}
                     <li class="nav-item ml-3">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/auth/logout">
                         <img src="iconos/power-standby-3x.png">
                         Cerrar sesion
                         </a>
                     </li>
+                    {{else}}
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="/auth/login">
+                        <img src="iconos/power-standby-3x.png">
+                        Iniciar sesion
+                        </a>
+                    </li>
+                    {{/if}}                    
                 </ul>   
             </div>
         </nav>
