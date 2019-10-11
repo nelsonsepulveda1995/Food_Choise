@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Recetas = require('../models/recetas');
 const Categoria = require('../models/categoria');
+const Ingrediente = require('../models/ingrediente');
 
 //check if logged
 const authCheck = (req, res, next) => {
@@ -24,17 +25,17 @@ router.get('/recetas', authCheck,async (req, res) => {
 })
 
 router.get('/recetas/new', authCheck,(req, res) => {
-    //Find all documents in the customers collection:        
+    //Obtengo todas las categorias       
     Categoria.find({}, function(err, result) {       
         if (err) throw err;        
         console.log(result);                
     });
-
-    /*$.each(categoriasArray, function(key, value) {   
-        $('#selCategoria').append($("<option></option>")
-            .attr("value",categoriasArray._id)
-            .text(categoriasArray.Descripcion)); 
-   });*/
+    
+    //Obtengo todos los ingredientes
+    Ingrediente.find({}, function(err, result) {       
+        if (err) throw err;        
+        console.log(result);                
+    });    
     
     res.render('recetas/new-receta');
 })
