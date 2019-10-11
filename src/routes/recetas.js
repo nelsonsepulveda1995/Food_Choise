@@ -3,17 +3,30 @@ const router = express.Router();
 
 const Recetas = require('../models/recetas')
 
-router.get('/recetas', async (req, res) => {
+//check if logged
+const authCheck = (req, res, next) => {
+    if(req.user){
+        //if logged in
+        next();
+        
+    } else {
+        //console.log(req)
+        //if user is not logged in
+        res.redirect('/auth/login');
+    }
+};
+
+router.get('/recetas', authCheck,async (req, res) => {
     const receta = await Recetas.find().sort( {date: 'desc'} );
     res.render('recetas/all-recetas', { receta });
 })
 
-router.get('/recetas/new', (req, res) => {
+router.get('/recetas/new', authCheck,(req, res) => {
     
     res.render('recetas/new-receta');
 })
 
-router.post('/recetas/new-receta', async (req, res) => {
+router.post('/recetas/new-receta', authCheck,async (req, res) => {
     console.log(req.body);
     const { title, descripcion,categoria} = req.body;
     const errors = [];
@@ -40,7 +53,7 @@ router.post('/recetas/new-receta', async (req, res) => {
     }
 })
 
-router.get('/recetas/mis-recetas',async (req, res) => {  //falta agregar el id para la busqueda de recetas
+router.get('/recetas/mis-recetas', authCheck, async (req, res) => {  //falta agregar el id para la busqueda de recetas
     const usuario=req.user.id;
     console.log(usuario)
     const query={owen:usuario};
@@ -50,12 +63,12 @@ router.get('/recetas/mis-recetas',async (req, res) => {  //falta agregar el id p
 })
 
 //ruta para ingresar a la edicion
-router.get('/recetas/editar/:id', async (res,req)=>{
+router.get('/recetas/editar/:id', authCheck, async (res,req)=>{
     const datosEditar= await Recetas.findById(req.params.id);
     res.render('recetas/editar-receta',{datosEditar});
 });
 
-router.put('/recetas/editar/:id',async(res,req)=>{
+router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
     const{title,descripcion,categoria}=res.body; //se toma los datos del form
     const errors = [];
     if (!title) {
@@ -79,7 +92,7 @@ router.put('/recetas/editar/:id',async(res,req)=>{
     }
     
 })
-router.delete('/recetas/delete/:id',async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
+router.delete('/recetas/delete/:id', authCheck, async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
     await Recetas.findByIdAndRemove(req.parms.id);
     res.redirect('/recetas/mis-recetas');
 })
