@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Recetas = require('../models/recetas')
+const Recetas = require('../models/recetas');
+const Categoria = require('../models/categoria');
 
 //check if logged
 const authCheck = (req, res, next) => {
@@ -16,12 +17,24 @@ const authCheck = (req, res, next) => {
     }
 };
 
+
 router.get('/recetas', authCheck,async (req, res) => {
     const receta = await Recetas.find().sort( {date: 'desc'} );
     res.render('recetas/all-recetas', { receta });
 })
 
 router.get('/recetas/new', authCheck,(req, res) => {
+    //Find all documents in the customers collection:        
+    Categoria.find({}, function(err, result) {       
+        if (err) throw err;        
+        console.log(result);                
+    });
+
+    /*$.each(categoriasArray, function(key, value) {   
+        $('#selCategoria').append($("<option></option>")
+            .attr("value",categoriasArray._id)
+            .text(categoriasArray.Descripcion)); 
+   });*/
     
     res.render('recetas/new-receta');
 })
@@ -31,13 +44,13 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
     const { title, descripcion,categoria} = req.body;
     const errors = [];
     if (!title) {
-        errors.push({text: 'Please write a title'});
+        errors.push({text: 'Completa el titulo'});
     } 
     if (!descripcion) {
-        errors.push({text: 'Please write a descripcion'});
+        errors.push({text: 'Escribe una descripcion'});
     }
     if (!categoria) {
-        errors.push({text: 'Please select a category'});
+        errors.push({text: 'Selecciona una categoria'});
     }
     if (errors.length > 0) {
         res.render('recetas/new-receta', {
@@ -95,7 +108,6 @@ router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
 router.delete('/recetas/delete/:id', authCheck, async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
     await Recetas.findByIdAndRemove(req.parms.id);
     res.redirect('/recetas/mis-recetas');
-})
-
+});
 
 module.exports = router;
