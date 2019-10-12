@@ -2,7 +2,9 @@
 
 dependencias incluidas
 
-para ejecutar De manera local (provisorio):
+Para poder ejecutar de manera local (provisorio):
+
+
 1)tener instalado mongobd y ejecutarlo
 2)tener instalado nodejs
 3)ejecutar el comando en el IDE = npm run dev 
