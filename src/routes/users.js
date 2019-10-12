@@ -3,6 +3,10 @@ const router = express.Router();
 
 const Usuarios=require('../models/usuarios'); //llamando a los modelos de login y usuario.
 
+router.get('/', (req, res) => {
+    res.render('/index');
+})
+
 router.get('/users/signin', (req, res) => {
     res.render('users/signin');
 })
