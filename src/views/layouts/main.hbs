@@ -28,115 +28,121 @@
 </head>
 
 <body>
-    <!--nav-bar-->
-    <div class="container col-md-12 col-xs-12"></div>
-        <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow " style="background-color: rgb(56, 54, 40);" id="navId">
-                <img src="logo2.png" width="50" height="50">
-                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Food Choice</a>
-                <form class="form-inline my-2 my-lg-2 w-100">
-                    <input class="form-control mr-sm-2 col-lg-8" type="text" placeholder="Buscar recetas...">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar recetas</button>
-                </form>            
-        </nav>
-    </div>
-    <!--/#nav-bar-->
-
-    <!--sidebar-->
-    <div class="container ">
-        <nav class="col-md-offset-3 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="invisible">°</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="invisible">°</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">
-                        <!--<img src="iconos/home-3x.png">-->
-                        <i class="fas fa-home"></i>
-                        Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                        <!--<img src="iconos/list-rich-3x.png">-->
-                        <i class="fas fa-list"></i>
-                        Categorias
-                        </a>
-                    </li>
-                </ul>
-                        
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-left px-3 mt-4 mb-1 text-muted">
-                <a class="text">
-                Mi cuenta
-                </a>
-                </h6>
-                <ul class="nav flex-column md-2">
-                    <li class="nav-item">
-                        <a class="nav-link ml-3" href="/profile">
-                            <!--<img src="iconos/person-3x.png">-->
-                            <i class="far fa-user"></i>
-                            Ir al perfil
-                        </a>
-                    </li>
-
-                    <li class="nav-item ml-3">
-                        <a class="nav-link" href="/recetas/mis-recetas">
-                        <!--<img src="iconos/book-3x.png">-->
-                        <i class="fas fa-list"></i>
-                        Mis recetas
-                        </a>
-                    </li>
-
-                    <li class="nav-item ml-3">
-                        <a class="nav-link" href="/recetas/new">
-                        <!--<img src="iconos/plus-3x.png">-->
-                        <i class="fas fa-plus"></i>
-                        Agregar Receta
-                        </a>
-                    </li>
-                    <li class="nav-item ml-3">
-                        <a class="nav-link" href="#">
-                        <!--<img src="iconos/star-3x.png">-->
-                        <i class="far fa-heart"></i>
-                        Favoritos
-                        </a>
-                    </li>
-                    {{#if user}}
-                    <li class="nav-item ml-3">
-                        <a class="nav-link" href="/auth/logout">
-                        <!--<img src="iconos/power-standby-3x.png">-->
-                        <i class="fas fa-sign-out-alt"></i>
-                        Cerrar sesion
-                        </a>
-                    </li>
-                    {{else}}
-                    <li class="nav-item ml-3">
-                        <a class="nav-link" href="/auth/login">
-                        <!--<img src="iconos/power-standby-3x.png">-->
-                        <i class="fas fa-sign-in-alt"></i>
-                        Iniciar sesion
-                        </a>
-                    </li>
-                    {{/if}}                    
-                </ul>   
-            </div>
-        </nav>
-    </div>
     
-    <!-- /#sidebar -->
 
-    <div class="container">
-        <div class="col-md-9 margen">
-            <main>
-                {{> errors }}  <!-- El main recorre en busaca de errores en caso de que los haya-->
-                {{> userlog }}
-                {{{ body }}}
-            </main>
+
+<div class="d-flex" id="wrapper">
+
+    <!-- Barra lateral -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Food Choice </div>
+        <div class="list-group list-group-flush">
+            <a href="/" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/home-3x.png">-->
+                <i class="fas fa-home"></i>
+                Inicio
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/list-rich-3x.png">-->
+                <i class="fas fa-list"></i>
+                Categorías
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light disabled">Mi cuenta</a>
+            <a href="/profile" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/person-3x.png">-->
+                <i class="far fa-user"></i>
+                Ir al perfil
+            </a>
+            <a href="/recetas/mis-recetas" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/book-3x.png">-->
+                <i class="fas fa-list"></i>
+                Mis recetas
+            </a>
+            <a href="/recetas/new" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/plus-3x.png">-->
+                <i class="fas fa-plus"></i>
+                Agregar Receta
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/star-3x.png">-->
+                <i class="far fa-heart"></i>
+                Favoritos
+            </a>
+            {{#if user}}
+            <a href="/auth/logout" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/power-standby-3x.png">-->
+                <i class="fas fa-sign-out-alt"></i>
+                Cerrar sesión
+            </a>
+            {{else}}
+            <a href="/auth/login" class="list-group-item list-group-item-action bg-light">
+                <!--<img src="iconos/power-standby-3x.png">-->
+                <i class="fas fa-sign-in-alt"></i>
+                Iniciar sesión
+            </a>
+            {{/if}}
         </div>
     </div>
+    <!-- /#Barra lateral -->
+
+    <!-- Contenido de la página -->
+    <div id="page-content-wrapper">
+
+        <!-- Barra superior -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">Ocultar menú</button>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!--#Barra superior-->
+
+        <div class="container">
+            <div class="col-md-12">
+                <main>
+                    {{> errors }}  <!-- El main recorre en busaca de errores en caso de que los haya-->
+                    {{> userlog }}
+                    {{{ body }}}
+                </main>
+            </div>
+        </div>
+        </div>
+    </div>
+  <!-- /#Contenido de la página -->
+
+
+    <!-- Ocultar menú Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
 </body>
 
 </html>
