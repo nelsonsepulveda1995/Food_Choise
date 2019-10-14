@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const fs=require('fs-extra');
 
 const Recetas = require('../models/recetas');
 const Categoria = require('../models/categoria');
 const Ingrediente = require('../models/ingrediente');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+    cloud_name:'elchetodelciber95',
+    api_key:'193479116246688',
+    api_secret:'AihAtz1kcPn-J5EIMk8AJrvPNzM'
+})
+
 
 //check if logged
 const authCheck = (req, res, next) => {
@@ -60,9 +69,18 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
             descripcion
         })
     } else {
+        const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
         const owen= req.user.id;
-        const newReceta = new Recetas({ title, owen, descripcion, categoria });
+        const newReceta = new Recetas({ 
+            title, 
+            owen, 
+            descripcion, 
+            categoria,
+            imagenURL: resultado.url,
+            imagenCloud: resultado.public_id 
+        });
         await newReceta.save();
+        await fs.unlink(req.file.path)
         res.redirect('/recetas/mis-recetas');
     }
 })

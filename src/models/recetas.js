@@ -6,7 +6,9 @@ const recipeSchema = new Schema({  //falta agregar ingredientes, calificacion, p
     owen:{ type:String ,required:true},
     descripcion: { type: String, required: true },
     date: { type: Date, default: Date.now },
-    categoria: {type: String, require: true}
+    categoria: {type: String, require: true},
+    imagenURL:{type: String, required: true},
+    imagenCloud:{type:String, required: true}
 });
 
 module.exports = mongoose.model('receta',recipeSchema);

@@ -11,6 +11,12 @@ const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const keys = require('./keys');
 const Usuario = require('./models/user-model');
+const uuid=require('uuid/v4');
+
+const morgan=require('morgan'); //trabajar imagenes
+const multer=require('multer');
+
+
 //const googleUntil = require('./google-util');
 
 
@@ -53,7 +59,18 @@ app.engine('.hbs', exphbs({
 }))
 app.set('view engine', '.hbs');
 
+
+
 //MiddleWares
+app.use(morgan('dev'));
+const storage=multer.diskStorage({
+    destination: path.join(__dirname,'public/uploads'),
+    filename: (req,file,cb,filename)=>{
+        cb(null,uuid()+ path.extname(file.originalname));
+    }
+})
+app.use(multer({storage}).single('imagen'))
+
 app.use(express.urlencoded({extended: false}));     //Activar si se usarán imágenes
 app.use(methodOverride('_method'));
 app.use(session({

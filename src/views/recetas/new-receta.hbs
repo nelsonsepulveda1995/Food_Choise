@@ -6,15 +6,25 @@
             <h3>Nueva receta</h3>
         </div>
         <div class="card-body">
-            <form action="/recetas/new-receta" method="POST">
+            <form action="/recetas/new-receta" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="text" name="title" class="form-control" placeholder="Nombre del Plato" autofocus required>
+                </div>
+                <!-- elegir archivo -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" name="imagen" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <textarea name="descripcion" class="form-control" placeholder="Descripcion" required></textarea>
                 </div>
                 <div class="form-group">
-                    <select name="categoria" id="selCategoria" class="form-cntrol" required>
+                    <select name="categoria" id="selCategoria" class="form-control" required>
                         <option value="1">Vegetariana</option>
                         <option value="2">Internacinal</option>
                         <option value="3">Ahumada</option>
