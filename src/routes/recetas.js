@@ -126,8 +126,8 @@ router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
     
 })
 router.delete('/recetas/delete/:id', authCheck, async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
-    const respuesta= await Recetas.findByIdAndRemove(req.parms.id);
-    await cloudinary.v2.uploader.destroy(respuesta.imagenCloud)
+    const respuesta= await Recetas.findByIdAndRemove(req.parms.id); //borra la receta de la base
+    await cloudinary.v2.uploader.destroy(respuesta.imagenCloud) //borra la foto de la nuve
     res.redirect('/recetas/mis-recetas');
 });
 
