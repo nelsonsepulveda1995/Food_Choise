@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const fs=require('fs-extra');
+const fs=require('fs-extra');   //file system sirve para borrar los archivos temporales
 
 const Recetas = require('../models/recetas');
 const Categoria = require('../models/categoria');
 const Ingrediente = require('../models/ingrediente');
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary'); 
 
-cloudinary.config({
+cloudinary.config({             //sesion de claudinary
     cloud_name:'elchetodelciber95',
     api_key:'193479116246688',
     api_secret:'AihAtz1kcPn-J5EIMk8AJrvPNzM'
@@ -79,8 +79,9 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
             imagenURL: resultado.url,
             imagenCloud: resultado.public_id 
         });
+        console.log(newReceta);
         await newReceta.save();
-        await fs.unlink(req.file.path)
+        await fs.unlink(req.file.path);
         res.redirect('/recetas/mis-recetas');
     }
 })
@@ -125,7 +126,8 @@ router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
     
 })
 router.delete('/recetas/delete/:id', authCheck, async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
-    await Recetas.findByIdAndRemove(req.parms.id);
+    const respuesta= await Recetas.findByIdAndRemove(req.parms.id);
+    await cloudinary.v2.uploader.destroy(respuesta.imagenCloud)
     res.redirect('/recetas/mis-recetas');
 });
 

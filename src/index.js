@@ -63,15 +63,15 @@ app.set('view engine', '.hbs');
 
 //MiddleWares
 app.use(morgan('dev'));
-const storage=multer.diskStorage({
+const storage=multer.diskStorage({      //esta funcion toma las fotos y les cambia el nombre por uno ramdom para evitar duplicados
     destination: path.join(__dirname,'public/uploads'),
     filename: (req,file,cb,filename)=>{
         cb(null,uuid()+ path.extname(file.originalname));
     }
 })
-app.use(multer({storage}).single('imagen'))
+app.use(multer({storage}).single('imagen')) //toma una sola foto
 
-app.use(express.urlencoded({extended: false}));     //Activar si se usarán imágenes
+app.use(express.urlencoded({extended: false}));     //false ya que multer es quien se encarga de las fotos
 app.use(methodOverride('_method'));
 app.use(session({
     secret: 'mysecretapp',
