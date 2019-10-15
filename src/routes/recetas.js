@@ -62,14 +62,23 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
     if (!categoria) {
         errors.push({text: 'Selecciona una categoria'});
     }
+    if(categoria<1||categoria>5){
+        errors.push({text: 'Selecciona una categoria valida'});
+    }
+    if(!req.file){                                          //valida que se mande una imagen al crear la receta (agregar cuando se edita editar)
+        errors.push({text: 'Selecciona una imagen'});
+    }
+    
     if (errors.length > 0) {
         res.render('recetas/new-receta', {
             errors,
             title,
-            descripcion
+            descripcion,
+            categoria,
         })
     } else {
         const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
+        console.log(resultado);
         const owen= req.user.id;
         const newReceta = new Recetas({ 
             title, 
@@ -113,6 +122,7 @@ router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
     if (!categoria) {
         errors.push({text: 'Please select a category'});
     }
+
     if (errors.length > 0) {
         res.render('recetas/editar-receta', {
             errors,
