@@ -129,15 +129,24 @@ router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
             title,
             descripcion
         })
-    } else {
-        await Recetas.findByIdAndUpdate(req.params.id,{title,descripcion,categoria});
-        res.redirect('/recetas/mis-recetas');
+    } 
+    else{
+        if(!req.file){  //si se actualiza sin cargar una foto nueva (falta testing)
+            await Recetas.findByIdAndUpdate(req.params.id,{title,descripcion,categoria});
+            res.redirect('/recetas/mis-recetas');
+        }
+        else{       //si al actualizar se encuentra una foto (falta testing)
+            const resultado = await cloudinary.v2.uploader.upload(req.file.path);
+            await Recetas.findByIdAndUpdate(req.params.id,{title,descripcion,categoria,imagenURL:resultado.url,imagenCloud:resultado.public_id});
+            await fs.unlink(req.file.path);
+            res.redirect('/recetas/mis-recetas');
+        }
     }
     
 })
 router.delete('/recetas/delete/:id', authCheck, async(res,req)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
     const respuesta= await Recetas.findByIdAndRemove(req.parms.id); //borra la receta de la base
-    await cloudinary.v2.uploader.destroy(respuesta.imagenCloud) //borra la foto de la nuve
+    await cloudinary.v2.uploader.destroy(respuesta.imagenCloud) //borra la foto de la nube
     res.redirect('/recetas/mis-recetas');
 });
 
