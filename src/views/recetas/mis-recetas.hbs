@@ -1,18 +1,24 @@
 {{#each resultado}}
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-xl-12">
+        <div class="col-md-12">
             <div class="card">
-                <header>
-                    <p>{{title}}</p>
-                </header>
-                <section>
-                    <div class="container" >
-                        <img src="{{imagenURL}}" alt="" class="img-fluid">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img src="{{imagenURL}}" alt="" class="img-fluid img-completa">
+                        </div>
+                        <div class="col-md-7">
+                            <h4 class="card-title txt-centrado">
+                                {{title}}   <a href="/recetas/editar/{{_id}}"><i class="fas fa-pencil-alt"></i></a>
+                            </h4>
+                            <hr class="my-4">
+                            <p class="txt-centrado mt-5">
+                                {{descripcion}}
+                            </p>
+                        </div>
                     </div>
-                </section>
-                <section>
-                    <pre>{{descripcion}}</pre>
-                </section>
+                    
+                </div>
             </div>
         </div>
     </div>
