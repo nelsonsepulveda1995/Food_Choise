@@ -7,7 +7,7 @@ const Categoria = require('../models/categoria');
 const Ingrediente = require('../models/ingrediente');
 const cloudinary = require('cloudinary'); 
 
-cloudinary.config({             //sesion de claudinary
+cloudinary.config({             //sesion de cloudinary
     cloud_name:'elchetodelciber95',
     api_key:'193479116246688',
     api_secret:'AihAtz1kcPn-J5EIMk8AJrvPNzM'
@@ -30,27 +30,20 @@ const authCheck = (req, res, next) => {
 
 router.get('/recetas', authCheck,async (req, res) => {
     const receta = await Recetas.find().sort( {date: 'desc'} );
-    res.render('recetas/all-recetas', { receta });
+    res.render('recetas/all-recetas', { receta, user:req.user});
 })
 
-router.get('/recetas/new', authCheck,(req, res) => {
+router.get('/recetas/new', authCheck,async (req, res) => {
     //Obtengo todas las categorias       
-    Categoria.find({}, function(err, result) {       
-        if (err) throw err;        
-        console.log(result);                
-    });
+    const cat = await Categoria.find();
     
     //Obtengo todos los ingredientes
-    Ingrediente.find({}, function(err, result) {       
-        if (err) throw err;        
-        console.log(result);                
-    });    
+    const ing = await Ingrediente.find();
     
-    res.render('recetas/new-receta');
+    res.render('recetas/new-receta',{user:req.user,cat,ing} );
 })
 
 router.post('/recetas/new-receta', authCheck,async (req, res) => {
-    console.log(req.body);
     const { title, descripcion,categoria} = req.body;
     const errors = [];
     if (!title) {
@@ -72,13 +65,14 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
     if (errors.length > 0) {
         res.render('recetas/new-receta', {
             errors,
+            user:req.user,
             title,
             descripcion,
             categoria,
         })
     } else {
         const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
-        console.log(resultado);
+        console.log("RESULTADO UPLOAD: "+resultado);
         const owen= req.user.id;
         const newReceta = new Recetas({ 
             title, 
@@ -88,7 +82,7 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
             imagenURL: resultado.url,
             imagenCloud: resultado.public_id 
         });
-        console.log(newReceta);
+        console.log("NUEVA RECETA: "+newReceta);
         await newReceta.save();
         await fs.unlink(req.file.path);
         res.redirect('/recetas/mis-recetas');
@@ -97,17 +91,17 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
 
 router.get('/recetas/mis-recetas', authCheck, async (req, res) => {  //falta agregar el id para la busqueda de recetas
     const usuario=req.user.id;
-    console.log(usuario)
     const query={owen:usuario};
     const resultado= await Recetas.find(query);
+    console.log(resultado[0].descripcion)
 
-    res.render('recetas/mis-recetas',{resultado});
+    res.render('recetas/mis-recetas',{resultado, user:req.user});
 })
 
 //ruta para ingresar a la edicion
 router.get('/recetas/editar/:id', authCheck, async (res,req)=>{
     const datosEditar= await Recetas.findById(req.params.id);
-    res.render('recetas/editar-receta',{datosEditar});
+    res.render('recetas/editar-receta',{datosEditar, user:req.user});
 });
 
 router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
@@ -126,6 +120,7 @@ router.put('/recetas/editar/:id', authCheck, async(res,req)=>{
     if (errors.length > 0) {
         res.render('recetas/editar-receta', {
             errors,
+            user:req.user,
             title,
             descripcion
         })

@@ -50,17 +50,15 @@
                 <i class="fas fa-list"></i>
                 Categorías
             </a>
+            {{#if user}}
             <a href="#" class="list-group-item list-group-item-action bg-light disabled">
                 Mi cuenta
             </a>
-            {{#if user}}
             <a href="/profile" class="list-group-item list-group-item-action bg-light disabled">
                 <!--<img src="iconos/person-3x.png">-->
                 <img class="img-circular img-centrada" width="150" height="150" src="{{user.thumbnail}}"></img><br>
                 <span>{{user.username}}</span> 
             </a>
-            {{/if}}
-
             <a href="/profile" class="list-group-item list-group-item-action bg-light">
                 <!--<img src="iconos/person-3x.png">-->
                 <i class="far fa-user"></i>
@@ -81,7 +79,6 @@
                 <i class="far fa-heart"></i>
                 Favoritos
             </a>
-            {{#if user}}
             <a href="/auth/logout" class="list-group-item list-group-item-action bg-light">
                 <!--<img src="iconos/power-standby-3x.png">-->
                 <i class="fas fa-sign-out-alt"></i>

@@ -74,3 +74,11 @@ body {
   color: #aaa;
 }
     
+#navbarSupportedContent{
+    height: 51.5px;
+}
+
+.checkbox{
+    
+    background-color: #dee2e6 !important;
+}
