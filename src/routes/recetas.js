@@ -99,7 +99,7 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {  //falta agr
 })
 
 //ruta para ingresar a la edicion
-router.get('/recetas/editar/:id', authCheck, async (res,req)=>{
+router.get('/recetas/editar/:id', authCheck, async (req,res)=>{
     const datosEditar= await Recetas.findById(req.params.id);
     res.render('recetas/editar-receta',{datosEditar, user:req.user});
 });
