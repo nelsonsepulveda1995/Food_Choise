@@ -81,7 +81,7 @@ app.use(session({
 
 //create home route
 app.get('/', (req, res) => {
-    res.render('index', {user: req.user});
+    res.render('recetas/all-recetas', {user: req.user});
 });
 
 //Routes

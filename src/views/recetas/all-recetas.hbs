@@ -1,30 +1,24 @@
+<div class="card mt-3 mb-3">
+    <img src="/iconos/bienvenida.jpg" class="rounded banner" alt="">
+</div>
+
 <div class="row">
-    {{#each notes}}
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title d-flex justified-content-between align-items-center">
-                    {{ title }} <a href="#"><i class="fas fa-edit"></i></a>
-                </h4>
-                <p>
-                    {{ description }}
-                </p>
-                <p>
-                    {{ categoria }}
-                </p>
-                <button class="btn btn-danger btn-block btn-sm">Delete</button>
-            </div>
+    {{#each receta}}
+    <div class="card all-receta col-lg-3 col-md-3 col-xl-3 mt-5 ml-5">
+        <h4>{{title}}</h4>
+        <h6>{{categoria}}</h6>
+        <div class="botones col-xs-7 col-sm-7 col-md-7 col-lg-7">
+            <a href="/recetas/ver/{{_id}}" class="btn btn-success btn-lg">Ver</a>
         </div>
     </div>
     {{else}}
-        <div class="card mx-auto">
-            <div class="card-body">
-                <p class="lead">
-                    There are not notes yet.
-                </p>
-                <a href="/recetas/add" class="btn btn-success btn-block">Create one!</a>
-            </div>
+    <div class="card mx-auto">
+        <div class="card-body">
+            <p class="lead">
+                Aún no hay recetas en nuestro servidor.
+            </p>
+            <a href="/recetas/new" class="btn btn-success btn-block">Sé el primero en subir una!</a>
         </div>
+    </div>
     {{/each}}
-    1:37:27
 </div>

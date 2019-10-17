@@ -34,9 +34,10 @@
                     <label for="">Ingredientes: </label>
                     <div class="container">
                         <div class="row d-flex justify-content-center">
+                            <input name="SelectedValues" type="hidden" value="">
                             {{#each ing}}
-                            <div class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
-                                <input type="checkbox" class="custom-control-input" id="{{_id}}" name="{{Descripcion}}">
+                            <div id="checks-ing" class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
+                                <input type="checkbox" class="custom-control-input" id="{{_id}}" name="ingredientes" value="{{Descripcion}}">
                                 <label class="custom-control-label" for="{{_id}}">{{Descripcion}}</label>
                             </div>
                             
