@@ -28,20 +28,28 @@ const authCheck = (req, res, next) => {
 };
 
 
-router.get('/recetas', authCheck,async (req, res) => {
+router.get('/recetas',async (req, res) => {
     const receta = await Recetas.find().sort( {date: 'desc'} );
     //var categRec = await Categoria.findById(receta.categoria);
     for (let i = 0; i < receta.length; i++) {
         var categRec = await Categoria.findById(receta[i].categoria);
         receta[i].categoria = categRec.descripcion;
     }
-    res.render('recetas/all-recetas', { receta, user:req.user});
+    if (req.user){
+        res.render('recetas/all-recetas', { receta , user: req.user});
+    }else{
+        res.render('recetas/all-recetas', { receta });
+    }
 })
 
-router.get('/recetas/ver/:id', authCheck,async (req, res) => {
+router.get('/recetas/ver/:id',async (req, res) => {
     const receta = await Recetas.findById(req.params.id).sort( {date: 'desc'} );
     var categRec = await Categoria.findById(receta.categoria);
-    res.render('recetas/ver-receta', { receta , user:req.user, categRec});
+    if (req.user){
+        res.render('recetas/ver-receta', { receta , user:req.user, categRec});
+    }else{
+        res.render('recetas/ver-receta', { receta , categRec});
+    }
 })
 
 router.get('/recetas/new', authCheck,async (req, res) => {
@@ -57,7 +65,6 @@ router.get('/recetas/new', authCheck,async (req, res) => {
 router.post('/recetas/new-receta', authCheck,async (req, res) => {
     const { title, descripcion,categoria} = req.body;
     console.log("Elementos seleccionados: ")
-    console.log(req.body.SelectedValues);
     const errors = [];
     if (!title) {
         errors.push({text: 'Completa el titulo'});
@@ -74,6 +81,10 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
     if(!req.file){                                          //valida que se mande una imagen al crear la receta (agregar cuando se edita editar)
         errors.push({text: 'Selecciona una imagen'});
     }
+    if(!req.body.ingredientes){
+        errors.push({text: 'Selecciona al menos un ingrediente'});
+    }
+
     
     if (errors.length > 0) {
         res.render('recetas/new-receta', {
@@ -81,17 +92,19 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
             user:req.user,
             title,
             descripcion,
-            categoria,
+            categoria
         })
     } else {
         const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
         console.log("RESULTADO UPLOAD: "+resultado);
         const owen= req.user.id;
+        const ingredientes = req.body.ingredientes;
         const newReceta = new Recetas({ 
             title, 
             owen, 
             descripcion, 
             categoria,
+            ingredientes,
             imagenURL: resultado.url,
             imagenCloud: resultado.public_id 
         });
@@ -105,7 +118,7 @@ router.post('/recetas/new-receta', authCheck,async (req, res) => {
 router.get('/recetas/mis-recetas', authCheck, async (req, res) => {  //falta agregar el id para la busqueda de recetas
     const usuario=req.user.id;
     const query={owen:usuario};
-    const resultado= await Recetas.find(query);
+    const resultado= await Recetas.find(query).sort( {date: 'desc'} );
 
     res.render('recetas/mis-recetas',{resultado, user:req.user});
 })
@@ -113,12 +126,23 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {  //falta agr
 //ruta para ingresar a la edicion
 router.get('/recetas/editar/:id', authCheck, async (req,res)=>{
     const datosEditar= await Recetas.findById(req.params.id);
+    const errors = [];
+    if (req.user.id == datosEditar.owen){
         //Obtengo todas las categorias       
         const cat = await Categoria.find();
-    
+
         //Obtengo todos los ingredientes
         const ing = await Ingrediente.find();
-    res.render('recetas/editar-receta',{datosEditar, user:req.user,cat,ing});
+        res.render('recetas/editar-receta',{datosEditar, user:req.user,cat,ing});
+    }else{
+        errors.push({text: 'Usted no tiene autorización para editar esta receta'});
+    }
+    if (errors.length > 0){
+        res.render(`recetas/error`, {
+            errors,
+            user:req.user
+        })
+    }
 });
 
 router.put('/recetas/editar', authCheck, async(req,res)=>{
@@ -132,6 +156,9 @@ router.put('/recetas/editar', authCheck, async(req,res)=>{
     if (categoria) {
         await Recetas.findByIdAndUpdate(req.query.id,{categoria});
     }
+    if (req.body.ingredientes){
+        await Recetas.findByIdAndUpdate(req.query.id,{ingredientes: req.body.ingredientes});
+    }
 
     if(req.file){
         const resultado = await cloudinary.v2.uploader.upload(req.file.path);
@@ -142,10 +169,22 @@ router.put('/recetas/editar', authCheck, async(req,res)=>{
     
 })
 router.delete('/recetas/delete', authCheck, async(req,res)=>{ //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
-    const respuesta= 0;
-    await Recetas.findByIdAndRemove(req.query.id); //borra la receta de la base
-    //await cloudinary.v2.uploader.destroy(respuesta.imagenCloud) //borra la foto de la nube
-    res.redirect('/recetas/mis-recetas');
+    const usuario=req.user.id;
+    const resultado= await Recetas.findById(req.query.id);
+    const errors = [];
+    if (usuario == resultado.owen){
+        await Recetas.findByIdAndRemove(req.query.id); //borra la receta de la base
+        await cloudinary.v2.uploader.destroy(resultado.imagenCloud);
+        res.redirect('/recetas/mis-recetas');
+    }else{
+        errors.push({text: 'Usted no tiene autorización para eliminar esta receta'});
+    }
+    if (errors.length > 0){
+        res.render(`recetas/error`, {
+            errors,
+            user:req.user
+        })
+    }
 });
 
 module.exports = router;

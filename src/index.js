@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
+const Handlebars = require('handlebars')
 const methodOverride = require('method-override');
 const session = require('express-session');
 const cookieSession = require('cookie-session');
@@ -17,8 +18,13 @@ const morgan=require('morgan'); //trabajar imagenes
 const multer=require('multer');
 
 
-//const googleUntil = require('./google-util');
-
+//helpers custom
+Handlebars.registerHelper('if_eq', function(a, b, opts) {
+    if(a == b) // Or === depending on your needs
+        return opts.fn(this);
+    else
+        return opts.inverse(this);
+});
 
 //Initializations
 const app = express();
@@ -81,7 +87,7 @@ app.use(session({
 
 //create home route
 app.get('/', (req, res) => {
-    res.render('recetas/all-recetas', {user: req.user});
+    res.redirect('/recetas');
 });
 
 //Routes

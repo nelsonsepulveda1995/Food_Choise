@@ -4,10 +4,10 @@
             <h3>Nueva receta</h3>
         </div>
         <div class="card-body">
-            <form action="/recetas/editar?_method=PUT&id={{datosEditar._id}}" method="POST" enctype="multipart/form-data">
+            <form action="/recetas/editar?_method=PUT&id={{datosEditar._id}}" method="POST"
+                enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" name="title" class="form-control" placeholder="Nombre del Plato" autofocus
-                        >
+                    <input type="text" name="title" class="form-control" placeholder="Nombre del Plato" autofocus>
                 </div>
                 <!-- elegir archivo -->
                 <div class="input-group mb-3">
@@ -21,10 +21,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea name="descripcion" class="form-control" placeholder="Descripcion" ></textarea>
+                    <textarea name="descripcion" class="form-control" placeholder="Descripcion"></textarea>
                 </div>
                 <div class="form-group">
-                    <select name="categoria" id="selCategoria" class="form-control" >
+                    <select name="categoria" id="selCategoria" class="form-control">
                         <option value="">Seleccionar Categoría</option>
                         {{#each cat }}
                         <option value="{{_id}}">{{descripcion}}</option>
@@ -36,11 +36,13 @@
                     <div class="container">
                         <div class="row d-flex justify-content-center">
                             {{#each ing}}
-                            <div class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
-                                <input type="checkbox" class="custom-control-input" id="{{_id}}" name="{{Descripcion}}">
+                            <div
+                                class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
+                                <input type="checkbox" class="custom-control-input" id="{{_id}}" name="ingredientes"
+                                    value="{{Descripcion}}">
                                 <label class="custom-control-label" for="{{_id}}">{{Descripcion}}</label>
                             </div>
-                            
+
                             {{/each}}
                         </div>
                     </div>
