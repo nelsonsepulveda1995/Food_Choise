@@ -187,4 +187,33 @@ router.delete('/recetas/delete', authCheck, async(req,res)=>{ //hay que hacer qu
     }
 });
 
+
+//rutas de busqueda
+
+router.get('/busqueda/1',(req,res)=>{   //busqueda por titulo
+
+})
+
+router.get('/busqueda/2',(req,res)=>{  //busqueda por ingredientes
+    
+})
+router.post('/busqueda/2',async(req,res)=>{ //donde llega el formulario de ingredientes
+    const ing=await Ingrediente.find();
+    console.log(ing);
+    res.send('recibido');
+})
+
+router.get('/busqueda/3', async(req,res)=>{   //busqueda por categoria
+    const cat=await Categoria.find();
+    console.log(cat);
+    res.render('recetas/buscar-categoria',{cat});
+})
+router.post('/busqueda/3',async(req,res)=>{  //donde llega el formulario de categoria
+    console.log(req.body);
+    res.send('recibido');
+})
+router.get('/recetas/favoritos',(res,req)=>{   //lista favoritos
+    
+})
+
 module.exports = router;

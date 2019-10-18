@@ -1,18 +1,18 @@
 <div class="col-md-8 mx-auto">
     <div class="card">
         <div class="card-header">
-            <h3>Categorias</h3>
+            <h3>Ingredientes</h3>
         </div>
         <div class="card-body">
-            <form action="/busqueda/3" method="POST">
+            <form action="/busqueda/2" method="POST">
                 <div class="form-group">
-                    <label for="">Categorias:  (todavia en desarrollo)</label>
+                    <label for="">Ingredientes:  (todavia en desarrollo)</label>
                     <div class="container">
                         <div class="row d-flex justify-content-center">
-                            {{#each cat}}
+                            {{#each ing}}
                             <div class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
-                                <input type="checkbox" class="custom-control-input" id="{{_id}}" name="{{descripcion}}">
-                                <label class="custom-control-label" for="{{_id}}">{{descripcion}}</label>
+                                <input type="checkbox" class="custom-control-input" id="{{_id}}" name="{{Descripcion}}">
+                                <label class="custom-control-label" for="{{_id}}">{{Descripcion}}</label>
                             </div>
                             
                             {{/each}}
