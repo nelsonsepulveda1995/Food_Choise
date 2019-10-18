@@ -206,9 +206,9 @@ router.post('/busqueda/2',async(req,res)=>{ //donde llega el formulario de ingre
 router.get('/busqueda/3', async(req,res)=>{   //busqueda por categoria
     const cat=await Categoria.find();
     console.log(cat);
-    res.render('recetas/buscar-categoria',{cat});
+    res.render('recetas/buscar-categoria',{cat, user: req.user});
 })
-router.post('/busqueda/3',async(req,res)=>{  //donde llega el formulario de categoria
+router.post('/busqueda/3', async(req,res)=>{  //donde llega el formulario de categoria
     console.log(req.body);
     res.send('recibido');
 })
