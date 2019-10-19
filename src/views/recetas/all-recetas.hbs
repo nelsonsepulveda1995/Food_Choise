@@ -2,14 +2,20 @@
     <img src="/iconos/bienvenida.jpg" class="rounded banner" alt="">
 </div>
 
-<div class="row">
+<div class="row mt-5 mx-auto">
     {{#each receta}}
-    <div class="card all-receta col-lg-3 col-md-3 col-xl-3 mt-5 ml-5">
-        <img src="{{imagenURL}}" alt="" class="rounded foto-plato">
-        <h4>{{title}}</h4>
-        <h6>{{categoria}}</h6>
-        <div class="botones col-xs-7 col-sm-7 col-md-7 col-lg-7">
-            <a href="/recetas/ver/{{_id}}" class="btn btn-success btn-lg">Ver</a>
+    <div class="col-md-6 mx-auto mt-2">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">
+                    {{title}}
+                </h4>
+                <img src="{{imagenURL}}" class="img-fluid img-completa">
+                <h6>
+                    {{categoria}}
+                </h6>
+            </div>
+            <a href="/recetas/ver/{{_id}}" class="btn btn-success">Ver</a>
         </div>
     </div>
     {{else}}
