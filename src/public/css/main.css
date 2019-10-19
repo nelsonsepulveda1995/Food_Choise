@@ -60,6 +60,9 @@ body {
     width: 100%;
     height: 100%;
 }
+.txt-centrado {
+    text-align: center;
+}
 
 .has-search .form-control {
   padding-left: 2.375rem;

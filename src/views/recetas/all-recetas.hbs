@@ -2,16 +2,17 @@
     <img src="/iconos/bienvenida.jpg" class="rounded banner" alt="">
 </div>
 
-<div class="row mt-5 mx-auto">
+<div class="row mx-auto">
     {{#each receta}}
-    <div class="col-md-6 mx-auto mt-2">
+    <div class="col-md-4 mx-auto">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">
+                <h4 class="card-title txt-centrado">
                     {{title}}
                 </h4>
                 <img src="{{imagenURL}}" class="img-fluid img-completa">
-                <h6>
+                <br><br>
+                <h6 class="txt-centrado">
                     {{categoria}}
                 </h6>
             </div>
@@ -19,7 +20,7 @@
         </div>
     </div>
     {{else}}
-    <div class="card mx-auto">
+    <div class="card mx-auto mt-5">
         <div class="card-body">
             <p class="lead">
                 Aún no hay recetas en nuestro servidor.
