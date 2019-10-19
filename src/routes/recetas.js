@@ -208,9 +208,18 @@ router.get('/busqueda/3', async(req,res)=>{   //busqueda por categoria
     console.log(cat);
     res.render('recetas/buscar-categoria',{cat, user: req.user});
 })
-router.post('/busqueda/3', async(req,res)=>{  //donde llega el formulario de categoria
+router.post('/busqueda/3', async(req,res)=>{  //falta completar !!!!!
     console.log(req.body);
-    res.send('recibido');
+    const errors=[];
+    if(!req.body.categoria){
+        const cat= await Categoria.find().sort( {descripcion: 'asc'}); //la busqueda se ordena de la 'a' a la 'z'
+        errors.push({text: 'seleccione al menos una categoria'});
+        res.render('recetas/buscar-categoria',{cat,errors,user:req.user})
+    }
+    else{
+        const Receta=await Recetas.find({categoria:{$ain:[""]}}) //ingresar parametro de busqueda (revisar si funciona)
+        res.send('recibido');
+    }
 })
 router.get('/recetas/favoritos',(res,req)=>{   //lista favoritos
     
