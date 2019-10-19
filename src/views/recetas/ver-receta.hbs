@@ -1,11 +1,16 @@
 <div class="card" style="margin: 15px;">
     <div class="row tarjeta">
-        <div class="col-lg-12 col-md-12 col-xl-12">
-            <h4>{{receta.title}}</h4>
-            <p>Preparacion: {{receta.descripcion}}</p>
-            <p>Categoría: {{categRec.descripcion}}</p>
+        <div class="col-md-12">
+            <h4 class="text-success">{{receta.title}}</h4>
+            <hr class="hr-cambio">
             <p><img class="foto-plato rounded" src="{{receta.imagenURL}}" alt=""></p>
-            <p>Ingredientes:</p>
+            <h4 class="text-muted">Preparación</h4>
+            <p>{{receta.descripcion}}</p>
+            <hr class="hr-cambio">
+            <h4 class="text-muted">Categoría</h4>
+            <p>{{categRec.descripcion}}</p>
+            <hr class="hr-cambio">
+            <h4 class="text-muted">Ingredientes</h4>
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     {{#each receta.ingredientes}}
