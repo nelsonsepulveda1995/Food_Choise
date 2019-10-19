@@ -4,17 +4,17 @@
 
 <div class="row mx-auto">
     {{#each receta}}
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-4 mx-auto mt-5">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title txt-centrado">
                     {{title}}
                 </h4>
-                <img src="{{imagenURL}}" class="img-fluid img-completa">
-                <br><br>
-                <h6 class="txt-centrado">
+                <h6 class="txt-centrado txt-categoria">
                     {{categoria}}
                 </h6>
+                <br>
+                <img src="{{imagenURL}}" class="img-fluid img-completa">
             </div>
             <a href="/recetas/ver/{{_id}}" class="btn btn-success">Ver</a>
         </div>
