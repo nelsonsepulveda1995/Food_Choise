@@ -1,6 +1,6 @@
 # Food_Choise Mejorado el server
 
-dependencias incluidas
+Dependencias incluidas
 
 Para poder ejecutar de manera local (provisorio):
 
