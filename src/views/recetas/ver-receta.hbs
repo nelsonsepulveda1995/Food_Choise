@@ -1,26 +1,26 @@
-<div class="card" style="margin: 15px;">
-    <div class="row tarjeta">
-        <div class="col-md-12">
-            <h4 class="text-success">{{receta.title}}</h4>
-            <hr class="hr-cambio">
+<div class="card">
+    <div class="col-md-12">
+        <div class="col-md-8 mx-auto">
+            <h4 class="text-success txt-centrado mt-3">{{receta.title}}</h4>
+            <hr>
             <p><img class="foto-plato rounded" src="{{receta.imagenURL}}" alt=""></p>
-            <h4 class="text-muted">Preparación</h4>
-            <p>{{receta.descripcion}}</p>
-            <hr class="hr-cambio">
-            <h4 class="text-muted">Categoría</h4>
-            <p>{{categRec.descripcion}}</p>
-            <hr class="hr-cambio">
-            <h4 class="text-muted">Ingredientes</h4>
+            <h4 class="text-muted txt-centrado">Ingredientes</h4>
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     {{#each receta.ingredientes}}
                     <div class="col-md-2 col-lg-2 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
                         {{this}}
                     </div>
-
                     {{/each}}
                 </div>
             </div>
+            <hr>
+            <h4 class="text-muted txt-centrado">Preparación</h4>
+            <p class="txt-centrado">{{receta.descripcion}}</p>
+            <hr>
+            <h4 class="text-muted txt-centrado">Categoría</h4>
+            <p class="txt-centrado">{{categRec.descripcion}}</p>
+            <hr>    
         </div>
     </div>
     {{#if_eq receta.owen user.id}}<!--Helper custom que hice para igualar dos parametros-->
@@ -31,25 +31,24 @@
                 Eliminar
             </button>
             <!-- Modal -->
-            <div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <form class="modal-content" method="POST" action="/recetas/delete?_method=DELETE&id={{receta._id}}">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Eliminar {{receta.title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <div class="d-block">
+                            <h4 class="modal-title text-center">Eliminar {{receta.title}}</h4>
                         </div>
+                        <hr>
                         <div class="modal-body">
-                            <div class="container-fluid">
-                                Está a punto de eliminar su receta "{{receta.title}}". ¿Está seguro?
+                            <div class="container-fluid text-center">
+                                Está a punto de eliminar su receta "{{receta.title}}". ¿Está seguro que desea eliminar la receta?
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <hr>
+                        <div class="text-center mx-auto">
                             <button type="submit" class="btn btn-primary">SI</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
                         </div>
+                        <br>
                     </form>
                 </div>
             </div>
@@ -64,26 +63,28 @@
         </div>
     </div>
     {{/if_eq}}
+    <br><br>
+    <!--Script para tener los comentarios de Disqus-->
     <div class="col-md-8 mx-auto"
     <div id="disqus_thread"></div>
-<script>
+    <script>
 
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://food-choice.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    ></div>
-</div>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://food-choice.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        ></div>
+    </div>
