@@ -1,31 +1,55 @@
-{{#each resultado}}
 <div class="card">
-    <div class="row tarjeta">
-        <div class="col-lg-10 col-md-10 col-xl-10">
-            <h4>{{title}}</h4>
-            <p>{{descripcion}}</p>
-        </div>
-        <div class="botones col-xs-2 col-sm-2 col-md-2 col-lg-2">
-            <a href="/recetas/ver/{{_id}}" class="btn btn-success btn-lg">Ver</a>
-        </div>
+    <div class="row mx-auto">
+        <div class="col-md-12">
+            {{#each resultado}}
+            <div class="card mt-2">
+                <div class="col-md-12 mx-auto">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="{{imagenURL}}" alt="No se pudo cargar la imagen" class="img-fluid img-completa">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="text-center">
+                                {{title}}
+                            </h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-center mt-3">
+                                        {{descripcion}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mx-auto text-center mt-3">
+                                <a href="/recetas/ver/{{_id}}" class="btn btn-success btn btn-block">
+                                    Ver receta
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
     </div>
-</div>
-<br>
-{{else}}
-<div class="row">
-    <div class="card mx-auto">
-        <div class="card-body">
-            <p class="lead">
-                No has escrito recetas aún.
-            </p>
-            <a href="/recetas/new" class="btn btn-success btn-block">Escribe una!</a>
-        </div>
-    </div>
-</div>
-{{/each}}
 
-{{#if resultado}}
-<div class="botones row">
-    <a class="col-sm-12 col-md-12 col-xs-12 btn btn-info" href="/recetas/new">Escribir una Receta!</a>
+    {{else}}
+    <div class="row mt-3">
+        <div class="card mx-auto">
+            <div class="card-body">
+                <p class="lead">
+                    No has escrito recetas aún.
+                </p>
+                <a href="/recetas/new" class="btn btn-success btn-block">Escribe una!</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    {{/each}}
+
+    {{#if resultado}}
+    <div class="botones row">
+        <a class="btn btn-info" href="/recetas/new">¡Agregar más recetas!</a>
+    </div>
+    {{/if}}
 </div>
-{{/if}}
+
