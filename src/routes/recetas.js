@@ -214,13 +214,13 @@ router.post('/busqueda/3', async(req,res)=>{  //falta completar !!!!!
     console.log(req.body)
     console.log(categoria);
     const errors=[];
-    if(!categoria){
-        
+    if(!categoria){  
         errors.push({text: 'seleccione al menos una categoria'});
         res.render('recetas/buscar-categoria',{cat,errors,user:req.user})
     }
     else{
-        const Receta=await Recetas.find({categoria:{$in:[""]}}) //ingresar parametro de busqueda (revisar si funciona)
+        const Receta=await Recetas.find({categoria:{$in:categoria}}) //ingresar parametro de busqueda (revisar si funciona)
+        console.log(Receta);
         res.send('recibido');
     }
 })
