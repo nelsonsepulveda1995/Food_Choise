@@ -1,0 +1,33 @@
+<h1>Recetas por Ingredientes: </h1>
+<div class="row mx-auto">
+    {{#each Receta}}
+    <div class="col-md-4 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title txt-centrado">
+                    {{title}}
+                </h4>
+                <h6 class="txt-centrado txt-categoria">
+                    {{#each ../ing }}
+                        {{#if_eq this._id ../this.ingredientes }}
+                            <p>{{this.descripcion}}</p>
+                        {{/if_eq}}
+                    {{/each}}
+                </h6>
+                <br>
+                <img src="{{imagenURL}}" class="img-fluid img-completa">
+            </div>
+            <a href="/recetas/ver/{{_id}}" class="btn btn-success">Ver</a>
+        </div>
+    </div>
+    {{else}}
+    <div class="card mx-auto mt-5">
+        <div class="card-body">
+            <p class="lead">
+                Aún no hay recetas en nuestro servidor.
+            </p>
+            <a href="/recetas/new" class="btn btn-success btn-block">Sé el primero en subir una!</a>
+        </div>
+    </div>
+    {{/each}}
+</div>

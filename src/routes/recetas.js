@@ -194,17 +194,31 @@ router.get('/busqueda/1',(req,res)=>{   //busqueda por titulo
 
 })
 
-router.get('/busqueda/2',(req,res)=>{  //busqueda por ingredientes
-    
+router.get('/busqueda/2',async(req,res)=>{  //busqueda por ingredientes
+    const ing=await Ingrediente.find().sort( {Descripcion: 'asc'});
+    console.log(ing);
+    res.render('recetas/buscar-ingredientes',{ing, user: req.user});
 })
 router.post('/busqueda/2',async(req,res)=>{ //donde llega el formulario de ingredientes
-    const ing=await Ingrediente.find();
-    console.log(ing);
-    res.send('recibido');
+    const {ingrediente}=req.body;
+    const ing =await Ingrediente.find().sort( {descripcion: 'asc'});
+    console.log(ingrediente);
+    
+    const errors=[];
+    if(!ingrediente){  
+        errors.push({text: 'seleccione al menos un Ingrediente'});
+        res.render('recetas/buscar-ingredientes',{ing,errors,user:req.user})
+    }
+    else{
+        const Receta=await Recetas.find({ingredientes:{$in:ingrediente}})
+        console.log('Recetas resultado de la busqueda');
+        console.log(Receta);
+        res.render('recetas/recetas-ingredientes',{Receta,ing});
+    }
 })
 
 router.get('/busqueda/3', async(req,res)=>{   //busqueda por categoria
-    const cat=await Categoria.find();
+    const cat=await Categoria.find().sort( {descripcion: 'asc'});;
     console.log(cat);
     res.render('recetas/buscar-categoria',{cat, user: req.user});
 })
