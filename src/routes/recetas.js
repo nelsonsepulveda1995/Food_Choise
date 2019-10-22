@@ -188,18 +188,29 @@ router.delete('/recetas/delete', authCheck, async(req,res)=>{ //hay que hacer qu
 });
 
 
-//rutas de busqueda
+// -----------------------------           RUTAS DE BUSQUEDA            ----------------------------------------------------------------------//
 
-router.get('/busqueda/1',(req,res)=>{   //busqueda por titulo
-
+router.post('/busqueda/1',(req,res)=>{   //busqueda por titulo
+    const {title}=req.body;
+    console.log(title);
+    const errors=[];
+    if(!title){  
+        errors.push({text: 'seleccione al menos un titulo'});
+        res.render('recetas/all-recetas',{errors,user:req.user})
+    }
+    else{
+        const Receta=Recetas.find({title:{$in:title}})
+        console.log(Receta);
+        res.render("recetas/recetas-titulo",{Receta,title});
+    }
 })
 
-router.get('/busqueda/2',async(req,res)=>{  //busqueda por ingredientes
+router.get('/busqueda/2',async(req,res)=>{          //busqueda por ingredientes
     const ing=await Ingrediente.find().sort( {Descripcion: 'asc'});
     console.log(ing);
-    res.render('recetas/buscar-ingredientes',{ing, user: req.user});
+    res.render('recetas/buscar-ingredientes',{ing, user: req.user}); 
 })
-router.post('/busqueda/2',async(req,res)=>{ //donde llega el formulario de ingredientes
+router.post('/busqueda/2',async(req,res)=>{         //donde llega el formulario de ingredientes
     const {ingrediente}=req.body;
     const ing =await Ingrediente.find().sort( {descripcion: 'asc'});
     console.log(ingrediente);
