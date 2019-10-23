@@ -190,7 +190,7 @@ router.delete('/recetas/delete', authCheck, async(req,res)=>{ //hay que hacer qu
 
 // -----------------------------           RUTAS DE BUSQUEDA            ----------------------------------------------------------------------//
 
-router.post('/busqueda/1',(req,res)=>{   //busqueda por titulo
+router.post('/busqueda/1', async(req,res)=>{   //busqueda por titulo
     const {title}=req.body;
     console.log(title);
     const errors=[];
@@ -199,8 +199,10 @@ router.post('/busqueda/1',(req,res)=>{   //busqueda por titulo
         res.render('recetas/all-recetas',{errors,user:req.user})
     }
     else{
-        const Receta=Recetas.find({title:{$in:title}})
+        const Receta=await Recetas.find({title:{$in:title}})
+        console.log('resultados de receta:');
         console.log(Receta);
+
         res.render("recetas/recetas-titulo",{Receta,title});
     }
 })
