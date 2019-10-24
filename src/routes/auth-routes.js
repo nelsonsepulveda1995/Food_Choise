@@ -10,7 +10,8 @@ router.get('/login', (req, res) =>{
 router.get('/logout', (req, res) =>{
     //handlwe with passport
     req.logOut();
-    res.redirect('/');
+    req.session = null;
+    res.redirect("/");
 });
 
 //auth with google
