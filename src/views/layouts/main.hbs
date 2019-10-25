@@ -109,10 +109,18 @@
                 </button>
 
                 <!--Barra de búsqueda-->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-lg-auto ml-3 my-auto d-inline w-50">
-                        <li class="nav-item">
+                <div class="collapse navbar-collapse container" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto ml-3 my-auto d-inline w-50 row">
+                        <li class="nav-item col-12">
                            <form class="input-group " method="POST" action="/busqueda/1">
+                                
+                                  <label for="tipoBusqueda" class="mr-2">Buscar por:</label>
+                                  <select class="form-control mr-3 col-4" name="tipoBusqueda" id="tipoBusqueda">
+                                    <option>Ingredientes</option>
+                                    <option>Categoría</option>
+                                    <option>Título</option>
+                                  </select>
+                                
                                 <input type="text" class="form-control" name="title" placeholder="Buscar recetas...">
                                     <button class="btn btn-secondary" type="submit">
                                         <i class="fa fa-search"></i>

@@ -226,7 +226,7 @@ router.post('/busqueda/2',async(req,res)=>{         //donde llega el formulario 
         const Receta=await Recetas.find({ingredientes:{$in:ingrediente}})
         console.log('Recetas resultado de la busqueda');
         console.log(Receta);
-        res.render('recetas/recetas-ingredientes',{Receta,ing});
+        res.render('recetas/recetas-ingredientes',{Receta,ing,user:req.user});
     }
 })
 
@@ -252,7 +252,7 @@ router.post('/busqueda/3', async(req,res)=>{  //falta completar !!!!!
         const Receta=await Recetas.find({categoria:{$in:categoria}}) //ingresar parametro de busqueda (revisar si funciona)
         console.log("recetas con la categoria "+ categoria + " : ");
         console.log(Receta);
-        res.render("recetas/recetas-categoria",{Receta, cat});
+        res.render("recetas/recetas-categoria",{Receta, cat,user:req.user});
     }
 })
 router.get('/recetas/favoritos',(res,req)=>{   //lista favoritos

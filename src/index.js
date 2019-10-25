@@ -81,7 +81,7 @@ app.use(express.urlencoded({extended: false}));     //false ya que multer es qui
 app.use(methodOverride('_method'));
 app.use(session({
     secret: 'mysecretapp',
-    resave: true,
+    resave: false,
     saveUninitialized: true 
 }));
 
