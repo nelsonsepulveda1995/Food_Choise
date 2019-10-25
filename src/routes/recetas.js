@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs=require('fs-extra');   //file system sirve para borrar los archivos temporales
-
+const Users = require('../models/user-model')
 const Recetas = require('../models/recetas');
 const Categoria = require('../models/categoria');
 const Ingrediente = require('../models/ingrediente');
@@ -34,6 +34,9 @@ router.get('/recetas',async (req, res) => {
     for (let i = 0; i < receta.length; i++) {
         var categRec = await Categoria.findById(receta[i].categoria);
         receta[i].categoria = categRec.descripcion;
+        var owenReceta = await Users.findById(receta[i].owen);
+        receta[i].owen = owenReceta.username;
+        receta[i].owenImg = owenReceta.thumbnail;
     }
     if (req.user){
         res.render('recetas/all-recetas', { receta , user: req.user});
@@ -200,6 +203,13 @@ router.post('/busqueda/1', async(req,res)=>{   //busqueda por titulo
     }
     else{
         const Receta=await Recetas.find({title:{$in:title}})
+        for (let i = 0; i < Receta.length; i++) {
+            var categRec = await Categoria.findById(Receta[i].categoria);
+            Receta[i].categoria = categRec.descripcion;
+            var owenReceta = await Users.findById(Receta[i].owen);
+            Receta[i].owen = owenReceta.username;
+            Receta[i].owenImg = owenReceta.thumbnail;
+        }
         console.log('resultados de receta:');
         console.log(Receta);
 
@@ -224,6 +234,13 @@ router.post('/busqueda/2',async(req,res)=>{         //donde llega el formulario 
     }
     else{
         const Receta=await Recetas.find({ingredientes:{$in:ingrediente}})
+        for (let i = 0; i < Receta.length; i++) {
+            var categRec = await Categoria.findById(Receta[i].categoria);
+            Receta[i].categoria = categRec.descripcion;
+            var owenReceta = await Users.findById(Receta[i].owen);
+            Receta[i].owen = owenReceta.username;
+            Receta[i].owenImg = owenReceta.thumbnail;
+        }
         console.log('Recetas resultado de la busqueda');
         console.log(Receta);
         res.render('recetas/recetas-ingredientes',{Receta,ing,user:req.user});
@@ -250,6 +267,13 @@ router.post('/busqueda/3', async(req,res)=>{  //falta completar !!!!!
     }
     else{
         const Receta=await Recetas.find({categoria:{$in:categoria}}) //ingresar parametro de busqueda (revisar si funciona)
+        for (let i = 0; i < Receta.length; i++) {
+            var categRec = await Categoria.findById(Receta[i].categoria);
+            Receta[i].categoria = categRec.descripcion;
+            var owenReceta = await Users.findById(Receta[i].owen);
+            Receta[i].owen = owenReceta.username;
+            Receta[i].owenImg = owenReceta.thumbnail;
+        }
         console.log("recetas con la categoria "+ categoria + " : ");
         console.log(Receta);
         res.render("recetas/recetas-categoria",{Receta, cat,user:req.user});

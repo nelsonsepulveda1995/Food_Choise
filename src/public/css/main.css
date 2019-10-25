@@ -3,6 +3,22 @@ body {
     overflow-x: hidden;
 }
 
+.contenedorIng {
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.zoom {
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+  }
+  
+  .zoom:hover {
+      
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
 #sidebar-wrapper {
     min-height: 100vh;
     margin-left: -15rem;
@@ -46,7 +62,7 @@ body {
 }
 
 .img-circular {
-	  border-radius: 50%
+    border-radius: 50%
 }
 
 .img-centrada {
@@ -54,69 +70,73 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
 .img-completa {
     width: 100%;
     height: 200px;
 }
+
 .txt-centrado {
     text-align: center;
 }
+
 .txt-categoria {
     background-color: #E9E4F0;
 }
+
 .has-search .form-control {
-  padding-left: 2.375rem;
+    padding-left: 2.375rem;
 }
 
 .has-search .form-control-feedback {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  width: 2.375rem;
-  height: 2.375rem;
-  line-height: 2.375rem;
-  text-align: center;
-  pointer-events: none;
-  color: #aaa;
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
 }
-    
-#navbarSupportedContent{
+
+#navbarSupportedContent {
     height: 51.5px;
 }
 
-.checkbox{
-    
+.checkbox {
+
     background-color: #dee2e6 !important;
 }
 
-.tarjeta{
+.tarjeta {
     text-align: center;
     padding: 10px;
-  }
+}
 
-  .botones{
-    padding:10px;
+.botones {
+    padding: 10px;
     margin: auto;
-  }
+}
 
-  .foto-plato{
+.foto-plato {
     width: 100%;
     height: 100%;
-  }
+}
 
-  .all-receta{
+.all-receta {
     padding: 10px;
     margin: auto;
     text-align: center;
-  }
+}
 
-  .titulo{
+.titulo {
     color: white;
-  }
+}
 
-  .banner{
-      height: 300px !important;
-  }
+.banner {
+    height: 300px !important;
+}
 
 hr {
     width: 75%;

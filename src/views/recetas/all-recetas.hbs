@@ -5,9 +5,9 @@
 
 <div class="row mx-auto">
     {{#each receta}}
-    <div class="col-md-4 mt-5">
-        <div class="card">
-            <div class="card-body">
+    <div class="col-md-4 mt-5 ">
+        <div class="card zoom">
+            <a href="/recetas/ver/{{_id}}" class="card-body">
                 <h4 class="card-title txt-centrado">
                     {{title}}
                 </h4>
@@ -15,9 +15,9 @@
                     {{categoria}}
                 </h6>
                 <br>
-                <img src="{{imagenURL}}" class="img-fluid img-completa">
-            </div>
-            <a href="/recetas/ver/{{_id}}" class="btn btn-success">Ver</a>
+                <img src="{{imagenURL}}" class="img-fluid img-completa rounded">
+                <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="{{owenImg}}" alt="">{{owen}}</h6>
+            </a>
         </div>
     </div>
     {{else}}
