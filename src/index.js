@@ -82,7 +82,7 @@ app.use(methodOverride('_method'));
 app.use(session({
     secret: 'mysecretapp',
     resave: false,
-    saveUninitialized: true 
+    saveUninitialized: false
 }));
 
 //create home route

@@ -19,6 +19,30 @@ body {
     transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
   }
 
+  .zoomStar {
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+  }
+  
+  .zoomStar:hover {
+    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+  .starSelected{
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+    transform: scale(1.5);
+  }
+  .starSelected:hover {
+    transform: scale(1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+  .starSelectedPrev{
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+    transform: scale(1.5);
+  }
+
 #sidebar-wrapper {
     min-height: 100vh;
     margin-left: -15rem;
@@ -140,4 +164,12 @@ body {
 
 hr {
     width: 75%;
+}
+
+.hidden{
+    display:none;
+}
+
+.estrella{
+    color: orange;
 }

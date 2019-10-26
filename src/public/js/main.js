@@ -21,10 +21,51 @@ $(document).ready(function () {
         // Ratio the hight to the width as the user screen ratio
         var google = window.open(this.href, 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
     });
+    $('#calificaciones>input').change(function () {
+        // over
+        if ($(this).is(":checked")) {
+            $(`#calificaciones>label>i`).removeClass("fa-star starSelected");
+            $(`#calificaciones>label>i`).addClass("fa-star-o");
+            var index = $(this).val()
+            
+            $(`#calificaciones>label:nth-child(${index})>i`).toggleClass("fa-star-o fa-star starSelected");
+            for (let i = index - 1; i >= 0; i--) {
+                $(`#calificaciones>label:nth-child(${i})>i`).toggleClass("fa-star-o fa-star starSelected");
+            }
+        }
+    });
+    if ($('#calificacion_usuario')) {
+        var calificacion = parseInt($('#calificacion_usuario').text());
+        for (let i = calificacion; i >= 0; i--) {
+            $(`#rate${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
+        }
+    }
+    var tarjetas = $('#tarjetaReceta .card')
+    for (let i = 0; i < tarjetas.length; i++) {
+        let stars = $(`#tarjetaReceta .card:eq(${i}) #id_tarjetaReceta`).text()
+        
+        
+        let calPromAll = parseFloat($('#promedio_calificacion_'+stars).text());
+        
+        if (calPromAll % 1 > 0) {
+            $(`#${stars}prom${parseInt(calPromAll)+1}`).toggleClass("fa-star-o fa-star fa fas fa-star-half-alt starSelectedPrev");
+        }
+        for (let i = parseInt(calPromAll); i >= 0; i--) {
+            $(`#${stars}prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
+        }
+
+    }
+    var calificacionProm = parseFloat($('#promedio_calificacion').text());
+    if (calificacionProm % 1 > 0) {
+        $(`#prom${parseInt(calificacionProm)+1}`).toggleClass("fa-star-o fa-star fa fas fa-star-half-alt starSelectedPrev");
+    }
+    for (let i = parseInt(calificacionProm); i >= 0; i--) {
+        $(`#prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
+    }
 });
 
 function buildlist(listName, labelName) {
-    console.log("se crea la lista")
+    
     var controls = document.getElementsByName(listName);
     var label = document.getElementsByName(labelName);
     label.value = '';

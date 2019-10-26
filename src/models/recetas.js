@@ -10,7 +10,8 @@ const recipeSchema = new Schema({  //falta agregar ingredientes, calificacion, p
     ingredientes: {type: Object, require: true},
     categoria: {type: String, require: true},
     imagenURL:{type: String, required: true},   //url de la imagen dada por cloudinary
-    imagenCloud:{type:String, required: true}   //id unico de la foto guardada en cloudinari para poder borrarla
+    imagenCloud:{type:String, required: true},   //id unico de la foto guardada en cloudinari para poder borrarla
+    calificacion:{type:Number}
 });
 
 module.exports = mongoose.model('receta',recipeSchema);
