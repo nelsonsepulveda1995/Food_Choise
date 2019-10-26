@@ -128,6 +128,12 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     } = req.body;
     console.log("Elementos seleccionados: ")
     const errors = [];
+    console.log("USUARIO: "+ req.user.id);
+    if(!req.user.id){
+        errors.push({
+            text: 'error con el login'
+        });
+    }
     if (!title) {
         errors.push({
             text: 'Completa el titulo'
