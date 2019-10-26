@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const rateSchema = new Schema({
+const visitasSchema = new Schema({
     id_receta: { type: String, required: true },
     id_visitantes: { type: Array, required: true },
 });
