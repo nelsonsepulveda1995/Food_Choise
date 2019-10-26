@@ -5,6 +5,7 @@ const Users = require('../models/user-model')
 const Recetas = require('../models/recetas');
 const Categoria = require('../models/categoria');
 const Calificacion = require('../models/calificacion');
+const Visitas=require('../models/visitas')
 const Ingrediente = require('../models/ingrediente');
 const cloudinary = require('cloudinary');
 
@@ -66,36 +67,42 @@ router.get('/recetas', async (req, res) => {
 router.get('/recetas/ver/:id', async (req, res) => {
     const receta = await Recetas.findById(req.params.id);
     var categRec = await Categoria.findById(receta.categoria);
-    const calificaciones = await Calificacion.findOne({
-        id_calificante: req.user,
-        id_receta:req.params.id
-    });
-    const calificacionesProm = await Calificacion.find({
-        id_receta: req.params.id
-    });
-    var totalCal = 0
-    for (let i = 0; i < calificacionesProm.length; i++) {
-        totalCal = totalCal + calificacionesProm[i].calificacion;
-    }
-    var promCal = totalCal / calificacionesProm.length;
-    console.log(promCal);
-    if (req.user && calificaciones) {
-        console.log("califico")
-        res.render('recetas/ver-receta', {
-            receta,
-            user: req.user,
-            categRec,
-            calificaciones,
-            promCal
+    console.log(req.user)
+    if(req.user){
+        console.log('ahdsjashdjkahsdkjahdkjashdkjashdashdlashdjas')
+        const calificaciones = await Calificacion.findOne({
+            id_calificante: req.user.id,
+            id_receta:req.params.id
         });
-    } else if (req.user) {
-        console.log("no califico")
-        res.render('recetas/ver-receta', {
-            receta,
-            user: req.user,
-            categRec,
-            promCal
+    
+        const calificacionesProm = await Calificacion.find({
+            id_receta: req.params.id
         });
+        var totalCal = 0
+        for (let i = 0; i < calificacionesProm.length; i++) {
+            totalCal = totalCal + calificacionesProm[i].calificacion;
+        }
+        var promCal = totalCal / calificacionesProm.length;
+        console.log(promCal);
+        if (req.user.id && calificaciones) {
+            console.log("califico")
+            res.render('recetas/ver-receta', {
+                receta,
+                user: req.user,
+                categRec,
+                calificaciones,
+                promCal
+            });
+            
+        } else if (req.user) {
+            console.log("no califico")
+            res.render('recetas/ver-receta', {
+                receta,
+                user: req.user,
+                categRec,
+                promCal
+            });
+        }
     } else {
         console.log("no es usuario")
         res.render('recetas/ver-receta', {
@@ -185,11 +192,11 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         console.log("NUEVA RECETA: " + newReceta);
         await newReceta.save();
         await fs.unlink(req.file.path);
-        const crearVisitas=new Visitas({
+        const crearVisitas = new Visitas({
             id_receta: newReceta._id,
-            id_visitantes: req.user
+            id_visitantes: req.user.id
         })
-
+        await crearVisitas.save();
         res.redirect('/recetas/mis-recetas');
     }
 })
