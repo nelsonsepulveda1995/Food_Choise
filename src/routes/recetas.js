@@ -128,12 +128,6 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     } = req.body;
     console.log("Elementos seleccionados: ")
     const errors = [];
-    console.log("USUARIO: "+ req.user.id);
-    if(!req.user.id){
-        errors.push({
-            text: 'error con el login'
-        });
-    }
     if (!title) {
         errors.push({
             text: 'Completa el titulo'
@@ -310,7 +304,7 @@ router.post('/recetas/calificar/:id', async (req, res) => {
         calif
     } = req.body
     const receta = req.params.id;
-    const user = req.user;
+    const user = req.user.id;
     const calificaciones = await Calificacion.find({
         id_calificante: user,
         id_receta: receta
