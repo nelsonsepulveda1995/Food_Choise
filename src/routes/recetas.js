@@ -65,11 +65,17 @@ router.get('/recetas', async (req, res) => {
 })
 
 router.get('/recetas/ver/:id', async (req, res) => {
-    const receta = await Recetas.findById(req.params.id);
-    var categRec = await Categoria.findById(receta.categoria);
+    const receta = await Recetas.findById(req.params.id); //trae la receta elegida
+    var categRec = await Categoria.findById(receta.categoria);  // trae la categoria de la receta
+    const verVisitas=await Visitas.findOne({id_receta:{$in: req.params.id}}); //trae las visitas de la receta elegida
+    console.log("VISITAS TOTALES"+verVisitas)
     console.log(req.user)
-    if(req.user){
-        console.log('ahdsjashdjkahsdkjahdkjashdkjashdashdlashdjas')
+                //---------------------- SI ESTA LOGUEADO ----------------------
+    if(req.user){                                           
+        if(verVisitas.id_visitantes.includes(req.user.id)){
+            console.log('paso la verificacion')
+        }
+        console.log('entrar en la parte usuario registrado');   
         const calificaciones = await Calificacion.findOne({
             id_calificante: req.user.id,
             id_receta:req.params.id
@@ -103,7 +109,9 @@ router.get('/recetas/ver/:id', async (req, res) => {
                 promCal
             });
         }
-    } else {
+    }
+    // ---------------------------------- SI NO ESTA LOGUEADO ------------------------- 
+    else {
         console.log("no es usuario")
         res.render('recetas/ver-receta', {
             receta,
