@@ -191,6 +191,11 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         console.log("NUEVA RECETA: " + newReceta);
         await newReceta.save();
         await fs.unlink(req.file.path);
+        const crearVisitas=new Visitas({
+            id_receta: newReceta._id,
+            id_visitantes: req.user
+        })
+
         res.redirect('/recetas/mis-recetas');
     }
 })
