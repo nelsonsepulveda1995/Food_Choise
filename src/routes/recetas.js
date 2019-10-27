@@ -516,14 +516,10 @@ router.post('/busqueda/3', async (req, res) => { //falta completar !!!!!
     const {
         categoria
     } = req.body;
-    const cat = await Categoria.find().sort({
+    const cat = await Categoria.find().sort({ //la busqueda se ordena de la 'a' a la 'z'
         descripcion: 'asc'
-    }); //la busqueda se ordena de la 'a' a la 'z'
+    }); 
     
-    
-    
-    
-
     const errors = [];
     if (!categoria) {
         errors.push({
@@ -565,11 +561,13 @@ router.post('/busqueda/3', async (req, res) => { //falta completar !!!!!
         });
     }
 })
+ //------------------------------------- FAVORITOS ---------------------------------------------------------
 
 router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
     if (req.user) {
         const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
         var favPrev = 0;
+        console.log("hay que ver que pasa: "+ favoritos);
         favoritos.id_favoritos.forEach(fav => {
             if (fav == req.params.id) {
                 favPrev = 1
@@ -588,7 +586,7 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
     }
 })
 
-router.get('/recetas/favoritos', async (req, res) => { //lista favoritos
+router.get('/recetas/favoritos', async (req, res) => {                    //lista favoritos
     if (req.user) {
         const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
         console.log("FAVORITOS GET")
