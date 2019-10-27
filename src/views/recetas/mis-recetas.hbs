@@ -1,34 +1,34 @@
-<div class="card">
+<div class="row mx-auto" id="tarjetaReceta">
 
 
-            {{#each resultado}}
-            <div class="card mt-2">
-                <div class="col-md-12 mx-auto">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="{{imagenURL}}" alt="No se pudo cargar la imagen" class="img-fluid img-completa">
-                        </div>
-                        <div class="col-md-8">
-                            <h4 class="text-center">
-                                {{title}}
-                            </h4>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="text-center mt-3">
-                                        {{descripcion}}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mx-auto text-center mt-3">
-                                <a href="/recetas/ver/{{_id}}" class="btn btn-success btn btn-block">
-                                    Ver receta
-                                </a>
-                            </div>
+    {{#each resultado}}
+    <div class="col-md-4 mt-5 ">
+        <div class="card zoom">
+            <p id="id_tarjetaReceta" style="display:none">{{_id}}</p>
+            <a href="/recetas/ver/{{_id}}" class="card-body">
+                <h4 class="card-title txt-centrado">
+                    {{title}}
+                </h4>
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <p id="promedio_calificacion_{{_id}}" style="display:none">{{calificacion}}</p>
+                        <div class="form-check mr-3">
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom1" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom2" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom3" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom4" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom5" aria-hidden="true"></i>
+
                         </div>
                     </div>
                 </div>
-  
+                <h6 class="txt-centrado txt-categoria">
+                    {{categoria}}
+                </h6>
+                <br>
+                <img src="{{imagenURL}}" class="img-fluid img-completa rounded">
+            </a>
+        </div>
     </div>
 
     {{else}}
@@ -51,4 +51,3 @@
     </div>
     {{/if}}
 </div>
-

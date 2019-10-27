@@ -1,22 +1,33 @@
 <h1>Recetas por Categoria: </h1>
-<div class="row mx-auto">
+<div class="row mx-auto" id="tarjetaReceta">
     {{#each Receta}}
-    <div class="col-md-4 mt-5">
+    <div class="col-md-4 mt-5 ">
         <div class="card zoom">
+            <p id="id_tarjetaReceta" style="display:none">{{_id}}</p>
             <a href="/recetas/ver/{{_id}}" class="card-body">
                 <h4 class="card-title txt-centrado">
                     {{title}}
                 </h4>
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <p id="promedio_calificacion_{{_id}}" style="display:none">{{calificacion}}</p>
+                        <div class="form-check mr-3">
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom1" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom2" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom3" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom4" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-xs estrella" id="{{_id}}prom5" aria-hidden="true"></i>
+
+                        </div>
+                    </div>
+                </div>
                 <h6 class="txt-centrado txt-categoria">
-                    {{#each ../cat }}
-                        {{#if_eq this._id ../this.categoria }}
-                            <p>{{this.descripcion}}</p>
-                        {{/if_eq}}
-                    {{/each}}
+                    {{categoria}}
                 </h6>
                 <br>
-                <img src="{{imagenURL}}" class="img-fluid img-completa">
-                <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="{{owenImg}}" alt="">{{owen}}</h6>
+                <img src="{{imagenURL}}" class="img-fluid img-completa rounded">
+                <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25"
+                        src="{{owenImg}}" alt="">{{owen}}</h6>
             </a>
         </div>
     </div>

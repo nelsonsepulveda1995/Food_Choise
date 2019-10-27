@@ -22,23 +22,7 @@
             <p class="txt-centrado">{{categRec.descripcion}}</p>
             <hr>
             {{#if user}}
-                {{#if calificaciones}}
-                    <p id="calificacion_usuario" style="display:none">{{calificaciones.calificacion}}</p>
-                    <p id="promedio_calificacion" style="display:none">{{promCal}}</p>
-
-                    <div class="container">
-                        <div class="row d-flex justify-content-center">
-                            <h1 class="text-success txt-centrado">Valoraste esta receta con: </h1>
-                            <div class="form-check mr-3">
-                                <i class="fa fa-star-o fa-2x estrella" id="rate1" aria-hidden="true"></i>
-                                <i class="fa fa-star-o fa-2x estrella" id="rate2" aria-hidden="true"></i>
-                                <i class="fa fa-star-o fa-2x estrella" id="rate3" aria-hidden="true"></i>
-                                <i class="fa fa-star-o fa-2x estrella" id="rate4" aria-hidden="true"></i>
-                                <i class="fa fa-star-o fa-2x estrella" id="rate5" aria-hidden="true"></i>
-
-                            </div>
-                        </div>
-                    </div>
+                {{#if_eq receta.owen user.id}}
                     <div class="container">
                         <div class="row d-flex justify-content-center">
                             <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
@@ -48,37 +32,89 @@
                                 <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
                                 <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
                                 <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
-
                             </div>
                         </div>
                     </div>
-                    
-
                 {{else}}
-                    <form class="container" action="/recetas/calificar/{{receta._id}}" method="POST">
-                        <div class="row d-flex justify-content-center">
-                            <div class="form-check mr-3" id="calificaciones">
-                                <label for="calif1"><i class="fa fa-star starSelected fa-2x estrella zoomStar" aria-hidden="true"></i></label>
-                                <label for="calif2"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
-                                <label for="calif3"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
-                                <label for="calif4"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
-                                <label for="calif5"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
-                                <input type="radio" class="hidden col-2" name="calif" id="calif1" value="1" checked>
-                                <input type="radio" class="hidden col-2" name="calif" id="calif2" value="2">
-                                <input type="radio" class="hidden col-2" name="calif" id="calif3" value="3">
-                                <input type="radio" class="hidden col-2" name="calif" id="calif4" value="4">
-                                <input type="radio" class="hidden col-2" name="calif" id="calif5" value="5">
+                    {{#if calificaciones}}
+                        <p id="calificacion_usuario" style="display:none">{{calificaciones.calificacion}}</p>
+                        <p id="promedio_calificacion" style="display:none">{{promCal}}</p>
 
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h1 class="text-success txt-centrado">Valoraste esta receta con: </h1>
+                                <div class="form-check mr-3">
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate1" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate2" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate3" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate4" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate5" aria-hidden="true"></i>
+
+                                </div>
                             </div>
                         </div>
-                        <div class="row d-flex justify-content-center">
-                            <button type="submit" class="btn btn-info">Calificar</button>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                                <div class="form-check mr-3">
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                                </div>
+                            </div>
                         </div>
 
-                    </form>
-                {{/if}}
+                    {{else}}
+                        <form class="container" action="/recetas/calificar/{{receta._id}}" method="POST">
+                            <div class="row d-flex justify-content-center">
+                                <div class="form-check mr-3" id="calificaciones">
+                                    <label for="calif1"><i class="fa fa-star starSelected fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif2"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif3"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif4"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif5"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif1" value="1" checked>
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif2" value="2">
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif3" value="3">
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif4" value="4">
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif5" value="5">
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <button type="submit" class="btn btn-info">Calificar</button>
+                            </div>
+                        </form>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                                <div class="form-check mr-3">
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if_eq}}
+            {{else}}
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                        <div class="form-check mr-3">
+                            <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
             {{/if}}
-
+            <h2>Visualizaciones: {{visitasTotales}}</h2>
         </div>
     </div>
     {{#if_eq receta.owen user.id}}
@@ -125,6 +161,7 @@
     </div>
     {{/if_eq}}
     <hr>
+    <a name="fav" id="fav" class="btn btn-success" href="/recetas/favoritos/{{receta._id}}">FAVORITOS</a>
     <hr>
     <!--Script para tener los comentarios de Disqus-->
     <div class="col-md-8 mx-auto">
