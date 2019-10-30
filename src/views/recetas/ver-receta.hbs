@@ -9,7 +9,7 @@
                 <div class="row d-flex justify-content-center">
                     {{#each receta.ingredientes}}
                     <div class="col-md-3 col-lg-3 mt-3 ml-3 custom-control custom-checkbox border rounded checkbox">
-                        {{this}}
+                        {{this.nombre}} - {{this.cantidad}}{{this.unidad}}
                     </div>
                     {{/each}}
                 </div>

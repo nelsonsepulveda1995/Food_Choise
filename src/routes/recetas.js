@@ -30,6 +30,43 @@ const authCheck = (req, res, next) => {
     }
 };
 
+router.post('/getIng', async (req,res) => {
+    const {
+        key
+    } = req.body;
+    
+    const errors = [];
+    const ing = await Ingrediente.find();
+    var keys = key.split(" ");
+    var ingredientesFinal = []
+    var chars={
+        "á":"a", "é":"e", "í":"i", "ó":"o", "ú":"u",
+        "à":"a", "è":"e", "ì":"i", "ò":"o", "ù":"u",
+        "Á":"A", "É":"E", "Í":"I", "Ó":"O", "Ú":"U",
+        "À":"A", "È":"E", "Ì":"I", "Ò":"O", "Ù":"U"}
+        
+    var expr=/[áàéèíìóòúùñ]/ig;
+    for (let j = 0; j < ing.length; j++) {
+        for (let i = 0; i < keys.length; i++) {
+            var input=keys[i].replace(expr,function(e){return chars[e]});
+            var output = ing[j].Descripcion.replace(expr,function(e){return chars[e]});
+            var _regex = new RegExp(input, "i");
+            var match = output.match(_regex);
+            if(match){
+                ingredientesFinal.push(ing[j])
+                i = keys.length
+            }
+            
+        }
+        
+    }
+    var html = '';
+    for (let i = 0; i < ingredientesFinal.length; i++) {
+        html += `<div><a class="suggest-element" data="${ingredientesFinal[i].Descripcion}" id="${ingredientesFinal[i]._id}">${ingredientesFinal[i].Descripcion}</a></div>`;
+    }
+    
+    res.send(html);
+})
 
 router.get('/recetas', async (req, res) => {
     const receta = await Recetas.find().sort({
@@ -164,7 +201,8 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         descripcion,
         categoria
     } = req.body;
-    
+    const ingredientesForm = req.body.ingredientesNom;
+    const cantIng = req.body.cantIng
     const errors = [];
     if (!title) {
         errors.push({
@@ -191,7 +229,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             text: 'Selecciona una imagen'
         });
     }
-    if (!req.body.ingredientes) {
+    if (!ingredientesForm) {
         errors.push({
             text: 'Selecciona al menos un ingrediente'
         });
@@ -208,7 +246,10 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         })
     } else {
         const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
-        
+        for (let i = 0; i < ingredientesForm.length; i++) {
+            var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
+            var index_cant = i+i;
+        }
         const owen = req.user.id;
         const ingredientes = req.body.ingredientes;
         const newReceta = new Recetas({
@@ -299,6 +340,13 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
         descripcion,
         categoria
     } = req.body; //se toma los datos del form
+    const ingredientesForm = req.body.ingredientesNom;
+    const cantIng = req.body.cantIng
+    console.log("ingredientes: ")
+            console.log(ingredientesForm);
+            console.log("cantidad: ")
+            console.log(req.body.cantIng);
+            console.log(req.query.id)
     if (title) {
         await Recetas.findByIdAndUpdate(req.query.id, {
             title
@@ -314,10 +362,18 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
             categoria
         });
     }
-    if (req.body.ingredientes) {
+    if (ingredientesForm) {
         await Recetas.findByIdAndUpdate(req.query.id, {
-            ingredientes: req.body.ingredientes
+            ingredientes : []
         });
+        for (let i = 0; i < ingredientesForm.length; i++) {
+            var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
+            var index_cant = i+i;
+            await Recetas.findByIdAndUpdate(req.query.id, {
+                $push : {ingredientes : {nombre : nomIngredienteDB.Descripcion , cantidad : cantIng[index_cant], unidad : cantIng[index_cant + 1]}}
+            });
+        }
+        
     }
 
     if (req.file) {
