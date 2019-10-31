@@ -62,10 +62,11 @@ $(document).ready(function () {
     for (let i = parseInt(calificacionProm); i >= 0; i--) {
         $(`#prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
     }
-
+    var anterior = '';
     $('#key').on('keyup', function () {
         var key = $(this).val();
         var dataString = 'key=' + key;
+        
         $.ajax({
             type: "POST",
             url: "/getIng",
@@ -79,10 +80,16 @@ $(document).ready(function () {
                     var id = $(this).attr('id');
                     var selected = $('#' + id).attr('data')
                     //Editamos el valor del input con data de la sugerencia pulsada
-                    $('#key').val(selected);
+                    $('#key').val('');
                     //Hacemos desaparecer el resto de sugerencias
                     $('#suggestions').hide();
-                    buildCant(selected,id)
+                    if (anterior == id) {
+                        alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
+                    } else {
+                        console.log(id);
+                        buildCant(selected,id)
+                    }
+                    anterior = id;
                     return false;
                 });
             }
@@ -92,6 +99,11 @@ $(document).ready(function () {
     $("#key").focusout(function () {
         $('#suggestions').fadeOut(1000);
     });
+
+    $('#inputGroupFile01').change(function(e){
+        $('#labelFile').text(e.target.files[0].name)
+        archivo(e);
+    })
 });
 
 function buildlist(listName, labelName) {
@@ -156,7 +168,23 @@ function buildCant(selected,id) {
         'hidden' : 'hidden'
     })
     $('#selecciones').append(nombre,ingrediente_completo);
+}
 
+function archivo(e) {
+    // Creamos el objeto de la clase FileReader
+    let reader = new FileReader();
 
+    // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+    reader.readAsDataURL(e.target.files[0]);
+    
 
+    // Le decimos que cuando este listo ejecute el código interno
+    reader.onload = function(){
+        let image = $('<img>',{
+            'src' : reader.result,
+            'class' : 'rounded thumb'
+        })
+        $('#preview').empty();
+        $('#preview').append(image);
+    };
 }

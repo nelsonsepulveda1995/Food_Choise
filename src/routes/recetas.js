@@ -200,7 +200,10 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         descripcion,
         categoria
     } = req.body;
-    const ingredientesForm = req.body.ingredientesNom;
+    const ingredientesForm = [];
+    ingredientesForm.push(
+        req.body.ingredientesNom
+    )
     const cantIng = req.body.cantIng
     const errors = [];
     if (!title) {
@@ -232,6 +235,23 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         errors.push({
             text: 'Selecciona al menos un ingrediente'
         });
+    }else{
+        var ingredientes = [];
+        for (let i = 0; i < ingredientesForm.length; i++) {
+            var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
+            var index_cant = i+i;
+            if (parseFloat(cantIng[index_cant]) < 0) {
+                errors.push({
+                    text: 'No puede ingresar un valor negativo en la cantidad a usar del ingrediente'
+                })
+            } else {
+                ingredientes.push({
+                    nombre : nomIngredienteDB.Descripcion,
+                    cantidad : cantIng[index_cant],
+                    unidad: cantIng[index_cant + 1]
+                })
+            }
+        }
     }
 
 
@@ -245,16 +265,6 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         })
     } else {
         const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
-        var ingredientes = [];
-        for (let i = 0; i < ingredientesForm.length; i++) {
-            var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
-            var index_cant = i+i;
-            ingredientes.push({
-                nombre : nomIngredienteDB.Descripcion,
-                cantidad : cantIng[index_cant],
-                unidad: cantIng[index_cant + 1]
-            })
-        }
         const owen = req.user.id;
         const newReceta = new Recetas({
             title,
@@ -344,13 +354,11 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
         descripcion,
         categoria
     } = req.body; //se toma los datos del form
-    const ingredientesForm = req.body.ingredientesNom;
+    const ingredientesForm = [];
+    ingredientesForm.push(
+        req.body.ingredientesNom
+    )
     const cantIng = req.body.cantIng
-    console.log("ingredientes: ")
-            console.log(ingredientesForm);
-            console.log("cantidad: ")
-            console.log(req.body.cantIng);
-            console.log(req.query.id)
     if (title) {
         await Recetas.findByIdAndUpdate(req.query.id, {
             title
@@ -367,12 +375,16 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
         });
     }
     if (ingredientesForm) {
+        console.log("find receta y blanquea ingrediente")
         await Recetas.findByIdAndUpdate(req.query.id, {
             ingredientes : []
         });
+        
         for (let i = 0; i < ingredientesForm.length; i++) {
+            console.log(ingredientesForm[i] + " en el bucle for")
             var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
             var index_cant = i+i;
+            console.log("find de receta y update de ingredientes ya con datos")
             await Recetas.findByIdAndUpdate(req.query.id, {
                 $push : {ingredientes : {nombre : nomIngredienteDB.Descripcion , cantidad : cantIng[index_cant], unidad : cantIng[index_cant + 1]}}
             });

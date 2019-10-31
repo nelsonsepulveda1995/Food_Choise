@@ -10,15 +10,16 @@
                     <input type="text" name="title" class="form-control" placeholder="Nombre del Plato" autofocus>
                 </div>
                 <!-- elegir archivo -->
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 d-flex justify-content-center border">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroupFileAddon01">Subir Imagen</span>
                     </div>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="inputGroupFile01" name="imagen"
                             aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile01">Seleccione Archivo</label>
+                        <label id='labelFile' class="custom-file-label" for="inputGroupFile01">Seleccione Archivo</label>
                     </div>
+                    <div id="preview"></div>
                 </div>
                 <div class="form-group">
                     <textarea name="descripcion" class="form-control" placeholder="Descripcion"></textarea>
@@ -36,7 +37,7 @@
                     <div class="container">
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
-                                <input class="search_query form-control" type="text" id="key" placeholder="Buscar...">
+                                <input class="search_query form-control" type="text" id="key" placeholder="Ingrese y seleccione un ingrediente">
                                 <div id="suggestions"></div>
                             </div>    
                         </div>
