@@ -21,6 +21,22 @@ $(document).ready(function () {
         // Ratio the hight to the width as the user screen ratio
         var google = window.open(this.href, 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
     });
+
+    //java imagen
+    $("#inputGroupFile01").change(function(e){
+        var fileName = '';
+        if (e.target.value){
+            fileName = e.target.value.split('\\').pop();
+         }
+        if (fileName){
+            var $fileName = $('#file_name');
+            $fileName.html(fileName);
+        } else {
+        $fileName.html('');
+        }
+    });
+    //# java imagen
+
     $('#calificaciones>input').change(function () {
         // over
         if ($(this).is(":checked")) {
