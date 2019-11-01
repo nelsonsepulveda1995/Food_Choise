@@ -26,7 +26,7 @@ const authCheck = (req, res, next) => {
     } else {
         //console.log(req)
         //if user is not logged in
-        res.redirect('/auth/login');
+        res.redirect('/auth/google');
     }
 };
 
@@ -62,6 +62,32 @@ router.post('/getIng', async (req,res) => {
     var html = '';
     for (let i = 0; i < ingredientesFinal.length; i++) {
         html += `<div><a class="suggest-element" data="${ingredientesFinal[i].Descripcion}" id="${ingredientesFinal[i]._id}">${ingredientesFinal[i].Descripcion}</a></div>`;
+    }
+    
+    res.send(html);
+})
+
+router.post('/getRecetasCat', async (req,res) => {
+    const {
+        key
+    } = req.body;
+    const recetas = await Recetas.find({categoria : key});
+    var html = '';
+    for (let i = 0; i < recetas.length; i++) {
+        html += `<div class="col-md-4 mt-5 ">
+                    <div class="card zoom">
+                        <p id="id_tarjetaReceta" style="display:none">${recetas[i]._id}</p>
+                        <a href="/recetas/ver/${recetas[i]._id}" class="card-body">
+                            <h4 class="card-title txt-centrado">
+                                ${recetas[i].title}
+                            </h4>
+                            {{>calificacion}} 
+                            <br>
+                            <img src="${recetas[i].imagenURL}" class="img-fluid img-completa rounded">
+                            <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="${recetas[i].owenImg}" alt="">${recetas[i].owen}</h6>
+                        </a>
+                    </div>
+                </div>`;
     }
     
     res.send(html);
@@ -577,8 +603,7 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
 router.get('/busqueda/3', async (req, res) => { //busqueda por categoria
     const cat = await Categoria.find().sort({
         descripcion: 'asc'
-    });;
-    
+    });
     res.render('recetas/buscar-categoria', {
         cat,
         user: req.user

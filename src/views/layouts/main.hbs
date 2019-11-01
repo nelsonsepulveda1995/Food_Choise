@@ -14,6 +14,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--link al css  -->
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/hubsicons.css">
     <!--link para iconos  -->
     <script src="https://kit.fontawesome.com/3b3b828bf0.js" crossorigin="anonymous"></script>
 
@@ -45,11 +46,27 @@
                     <i class="fas fa-home"></i>
                     Inicio
                 </a>
-                <a href="/busqueda/3" class="list-group-item list-group-item-action bg-light">
-                    <!--<img src="iconos/list-rich-3x.png">-->
-                    <i class="fas fa-list"></i>
-                    Categorías
-                </a>
+                <div class="dropdown dropright">
+                    <a href="#" id='listaCat' class="bg-light list-group-item list-group-item-action dropdown-toggle"
+                        data-toggle="dropdown">
+                        <!--<img src="iconos/list-rich-3x.png">-->
+                        <i class="fas fa-list"></i>
+                        Categorías
+                    </a>
+                    <div class="dropdown-menu dropright">
+                        <a class="dropdown-item" href="#">Link 1</a>
+                        <a class="dropdown-item" href="#">Link 2</a>
+                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown">Link 3</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Action</a>
+                        </div>
+                    </div>
+                </div>
+
+
                 {{#if user}}
                 <a href="#" class="list-group-item list-group-item-action bg-light disabled">
                     Mi cuenta
