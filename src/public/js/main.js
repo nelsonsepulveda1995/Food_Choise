@@ -187,7 +187,7 @@ function archivo(e) {
     reader.onload = function(){
         let image = $('<img>',{
             'src' : reader.result,
-            'class' : 'rounded thumb'
+            'class' : 'rounded img-receta'
         })
         $('#preview').empty();
         $('#preview').append(image);

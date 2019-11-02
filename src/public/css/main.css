@@ -125,6 +125,11 @@ body {
     height: 200px;
 }
 
+.img-receta {
+    width: 250px;
+    height: 250px;
+}
+
 .txt-centrado {
     text-align: center;
 }

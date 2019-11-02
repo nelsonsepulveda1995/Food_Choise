@@ -257,7 +257,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             text: 'Selecciona una imagen'
         });
     }
-    if (!ingredientesForm) {
+    if (!ingredientesForm[0]) {
         errors.push({
             text: 'Selecciona al menos un ingrediente'
         });
@@ -400,7 +400,7 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
             categoria
         });
     }
-    if (ingredientesForm) {
+    if (ingredientesForm[0]) {
         console.log("find receta y blanquea ingrediente")
         await Recetas.findByIdAndUpdate(req.query.id, {
             ingredientes : []

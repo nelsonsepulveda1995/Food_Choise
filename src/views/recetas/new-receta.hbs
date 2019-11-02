@@ -10,19 +10,21 @@
                         required>
                 </div>
                 <!-- elegir archivo -->
-                <div class=" container mb-3 d-flex justify-content-center border">
-                    <div class="row input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="preview">Subir Imagen</span>
-                        </div>
-                        <div class="custom-file">
+                <div class="input-group mb-3 d-flex justify-content-center border">
+                    <div class="row text-center mx-auto">
+                        <h4 class="txt-center text-center mx-auto mt-3">Subir imagen</h4>
+                        <br>
+                        <div class="custom-file" style="margin-bottom: 10px;">
                             <input type="file" class="custom-file-input" id="inputGroupFile01" name="imagen"
                                 aria-describedby="inputGroupFileAddon01">
-                            <label id='labelFile' class="custom-file-label" for="inputGroupFile01">Seleccione Archivo</label>
+                            <label id='labelFile' class="custom-file-label" for="inputGroupFile01" id="file_name">Seleccione Archivo</label>
                         </div>
                     </div>
-                    
-                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="preview"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <textarea name="descripcion" class="form-control" placeholder="Preparacion del plato" required></textarea>
