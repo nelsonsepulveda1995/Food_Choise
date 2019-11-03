@@ -109,6 +109,12 @@ $(document).ready(function () {
         $('#labelFile').text(e.target.files[0].name)
         archivo(e);
     })
+
+    $('#formBusqueda').submit(function (e) {
+        var accion = $("#tipoBusqueda").val();
+        $(this).attr('action',`/busqueda/${accion}`);
+        
+    });
 });
 
 function buildlist(listName, labelName) {

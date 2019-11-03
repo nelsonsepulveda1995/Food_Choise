@@ -54,15 +54,30 @@
                         Categorías
                     </a>
                     <div class="dropdown-menu dropright">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown">Link 3</a>
+                        <a class="dropdown-item" href="#">Aperitivos y tapas</a>
+                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown">Carnes</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Aves</a>
+                            <a class="dropdown-item" href="#">Cerdo</a>
+                            <a class="dropdown-item" href="#">Mariscos</a>
+                            <a class="dropdown-item" href="#">Pescados</a>
+                            <a class="dropdown-item" href="#">Vaca</a>
                         </div>
+                        <a class="dropdown-item" href="#">Coctéles y bebidas</a>
+                        <a class="dropdown-item" href="#">Ensaladas</a>
+                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown">Granos</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Arroces</a>
+                            <a class="dropdown-item" href="#">Cereales</a>
+                            <a class="dropdown-item" href="#">Leumbres</a>
+                        </div>
+                        <a class="dropdown-item" href="#">Huevos y lacteos</a>
+                        <a class="dropdown-item" href="#">Panificados</a>
+                        <a class="dropdown-item" href="#">Pastas</a>
+                        <a class="dropdown-item" href="#">Postres</a>
+                        <a class="dropdown-item" href="#">Salsas</a>
+                        <a class="dropdown-item" href="#">Sopas y cremas</a>
+                        <a class="dropdown-item" href="#">Verduras</a>
                     </div>
                 </div>
 
@@ -132,13 +147,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mx-lg-auto ml-3 my-auto d-inline w-100">
                             <li class="nav-item ">
-                                <form class="input-group " method="POST" action="/busqueda/1">
+                                <form id="formBusqueda" class="input-group " method="POST">
 
                                     <label for="tipoBusqueda" class="mr-2 my-auto">Buscar por:</label>
                                     <select class="form-control mr-3 col-2" name="tipoBusqueda" id="tipoBusqueda">
-                                        <option>Título</option>
-                                        <option>Categoría</option>
-                                        <option>Ingredientes</option>
+                                        <option value="1">Título</option>
+                                        <option value="2">Ingredientes</option>
+                                        <option value="3">Categoría</option>
                                     </select>
 
                                     <input type="text" class="form-control" name="title"
