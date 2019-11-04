@@ -206,7 +206,9 @@ router.get('/recetas/ver/:id', async (req, res) => {
     }
 })
 
-router.get('/recetas/new', authCheck, async (req, res) => {
+    //-------------------------------------- CREACION DE RECETA ---------------------------------------------
+
+    router.get('/recetas/new', authCheck, async (req, res) => {
     //Obtengo todas las categorias       
     const cat = await Categoria.find();
 
@@ -313,7 +315,9 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     }
 })
 
-router.get('/recetas/mis-recetas', authCheck, async (req, res) => { //falta agregar el id para la busqueda de recetas
+// --------------------------------------- VER MIS RECETAS ---------------------------------------
+
+router.get('/recetas/mis-recetas', authCheck, async (req, res) => { 
     const usuario = req.user.id;
     const query = {
         owen: usuario
@@ -345,7 +349,8 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => { //falta agre
     });
 })
 
-//ruta para ingresar a la edicion
+// -----------------------------------------ruta para ingresar a la edicion------------------------------------
+
 router.get('/recetas/editar/:id', authCheck, async (req, res) => {
     const datosEditar = await Recetas.findById(req.params.id);
     const errors = [];
@@ -429,12 +434,14 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
     res.redirect('/recetas/mis-recetas');
 
 })
+
 router.delete('/recetas/delete', authCheck, async (req, res) => { //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
     const usuario = req.user.id;
     const resultado = await Recetas.findById(req.query.id);
     const errors = [];
     if (usuario == resultado.owen) {
-        await Recetas.findByIdAndRemove(req.query.id); //borra la receta de la base
+        await Recetas.findByIdAndRemove(req.query.id);   //borra la receta de la base
+        await Calificacion.findByIdAndDelete(req.query.id);  //borra la calificacion de la receta
         await cloudinary.v2.uploader.destroy(resultado.imagenCloud);
         res.redirect('/recetas/mis-recetas');
     } else {
