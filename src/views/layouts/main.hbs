@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/css/hubsicons.css">
     <!--link para iconos  -->
     <script src="https://kit.fontawesome.com/3b3b828bf0.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.4.0/css/all.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
@@ -29,9 +29,6 @@
 </head>
 
 <body>
-
-
-
     <div class="d-flex" id="wrapper">
 
         <!-- Barra lateral -->
@@ -46,42 +43,78 @@
                     <i class="fas fa-home"></i>
                     Inicio
                 </a>
-                <div class="dropdown dropright">
-                    <a href="#" id='listaCat' class="bg-light list-group-item list-group-item-action dropdown-toggle"
-                        data-toggle="dropdown">
-                        <!--<img src="iconos/list-rich-3x.png">-->
-                        <i class="fas fa-list"></i>
-                        Categorías
-                    </a>
-                    <div class="dropdown-menu dropright">
-                        <a class="dropdown-item" href="#">Aperitivos y tapas</a>
-                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown">Carnes</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Aves</a>
-                            <a class="dropdown-item" href="#">Cerdo</a>
-                            <a class="dropdown-item" href="#">Mariscos</a>
-                            <a class="dropdown-item" href="#">Pescados</a>
-                            <a class="dropdown-item" href="#">Vaca</a>
-                        </div>
-                        <a class="dropdown-item" href="#">Coctéles y bebidas</a>
-                        <a class="dropdown-item" href="#">Ensaladas</a>
-                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown">Granos</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Arroces</a>
-                            <a class="dropdown-item" href="#">Cereales</a>
-                            <a class="dropdown-item" href="#">Leumbres</a>
-                        </div>
-                        <a class="dropdown-item" href="#">Huevos y lacteos</a>
-                        <a class="dropdown-item" href="#">Panificados</a>
-                        <a class="dropdown-item" href="#">Pastas</a>
-                        <a class="dropdown-item" href="#">Postres</a>
-                        <a class="dropdown-item" href="#">Salsas</a>
-                        <a class="dropdown-item" href="#">Sopas y cremas</a>
-                        <a class="dropdown-item" href="#">Verduras</a>
-                    </div>
+                <a data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    class="bg-light list-group-item list-group-item-action dropdown-toggle">
+                    <i class="fas fa-list"></i>
+                    Categorías
+                </a>
+                <div id="navbarContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--aperitivos-y-tapas"></span>
+                            <a class="dropdown-item col-9" href="#">Aperitivos y tapas</a>
+                        </li>
+                        <li class="nav-item dropdown dropright row">
+                            <span class="ml-3 hubicon l positivo hubicon--carne"></span>    
+                            <a class="dropdown-item dropdown-toggle col-9" data-toggle="dropdown">Carnes</a>
+                            <ul class="dropdown-menu">
+                                
+                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--aves-y-caza col-2"></span><a class="dropdown-item col-7" href="#">Aves</a></li>
+                                <li class="row"><i class="ml-3 mt-2 far fa-pig fa-lg" style="color : rgb(80,80,90)"></i><a class="dropdown-item col-7" href="#">Cerdo</a></li>
+                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--mariscos col-2"></span><a class="dropdown-item col-7" href="#">Mariscos</a></li>
+                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--pescado col-2"></span><a class="dropdown-item col-7" href="#">Pescados</a></li>
+                                <li class="row"><i class="ml-3 mt-2 far fa-cow fa-lg" style="color : rgb(80,80,90)"></i><a class="dropdown-item col-7" href="#">Vaca</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--cocteles-y-bebidas"></span>
+                            <a class="dropdown-item col-9" href="#">Coctéles y bebidas</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--ensaladas"></span>
+                            <a class="dropdown-item col-9" href="#">Ensaladas</a>
+                        </li>
+                        <li class="nav-item dropdown dropright row">
+                            <span class="ml-3 hubicon l positivo hubicon--arroces-y-cereales"></span>    
+                            <a class="dropdown-item dropdown-toggle col-9" data-toggle="dropdown">Granos</a>
+                            <ul class="dropdown-menu">
+                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--arroces-y-cereales col-2"></span><a class="dropdown-item col-7" href="#">Arroces</a></li>
+                                <li class="row"><i class="ml-3 mt-2 far fa-corn fa-lg" style="color : rgb(80,80,90)"></i><a class="dropdown-item col-7" href="#">Cereales</a></li>
+                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--legumbres col-2"></span><a class="dropdown-item col-7" href="#">Legumbres</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--huevos-y-lacteos"></span>
+                            <a class="dropdown-item col-9" href="#">Huevos y lacteos</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--pan-y-bolleria"></span>
+                            <a class="dropdown-item col-9" href="#">Panificados</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--pasta"></span>
+                            <a class="dropdown-item col-9" href="#">Pastas</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--postres"></span>
+                            <a class="dropdown-item col-9" href="#">Postres</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--salsas"></span>
+                            <a class="dropdown-item col-9" href="#">Salsas</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--sopas-y-cremas"></span>
+                            <a class="dropdown-item col-9" href="#">Sopas y cremas</a>
+                        </li>
+                        <li class="nav-item row">
+                            <span class="ml-3 hubicon l positivo hubicon--verduras"></span>
+                            <a class="dropdown-item col-9" href="#">Verduras</a>
+                        </li>
+                    </ul>
                 </div>
-
-
                 {{#if user}}
                 <a href="#" class="list-group-item list-group-item-action bg-light disabled">
                     Mi cuenta
@@ -118,7 +151,7 @@
                 </a>
                 {{else}}
                 <a href="/auth/google" target="_blank" id="googleSignIn"
-                    class="list-group-item list-group-item-action bg-light">
+                    class="list-group-item list-group-item-action bg-light googleSignIn">
                     <!--<img src="iconos/power-standby-3x.png">-->
                     <i class="fas fa-sign-in-alt"></i>
                     Iniciar sesión

@@ -25,7 +25,11 @@
             <p class="lead">
                 Aún no hay recetas en nuestro servidor.
             </p>
-            <a href="/recetas/new" class="btn btn-success btn-block">Sé el primero en subir una!</a>
+            {{#if user}}
+                <a href="/recetas/new" class="btn btn-success btn-block">Sé el primero en subir una!</a>
+            {{else}}
+                <a href="/auth/google" target="_blank" class="btn btn-success btn-block googleSignIn">Necesitas loguearte para crear una receta. Registrate! Es gratis ;)</a>
+            {{/if}}
         </div>
     </div>
     {{/each}}
