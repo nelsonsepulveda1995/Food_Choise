@@ -701,30 +701,44 @@ router.get('/recetas/favoritos', async (req, res) => {                    //list
             const recetaFav = await Recetas.findById(favoritos.id_favoritos[i]);
             console.log("find receta")
             console.log(recetaFav)
-            recetasFinal.push(recetaFav)
-        }
-        for (let i = 0; i < recetasFinal.length; i++) {
-            var categRec = await Categoria.findById(recetasFinal[i].categoria);
-            recetasFinal[i].categoria = categRec.descripcion;
-            var owenReceta = await Users.findById(recetasFinal[i].owen);
-            recetasFinal[i].owen = owenReceta.username;
-            recetasFinal[i].owenImg = owenReceta.thumbnail;
-            const calificacionesProm = await Calificacion.find({
-                id_receta: recetasFinal[i]._id
-            });
-            var totalCal = 0
-            for (let i = 0; i < calificacionesProm.length; i++) {
-                totalCal = totalCal + calificacionesProm[i].calificacion;
+            if (recetaFav) {
+                recetasFinal.push(recetaFav);
+            }else{
+                await Favoritos.update( {id_usuario : req.user.id}, { $pullAll: {id_favoritos: [favoritos.id_favoritos[i]] } } )
+                var updFavoritos = await Favoritos.findOne({id_usuario : req.user.id})
+                console.log("FAVORITOS GET UPDATED")
+                console.log(updFavoritos)
+
             }
-            var promCal = totalCal / calificacionesProm.length;
-            recetasFinal[i].calificacion = promCal;
         }
-        console.log("todas las recetas")
-        console.log(recetasFinal);
-        res.render('recetas/favoritos', {
-            receta: recetasFinal,
-            user: req.user,
-        })
+        if (recetasFinal) {
+            for (let i = 0; i < recetasFinal.length; i++) {
+                var categRec = await Categoria.findById(recetasFinal[i].categoria);
+                recetasFinal[i].categoria = categRec.descripcion;
+                var owenReceta = await Users.findById(recetasFinal[i].owen);
+                recetasFinal[i].owen = owenReceta.username;
+                recetasFinal[i].owenImg = owenReceta.thumbnail;
+                const calificacionesProm = await Calificacion.find({
+                    id_receta: recetasFinal[i]._id
+                });
+                var totalCal = 0
+                for (let i = 0; i < calificacionesProm.length; i++) {
+                    totalCal = totalCal + calificacionesProm[i].calificacion;
+                }
+                var promCal = totalCal / calificacionesProm.length;
+                recetasFinal[i].calificacion = promCal;
+            }
+            console.log("todas las recetas")
+            console.log(recetasFinal);
+            res.render('recetas/favoritos', {
+                receta: recetasFinal,
+                user: req.user,
+            })
+        } else {
+            res.render('recetas/favoritos', {
+                user: req.user
+            })
+        }
     }else{
         res.send(`<script>alert("Logueate"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
     }
