@@ -435,13 +435,15 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
 
 })
 
+//-------------------  Eliminacion de recetas (incluye eliminacion de calificacion y foto)  -----------------
+
 router.delete('/recetas/delete', authCheck, async (req, res) => { //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
     const usuario = req.user.id;
     const resultado = await Recetas.findById(req.query.id);
     const errors = [];
     if (usuario == resultado.owen) {
-        await Recetas.findByIdAndRemove(req.query.id);   //borra la receta de la base
-        await Calificacion.findByIdAndDelete(req.query.id);  //borra la calificacion de la receta
+        //await Calificacion.remove({id_receta:resultado._id});   borra la calificacion de la receta (no se como funcionara)
+        await Recetas.findByIdAndRemove(req.query.id);   //borra la receta de la base                       
         await cloudinary.v2.uploader.destroy(resultado.imagenCloud);
         res.redirect('/recetas/mis-recetas');
     } else {
