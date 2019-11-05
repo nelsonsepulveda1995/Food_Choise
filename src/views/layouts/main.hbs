@@ -51,68 +51,24 @@
                 </a>
                 <div id="navbarContent" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--aperitivos-y-tapas"></span>
-                            <a class="dropdown-item col-9" href="#">Aperitivos y tapas</a>
-                        </li>
-                        <li class="nav-item dropdown dropright row">
-                            <span class="ml-3 hubicon l positivo hubicon--carne"></span>    
-                            <a class="dropdown-item dropdown-toggle col-9" data-toggle="dropdown">Carnes</a>
-                            <ul class="dropdown-menu">
-                                
-                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--aves-y-caza col-2"></span><a class="dropdown-item col-7" href="#">Aves</a></li>
-                                <li class="row"><i class="ml-3 mt-2 far fa-pig fa-lg" style="color : rgb(80,80,90)"></i><a class="dropdown-item col-7" href="#">Cerdo</a></li>
-                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--mariscos col-2"></span><a class="dropdown-item col-7" href="#">Mariscos</a></li>
-                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--pescado col-2"></span><a class="dropdown-item col-7" href="#">Pescados</a></li>
-                                <li class="row"><i class="ml-3 mt-2 far fa-cow fa-lg" style="color : rgb(80,80,90)"></i><a class="dropdown-item col-7" href="#">Vaca</a></li>
-                                
-                            </ul>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--cocteles-y-bebidas"></span>
-                            <a class="dropdown-item col-9" href="#">Coctéles y bebidas</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--ensaladas"></span>
-                            <a class="dropdown-item col-9" href="#">Ensaladas</a>
-                        </li>
-                        <li class="nav-item dropdown dropright row">
-                            <span class="ml-3 hubicon l positivo hubicon--arroces-y-cereales"></span>    
-                            <a class="dropdown-item dropdown-toggle col-9" data-toggle="dropdown">Granos</a>
-                            <ul class="dropdown-menu">
-                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--arroces-y-cereales col-2"></span><a class="dropdown-item col-7" href="#">Arroces</a></li>
-                                <li class="row"><i class="ml-3 mt-2 far fa-corn fa-lg" style="color : rgb(80,80,90)"></i><a class="dropdown-item col-7" href="#">Cereales</a></li>
-                                <li class="row"><span class="ml-3 hubicon l positivo hubicon--legumbres col-2"></span><a class="dropdown-item col-7" href="#">Legumbres</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--huevos-y-lacteos"></span>
-                            <a class="dropdown-item col-9" href="#">Huevos y lacteos</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--pan-y-bolleria"></span>
-                            <a class="dropdown-item col-9" href="#">Panificados</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--pasta"></span>
-                            <a class="dropdown-item col-9" href="#">Pastas</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--postres"></span>
-                            <a class="dropdown-item col-9" href="#">Postres</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--salsas"></span>
-                            <a class="dropdown-item col-9" href="#">Salsas</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--sopas-y-cremas"></span>
-                            <a class="dropdown-item col-9" href="#">Sopas y cremas</a>
-                        </li>
-                        <li class="nav-item row">
-                            <span class="ml-3 hubicon l positivo hubicon--verduras"></span>
-                            <a class="dropdown-item col-9" href="#">Verduras</a>
-                        </li>
+                        {{#each allCat}}
+                            {{#if_eq tipo "cat"}}
+                                <li class="nav-item row">
+                                    <span class="ml-3 hubicon l positivo hubicon--{{icono}}"></span>
+                                    <a class="dropdown-item col-9" href="/busqueda/3/{{_id}}">{{descripcion}}</a>
+                                </li>
+                            {{else}}
+                                <li class="nav-item dropdown dropright row">
+                                    <span class="ml-3 hubicon l positivo hubicon--{{icono}}"></span>    
+                                    <a class="dropdown-item dropdown-toggle col-9" data-toggle="dropdown">{{descripcion}}</a>
+                                    <ul class="dropdown-menu">
+                                        {{#each subcategorias}}
+                                            <li class="row"><span class="{{icono}} col-2" style="color : rgb(80,80,90)"></span><a class="dropdown-item col-7" href="/busqueda/3/{{_id}}">{{descripcion}}</a></li>    
+                                        {{/each}}
+                                    </ul>
+                                </li>
+                            {{/if_eq}}
+                        {{/each}}
                     </ul>
                 </div>
                 {{#if user}}

@@ -32,7 +32,14 @@
                 <div class="form-group">
                     <select name="categoria" id="selCategoria" class="form-control" required>
                         {{#each cat }}
-                        <option value="{{_id}}">{{descripcion}}</option>
+                            {{#if_eq tipo "cat"}}
+                                <option value="{{_id}}|{{tipo}}">{{descripcion}}</option>
+                            {{else}}
+                                    
+                                {{#each subcategorias}}
+                                    <option value="{{_id}}|{{../tipo}}|{{../_id}}">{{descripcion}}</option>
+                                {{/each}}
+                            {{/if_eq}}
                         {{/each}}
                     </select>
                 </div>

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Favoritos = require('../models/favoritos');
 const Recetas = require('../models/recetas');
-
+const Categoria = require('../models/categoria');
 //check if logged
 const authCheck = (req, res, next) => {
     if(req.user){
@@ -26,7 +26,8 @@ router.get('/', authCheck, async(req, res) =>{
     console.log("cantidad  de favoritos", cantidadFavoritos);
     console.log("cantidad  de Recetas", cantidadReceta);
     console.log("cantidad  de Recetas", result);
-    res.render('profile', {user: req.user,cantidadReceta,result });
+    var allCat = await Categoria.find()
+    res.render('profile', {user: req.user,cantidadReceta,result,allCat });
 });
 
 module.exports = router;
