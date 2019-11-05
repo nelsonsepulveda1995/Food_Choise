@@ -1,0 +1,16 @@
+<div class="card">
+    <nav class="nav dropdown justify-content-center">
+      {{#each allCat}}
+            {{#if_eq tipo "cat"}}
+                <a class="nav-link" href="#">{{descripcion}}</a>
+            {{else}}
+                <a class="nav-link dropdown-toogle" href="#" data-toggle="dropdown">{{descripcion}}</a>
+                <div class="dropdown-menu">
+                    {{#each subcategorias}}
+                        <a class="nav-link active" href="#">{{descripcion}}</a>
+                    {{/each}}
+                </div>
+            {{/if_eq}}
+      {{/each}}
+    </nav>
+</div>

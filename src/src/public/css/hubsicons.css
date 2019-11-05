@@ -1,0 +1,1090 @@
+
+.hubicon {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 .15em 0 0;
+    background-image: url("hubsicons.png");
+    background-repeat: no-repeat
+}
+
+.hubicon.directory {
+    background-image: url("hubsicons-directory.png")
+}
+
+.hubicon.xs {
+    width: 5px;
+    height: 5px;
+    background-size: 10px
+}
+
+.hubicon.s {
+    width: 10px;
+    height: 10px;
+    background-size: 20px
+}
+
+.hubicon.m {
+    width: 15px;
+    height: 15px;
+    background-size: 30px
+}
+
+.hubicon.hubicon--menu,
+.hubicon.l {
+    width: 25px;
+    height: 25px;
+    background-size: 50px
+}
+
+.hubicon.l-custom {
+    width: 25px;
+    height: 25px;
+    background-size: 25px
+}
+
+.hubicon.xl {
+    width: 35px;
+    height: 35px;
+    background-size: 70px
+}
+
+.hubicon.xxl {
+    width: 60px;
+    height: 60px;
+    background-size: 120px
+}
+
+.positivo.hubicon--aperitivos-y-tapas.l,
+.positivo.hubicon--aperitivos-y-tapas.m,
+.positivo.hubicon--aperitivos-y-tapas.s,
+.positivo.hubicon--aperitivos-y-tapas.xl,
+.positivo.hubicon--aperitivos-y-tapas.xs,
+.positivo.hubicon--aperitivos-y-tapas.xxl {
+    background-position: 0 0
+}
+
+.negativo.hubicon--aperitivos-y-tapas.xs {
+    background-position: -5px 0
+}
+
+.negativo.hubicon--aperitivos-y-tapas.s {
+    background-position: -10px 0
+}
+
+.negativo.hubicon--aperitivos-y-tapas.m {
+    background-position: -15px 0
+}
+
+.negativo.hubicon--aperitivos-y-tapas.l {
+    background-position: -25px 0
+}
+
+.negativo.hubicon--aperitivos-y-tapas.xl {
+    background-position: -35px 0
+}
+
+.negativo.hubicon--aperitivos-y-tapas.xxl {
+    background-position: -60px 0
+}
+
+.hubicon--menu.hubicon--aperitivos-y-tapas {
+    background-position: -25px 0
+}
+
+@media (min-width:1025px) {
+    .titulo.titulo--place {
+        max-width: 80%
+    }
+
+    .hubicon--menu.hubicon--aperitivos-y-tapas {
+        background-position: 0 0
+    }
+}
+
+.positivo.hubicon--ensaladas.xs {
+    background-position: 0 -5px
+}
+
+.positivo.hubicon--ensaladas.s {
+    background-position: 0 -10px
+}
+
+.positivo.hubicon--ensaladas.m {
+    background-position: 0 -15px
+}
+
+.positivo.hubicon--ensaladas.l {
+    background-position: 0 -25px
+}
+
+.positivo.hubicon--ensaladas.xl {
+    background-position: 0 -35px
+}
+
+.positivo.hubicon--ensaladas.xxl {
+    background-position: 0 -60px
+}
+
+.negativo.hubicon--ensaladas.xs {
+    background-position: -5px -5px
+}
+
+.negativo.hubicon--ensaladas.s {
+    background-position: -10px -10px
+}
+
+.negativo.hubicon--ensaladas.m {
+    background-position: -15px -15px
+}
+
+.negativo.hubicon--ensaladas.l {
+    background-position: -25px -25px
+}
+
+.negativo.hubicon--ensaladas.xl {
+    background-position: -35px -35px
+}
+
+.negativo.hubicon--ensaladas.xxl {
+    background-position: -60px -60px
+}
+
+.hubicon--menu.hubicon--ensaladas {
+    background-position: -25px -25px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--ensaladas {
+        background-position: 0 -25px
+    }
+}
+
+.positivo.hubicon--pasta.xs {
+    background-position: 0 -10px
+}
+
+.positivo.hubicon--pasta.s {
+    background-position: 0 -20px
+}
+
+.positivo.hubicon--pasta.m {
+    background-position: 0 -30px
+}
+
+.positivo.hubicon--pasta.l {
+    background-position: 0 -50px
+}
+
+.positivo.hubicon--pasta.xl {
+    background-position: 0 -70px
+}
+
+.positivo.hubicon--pasta.xxl {
+    background-position: 0 -120px
+}
+
+.negativo.hubicon--pasta.xs {
+    background-position: -5px -10px
+}
+
+.negativo.hubicon--pasta.s {
+    background-position: -10px -20px
+}
+
+.negativo.hubicon--pasta.m {
+    background-position: -15px -30px
+}
+
+.negativo.hubicon--pasta.l {
+    background-position: -25px -50px
+}
+
+.negativo.hubicon--pasta.xl {
+    background-position: -35px -70px
+}
+
+.negativo.hubicon--pasta.xxl {
+    background-position: -60px -120px
+}
+
+.hubicon--menu.hubicon--pasta {
+    background-position: -25px -50px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--pasta {
+        background-position: 0 -50px
+    }
+}
+
+.positivo.hubicon--sopas-y-cremas.xs {
+    background-position: 0 -15px
+}
+
+.positivo.hubicon--sopas-y-cremas.s {
+    background-position: 0 -30px
+}
+
+.positivo.hubicon--sopas-y-cremas.m {
+    background-position: 0 -45px
+}
+
+.positivo.hubicon--sopas-y-cremas.l {
+    background-position: 0 -75px
+}
+
+.positivo.hubicon--sopas-y-cremas.xl {
+    background-position: 0 -105px
+}
+
+.positivo.hubicon--sopas-y-cremas.xxl {
+    background-position: 0 -180px
+}
+
+.negativo.hubicon--sopas-y-cremas.xs {
+    background-position: -5px -15px
+}
+
+.negativo.hubicon--sopas-y-cremas.s {
+    background-position: -10px -30px
+}
+
+.negativo.hubicon--sopas-y-cremas.m {
+    background-position: -15px -45px
+}
+
+.negativo.hubicon--sopas-y-cremas.l {
+    background-position: -25px -75px
+}
+
+.negativo.hubicon--sopas-y-cremas.xl {
+    background-position: -35px -105px
+}
+
+.negativo.hubicon--sopas-y-cremas.xxl {
+    background-position: -60px -180px
+}
+
+.hubicon--menu.hubicon--sopas-y-cremas {
+    background-position: -25px -75px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--sopas-y-cremas {
+        background-position: 0 -75px
+    }
+}
+
+.positivo.hubicon--verduras.xs {
+    background-position: 0 -20px
+}
+
+.positivo.hubicon--verduras.s {
+    background-position: 0 -40px
+}
+
+.positivo.hubicon--verduras.m {
+    background-position: 0 -60px
+}
+
+.positivo.hubicon--verduras.l {
+    background-position: 0 -100px
+}
+
+.positivo.hubicon--verduras.xl {
+    background-position: 0 -140px
+}
+
+.positivo.hubicon--verduras.xxl {
+    background-position: 0 -240px
+}
+
+.negativo.hubicon--verduras.xs {
+    background-position: -5px -20px
+}
+
+.negativo.hubicon--verduras.s {
+    background-position: -10px -40px
+}
+
+.negativo.hubicon--verduras.m {
+    background-position: -15px -60px
+}
+
+.negativo.hubicon--verduras.l {
+    background-position: -25px -100px
+}
+
+.negativo.hubicon--verduras.xl {
+    background-position: -35px -140px
+}
+
+.negativo.hubicon--verduras.xxl {
+    background-position: -60px -240px
+}
+
+.hubicon--menu.hubicon--verduras {
+    background-position: -25px -100px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--verduras {
+        background-position: 0 -100px
+    }
+}
+
+.positivo.hubicon--legumbres.xs {
+    background-position: 0 -25px
+}
+
+.positivo.hubicon--legumbres.s {
+    background-position: 0 -50px
+}
+
+.positivo.hubicon--legumbres.m {
+    background-position: 0 -75px
+}
+
+.positivo.hubicon--legumbres.l {
+    background-position: 0 -125px
+}
+
+.positivo.hubicon--legumbres.xl {
+    background-position: 0 -175px
+}
+
+.positivo.hubicon--legumbres.xxl {
+    background-position: 0 -300px
+}
+
+.negativo.hubicon--legumbres.xs {
+    background-position: -5px -25px
+}
+
+.negativo.hubicon--legumbres.s {
+    background-position: -10px -50px
+}
+
+.negativo.hubicon--legumbres.m {
+    background-position: -15px -75px
+}
+
+.negativo.hubicon--legumbres.l {
+    background-position: -25px -125px
+}
+
+.negativo.hubicon--legumbres.xl {
+    background-position: -35px -175px
+}
+
+.negativo.hubicon--legumbres.xxl {
+    background-position: -60px -300px
+}
+
+.hubicon--menu.hubicon--legumbres {
+    background-position: -25px -125px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--legumbres {
+        background-position: 0 -125px
+    }
+}
+
+.positivo.hubicon--arroces-y-cereales.xs {
+    background-position: 0 -30px
+}
+
+.positivo.hubicon--arroces-y-cereales.s {
+    background-position: 0 -60px
+}
+
+.positivo.hubicon--arroces-y-cereales.m {
+    background-position: 0 -90px
+}
+
+.positivo.hubicon--arroces-y-cereales.l {
+    background-position: 0 -150px
+}
+
+.positivo.hubicon--arroces-y-cereales.xl {
+    background-position: 0 -210px
+}
+
+.positivo.hubicon--arroces-y-cereales.xxl {
+    background-position: 0 -360px
+}
+
+.negativo.hubicon--arroces-y-cereales.xs {
+    background-position: -5px -30px
+}
+
+.negativo.hubicon--arroces-y-cereales.s {
+    background-position: -10px -60px
+}
+
+.negativo.hubicon--arroces-y-cereales.m {
+    background-position: -15px -90px
+}
+
+.negativo.hubicon--arroces-y-cereales.l {
+    background-position: -25px -150px
+}
+
+.negativo.hubicon--arroces-y-cereales.xl {
+    background-position: -35px -210px
+}
+
+.negativo.hubicon--arroces-y-cereales.xxl {
+    background-position: -60px -360px
+}
+
+.hubicon--menu.hubicon--arroces-y-cereales {
+    background-position: -25px -150px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--arroces-y-cereales {
+        background-position: 0 -150px
+    }
+}
+
+.positivo.hubicon--carne.xs {
+    background-position: 0 -35px
+}
+
+.positivo.hubicon--carne.s {
+    background-position: 0 -70px
+}
+
+.positivo.hubicon--carne.m {
+    background-position: 0 -105px
+}
+
+.positivo.hubicon--carne.l {
+    background-position: 0 -175px
+}
+
+.positivo.hubicon--carne.xl {
+    background-position: 0 -245px
+}
+
+.positivo.hubicon--carne.xxl {
+    background-position: 0 -420px
+}
+
+.negativo.hubicon--carne.xs {
+    background-position: -5px -35px
+}
+
+.negativo.hubicon--carne.s {
+    background-position: -10px -70px
+}
+
+.negativo.hubicon--carne.m {
+    background-position: -15px -105px
+}
+
+.negativo.hubicon--carne.l {
+    background-position: -25px -175px
+}
+
+.negativo.hubicon--carne.xl {
+    background-position: -35px -245px
+}
+
+.negativo.hubicon--carne.xxl {
+    background-position: -60px -420px
+}
+
+.hubicon--menu.hubicon--carne {
+    background-position: -25px -175px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--carne {
+        background-position: 0 -175px
+    }
+}
+
+.positivo.hubicon--aves-y-caza.xs {
+    background-position: 0 -40px
+}
+
+.positivo.hubicon--aves-y-caza.s {
+    background-position: 0 -80px
+}
+
+.positivo.hubicon--aves-y-caza.m {
+    background-position: 0 -120px
+}
+
+.positivo.hubicon--aves-y-caza.l {
+    background-position: 0 -200px
+}
+
+.positivo.hubicon--aves-y-caza.xl {
+    background-position: 0 -280px
+}
+
+.positivo.hubicon--aves-y-caza.xxl {
+    background-position: 0 -480px
+}
+
+.negativo.hubicon--aves-y-caza.xs {
+    background-position: -5px -40px
+}
+
+.negativo.hubicon--aves-y-caza.s {
+    background-position: -10px -80px
+}
+
+.negativo.hubicon--aves-y-caza.m {
+    background-position: -15px -120px
+}
+
+.negativo.hubicon--aves-y-caza.l {
+    background-position: -25px -200px
+}
+
+.negativo.hubicon--aves-y-caza.xl {
+    background-position: -35px -280px
+}
+
+.negativo.hubicon--aves-y-caza.xxl {
+    background-position: -60px -480px
+}
+
+.hubicon--menu.hubicon--aves-y-caza {
+    background-position: -25px -200px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--aves-y-caza {
+        background-position: 0 -200px
+    }
+}
+
+.positivo.hubicon--pescado.xs {
+    background-position: 0 -45px
+}
+
+.positivo.hubicon--pescado.s {
+    background-position: 0 -90px
+}
+
+.positivo.hubicon--pescado.m {
+    background-position: 0 -135px
+}
+
+.positivo.hubicon--pescado.l {
+    background-position: 0 -225px
+}
+
+.positivo.hubicon--pescado.xl {
+    background-position: 0 -315px
+}
+
+.positivo.hubicon--pescado.xxl {
+    background-position: 0 -540px
+}
+
+.negativo.hubicon--pescado.xs {
+    background-position: -5px -45px
+}
+
+.negativo.hubicon--pescado.s {
+    background-position: -10px -90px
+}
+
+.negativo.hubicon--pescado.m {
+    background-position: -15px -135px
+}
+
+.negativo.hubicon--pescado.l {
+    background-position: -25px -225px
+}
+
+.negativo.hubicon--pescado.xl {
+    background-position: -35px -315px
+}
+
+.negativo.hubicon--pescado.xxl {
+    background-position: -60px -540px
+}
+
+.hubicon--menu.hubicon--pescado {
+    background-position: -25px -225px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--pescado {
+        background-position: 0 -225px
+    }
+}
+
+.positivo.hubicon--mariscos.xs {
+    background-position: 0 -50px
+}
+
+.positivo.hubicon--mariscos.s {
+    background-position: 0 -100px
+}
+
+.positivo.hubicon--mariscos.m {
+    background-position: 0 -150px
+}
+
+.positivo.hubicon--mariscos.l {
+    background-position: 0 -250px
+}
+
+.positivo.hubicon--mariscos.xl {
+    background-position: 0 -350px
+}
+
+.positivo.hubicon--mariscos.xxl {
+    background-position: 0 -600px
+}
+
+.negativo.hubicon--mariscos.xs {
+    background-position: -5px -50px
+}
+
+.negativo.hubicon--mariscos.s {
+    background-position: -10px -100px
+}
+
+.negativo.hubicon--mariscos.m {
+    background-position: -15px -150px
+}
+
+.negativo.hubicon--mariscos.l {
+    background-position: -25px -250px
+}
+
+.negativo.hubicon--mariscos.xl {
+    background-position: -35px -350px
+}
+
+.negativo.hubicon--mariscos.xxl {
+    background-position: -60px -600px
+}
+
+.hubicon--menu.hubicon--mariscos {
+    background-position: -25px -250px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--mariscos {
+        background-position: 0 -250px
+    }
+}
+
+.positivo.hubicon--salsas.xs {
+    background-position: 0 -55px
+}
+
+.positivo.hubicon--salsas.s {
+    background-position: 0 -110px
+}
+
+.positivo.hubicon--salsas.m {
+    background-position: 0 -165px
+}
+
+.positivo.hubicon--salsas.l {
+    background-position: 0 -275px
+}
+
+.positivo.hubicon--salsas.xl {
+    background-position: 0 -385px
+}
+
+.positivo.hubicon--salsas.xxl {
+    background-position: 0 -660px
+}
+
+.negativo.hubicon--salsas.xs {
+    background-position: -5px -55px
+}
+
+.negativo.hubicon--salsas.s {
+    background-position: -10px -110px
+}
+
+.negativo.hubicon--salsas.m {
+    background-position: -15px -165px
+}
+
+.negativo.hubicon--salsas.l {
+    background-position: -25px -275px
+}
+
+.negativo.hubicon--salsas.xl {
+    background-position: -35px -385px
+}
+
+.negativo.hubicon--salsas.xxl {
+    background-position: -60px -660px
+}
+
+.hubicon--menu.hubicon--salsas {
+    background-position: -25px -275px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--salsas {
+        background-position: 0 -275px
+    }
+}
+
+.positivo.hubicon--cocteles-y-bebidas.xs {
+    background-position: 0 -60px
+}
+
+.positivo.hubicon--cocteles-y-bebidas.s {
+    background-position: 0 -120px
+}
+
+.positivo.hubicon--cocteles-y-bebidas.m {
+    background-position: 0 -180px
+}
+
+.positivo.hubicon--cocteles-y-bebidas.l {
+    background-position: 0 -300px
+}
+
+.positivo.hubicon--cocteles-y-bebidas.xl {
+    background-position: 0 -420px
+}
+
+.positivo.hubicon--cocteles-y-bebidas.xxl {
+    background-position: 0 -720px
+}
+
+.negativo.hubicon--cocteles-y-bebidas.xs {
+    background-position: -5px -60px
+}
+
+.negativo.hubicon--cocteles-y-bebidas.s {
+    background-position: -10px -120px
+}
+
+.negativo.hubicon--cocteles-y-bebidas.m {
+    background-position: -15px -180px
+}
+
+.negativo.hubicon--cocteles-y-bebidas.l {
+    background-position: -25px -300px
+}
+
+.negativo.hubicon--cocteles-y-bebidas.xl {
+    background-position: -35px -420px
+}
+
+.negativo.hubicon--cocteles-y-bebidas.xxl {
+    background-position: -60px -720px
+}
+
+.hubicon--menu.hubicon--cocteles-y-bebidas {
+    background-position: -25px -300px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--cocteles-y-bebidas {
+        background-position: 0 -300px
+    }
+}
+
+.positivo.hubicon--pan-y-bolleria.xs {
+    background-position: 0 -65px
+}
+
+.positivo.hubicon--pan-y-bolleria.s {
+    background-position: 0 -130px
+}
+
+.positivo.hubicon--pan-y-bolleria.m {
+    background-position: 0 -195px
+}
+
+.positivo.hubicon--pan-y-bolleria.l {
+    background-position: 0 -325px
+}
+
+.positivo.hubicon--pan-y-bolleria.xl {
+    background-position: 0 -455px
+}
+
+.positivo.hubicon--pan-y-bolleria.xxl {
+    background-position: 0 -780px
+}
+
+.negativo.hubicon--pan-y-bolleria.xs {
+    background-position: -5px -65px
+}
+
+.negativo.hubicon--pan-y-bolleria.s {
+    background-position: -10px -130px
+}
+
+.negativo.hubicon--pan-y-bolleria.m {
+    background-position: -15px -195px
+}
+
+.negativo.hubicon--pan-y-bolleria.l {
+    background-position: -25px -325px
+}
+
+.negativo.hubicon--pan-y-bolleria.xl {
+    background-position: -35px -455px
+}
+
+.negativo.hubicon--pan-y-bolleria.xxl {
+    background-position: -60px -780px
+}
+
+.hubicon--menu.hubicon--pan-y-bolleria {
+    background-position: -25px -325px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--pan-y-bolleria {
+        background-position: 0 -325px
+    }
+}
+
+.positivo.hubicon--postres.xs {
+    background-position: 0 -70px
+}
+
+.positivo.hubicon--postres.s {
+    background-position: 0 -140px
+}
+
+.positivo.hubicon--postres.m {
+    background-position: 0 -210px
+}
+
+.positivo.hubicon--postres.l {
+    background-position: 0 -350px
+}
+
+.positivo.hubicon--postres.xl {
+    background-position: 0 -490px
+}
+
+.positivo.hubicon--postres.xxl {
+    background-position: 0 -840px
+}
+
+.negativo.hubicon--postres.xs {
+    background-position: -5px -70px
+}
+
+.negativo.hubicon--postres.s {
+    background-position: -10px -140px
+}
+
+.negativo.hubicon--postres.m {
+    background-position: -15px -210px
+}
+
+.negativo.hubicon--postres.l {
+    background-position: -25px -350px
+}
+
+.negativo.hubicon--postres.xl {
+    background-position: -35px -490px
+}
+
+.negativo.hubicon--postres.xxl {
+    background-position: -60px -840px
+}
+
+.hubicon--menu.hubicon--postres {
+    background-position: -25px -350px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--postres {
+        background-position: 0 -350px
+    }
+}
+
+.positivo.hubicon--huevos-y-lacteos.xs {
+    background-position: 0 -75px
+}
+
+.positivo.hubicon--huevos-y-lacteos.s {
+    background-position: 0 -150px
+}
+
+.positivo.hubicon--huevos-y-lacteos.m {
+    background-position: 0 -225px
+}
+
+.positivo.hubicon--huevos-y-lacteos.l {
+    background-position: 0 -375px
+}
+
+.positivo.hubicon--huevos-y-lacteos.xl {
+    background-position: 0 -525px
+}
+
+.positivo.hubicon--huevos-y-lacteos.xxl {
+    background-position: 0 -900px
+}
+
+.negativo.hubicon--huevos-y-lacteos.xs {
+    background-position: -5px -75px
+}
+
+.negativo.hubicon--huevos-y-lacteos.s {
+    background-position: -10px -150px
+}
+
+.negativo.hubicon--huevos-y-lacteos.m {
+    background-position: -15px -225px
+}
+
+.negativo.hubicon--huevos-y-lacteos.l {
+    background-position: -25px -375px
+}
+
+.negativo.hubicon--huevos-y-lacteos.xl {
+    background-position: -35px -525px
+}
+
+.negativo.hubicon--huevos-y-lacteos.xxl {
+    background-position: -60px -900px
+}
+
+.hubicon--menu.hubicon--huevos-y-lacteos {
+    background-position: -25px -375px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--huevos-y-lacteos {
+        background-position: 0 -375px
+    }
+}
+
+.positivo.hubicon--guisos-y-potajes.xs {
+    background-position: 0 -80px
+}
+
+.positivo.hubicon--guisos-y-potajes.s {
+    background-position: 0 -160px
+}
+
+.positivo.hubicon--guisos-y-potajes.m {
+    background-position: 0 -240px
+}
+
+.positivo.hubicon--guisos-y-potajes.l {
+    background-position: 0 -400px
+}
+
+.positivo.hubicon--guisos-y-potajes.xl {
+    background-position: 0 -560px
+}
+
+.positivo.hubicon--guisos-y-potajes.xxl {
+    background-position: 0 -960px
+}
+
+.negativo.hubicon--guisos-y-potajes.xs {
+    background-position: -5px -80px
+}
+
+.negativo.hubicon--guisos-y-potajes.s {
+    background-position: -10px -160px
+}
+
+.negativo.hubicon--guisos-y-potajes.m {
+    background-position: -15px -240px
+}
+
+.negativo.hubicon--guisos-y-potajes.l {
+    background-position: -25px -400px
+}
+
+.negativo.hubicon--guisos-y-potajes.xl {
+    background-position: -35px -560px
+}
+
+.negativo.hubicon--guisos-y-potajes.xxl {
+    background-position: -60px -960px
+}
+
+.hubicon--menu.hubicon--guisos-y-potajes {
+    background-position: -25px -400px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--guisos-y-potajes {
+        background-position: 0 -400px
+    }
+}
+
+.positivo.hubicon--consejos-de-cocina.xs {
+    background-position: 0 -85px
+}
+
+.positivo.hubicon--consejos-de-cocina.s {
+    background-position: 0 -170px
+}
+
+.positivo.hubicon--consejos-de-cocina.m {
+    background-position: 0 -255px
+}
+
+.positivo.hubicon--consejos-de-cocina.l {
+    background-position: 0 -425px
+}
+
+.positivo.hubicon--consejos-de-cocina.xl {
+    background-position: 0 -595px
+}
+
+.positivo.hubicon--consejos-de-cocina.xxl {
+    background-position: 0 -1020px
+}
+
+.negativo.hubicon--consejos-de-cocina.xs {
+    background-position: -5px -85px
+}
+
+.negativo.hubicon--consejos-de-cocina.s {
+    background-position: -10px -170px
+}
+
+.negativo.hubicon--consejos-de-cocina.m {
+    background-position: -15px -255px
+}
+
+.negativo.hubicon--consejos-de-cocina.l {
+    background-position: -25px -425px
+}
+
+.negativo.hubicon--consejos-de-cocina.xl {
+    background-position: -35px -595px
+}
+
+.negativo.hubicon--consejos-de-cocina.xxl {
+    background-position: -60px -1020px
+}
+
+.hubicon--menu.hubicon--consejos-de-cocina {
+    background-position: -25px -425px
+}
+
+@media (min-width:1025px) {
+    .hubicon--menu.hubicon--consejos-de-cocina {
+        background-position: 0 -425px
+    }
+}

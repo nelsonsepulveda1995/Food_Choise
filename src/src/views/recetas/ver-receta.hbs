@@ -1,0 +1,191 @@
+<div class="card">
+    <div class="col-md-12">
+        <div class="col-md-8 mx-auto">
+            <h4 class="text-success txt-centrado mt-3">{{receta.title}}</h4>
+            <hr>
+            <p><img class="foto-plato rounded" src="{{receta.imagenURL}}" alt=""></p>
+            <h4 class="text-muted txt-centrado">Ingredientes</h4>
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    {{#each receta.ingredientes}}
+                    <div class="col-md-3 col-lg-3 mt-3 ml-3 custom-control custom-checkbox border rounded checkbox">
+                        {{this.nombre}} - {{this.cantidad}}{{this.unidad}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            <hr>
+            <h4 class="text-muted txt-centrado">Preparación</h4>
+            <p class="txt-centrado">{{receta.descripcion}}</p>
+            <hr>
+            <h4 class="text-muted txt-centrado">Categoría</h4>
+            <p class="txt-centrado">{{receta.categoria}}</p>
+            <hr>
+            {{#if user}}
+                {{#if_eq receta.owen user.id}}
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                            <div class="form-check mr-3">
+                                <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                {{else}}
+                    {{#if calificaciones}}
+                        <p id="calificacion_usuario" style="display:none">{{calificaciones.calificacion}}</p>
+                        <p id="promedio_calificacion" style="display:none">{{promCal}}</p>
+
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h1 class="text-success txt-centrado">Valoraste esta receta con: </h1>
+                                <div class="form-check mr-3">
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate1" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate2" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate3" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate4" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="rate5" aria-hidden="true"></i>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                                <div class="form-check mr-3">
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    {{else}}
+                        <form class="container" action="/recetas/calificar/{{receta._id}}" method="POST">
+                            <div class="row d-flex justify-content-center">
+                                <div class="form-check mr-3" id="calificaciones">
+                                    <label for="calif1"><i class="fa fa-star starSelected fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif2"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif3"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif4"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <label for="calif5"><i class="fa fa-star-o fa-2x estrella zoomStar" aria-hidden="true"></i></label>
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif1" value="1" checked>
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif2" value="2">
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif3" value="3">
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif4" value="4">
+                                    <input type="radio" class="hidden col-2" name="calif" id="calif5" value="5">
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <button type="submit" class="btn btn-info">Calificar</button>
+                            </div>
+                        </form>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                                <div class="form-check mr-3">
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if_eq}}
+            {{else}}
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <h1 class="text-success txt-centrado">Promedio de valoracion de la receta: </h1>
+                        <div class="form-check mr-3">
+                            <i class="fa fa-star-o fa-2x estrella" id="prom1" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom2" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom3" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom4" aria-hidden="true"></i>
+                            <i class="fa fa-star-o fa-2x estrella" id="prom5" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <h2>Visualizaciones: {{visitasTotales}}</h2>
+        </div>
+    </div>
+    {{#if_eq receta.owen user.id}}
+    <!--Helper custom que hice para igualar dos parametros-->
+    <div class="row botones">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmacion">
+                Eliminar
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <form class="modal-content" method="POST" action="/recetas/delete?_method=DELETE&id={{receta._id}}">
+                        <div class="d-block">
+                            <h4 class="modal-title text-center">Eliminar {{receta.title}}</h4>
+                        </div>
+                        <hr>
+                        <div class="modal-body">
+                            <div class="container-fluid text-center">
+                                Está a punto de eliminar su receta "{{receta.title}}". ¿Está seguro que desea eliminar
+                                la receta?
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center mx-auto">
+                            <button type="submit" class="btn btn-primary">SI</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                        </div>
+                        <hr>
+                    </form>
+                </div>
+            </div>
+            <script>
+                $('#exampleModal').on('show.bs.modal', event => {
+                    var button = $(event.relatedTarget);
+                    var modal = $(this);
+                });
+            </script>
+            <a href="/recetas/editar/{{receta._id}}" class="btn btn-info">Editar</a>
+
+        </div>
+    </div>
+    {{/if_eq}}
+    <hr>
+    <a name="fav" id="fav" class="btn btn-success" href="/recetas/favoritos/{{receta._id}}">FAVORITOS</a>
+    <hr>
+    <!--Script para tener los comentarios de Disqus-->
+    <div class="col-md-8 mx-auto">
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document,
+                    s = d.createElement('script');
+                s.src = 'https://food-choice.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+                Disqus.</a></noscript>
+        >
+    </div>
+</div>

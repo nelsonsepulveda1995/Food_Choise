@@ -1,0 +1,38 @@
+<div class="row mx-auto" id="tarjetaReceta">
+    {{#each resultado}}
+    <div class="col-md-4 mt-5 ">
+        <div class="card zoom">
+            <p id="id_tarjetaReceta" style="display:none">{{_id}}</p>
+            <a href="/recetas/ver/{{_id}}" class="card-body">
+                <h4 class="card-title txt-centrado">
+                    {{title}}
+                </h4>
+                {{>calificacion}}
+                <h6 class="txt-centrado txt-categoria">
+                    {{categoria}}
+                </h6>
+                <br>
+                <img src="{{imagenURL}}" class="img-fluid img-completa rounded">
+            </a>
+        </div>
+    </div>
+
+    {{else}}
+    <div class="row mt-3">
+        <div class="card mx-auto">
+            <div class="card-body">
+                <p class="lead">
+                    No has escrito recetas aún.
+                </p>
+                <a href="/recetas/new" class="btn btn-success btn-block">Escribe una!</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    {{#if resultado}}
+    <div class="botones row">
+        <a class="btn btn-info" href="/recetas/new">¡Agregar más recetas!</a>
+    </div>
+    {{/if}}
+    {{/each}}
+</div>

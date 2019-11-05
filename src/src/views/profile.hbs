@@ -1,0 +1,27 @@
+<div class="container" style="margin: 20px;">
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h1>Bienvenido a tu perfil, {{user.username}}</h1>
+            </div>
+            <div class="card-body mx-auto ">
+                
+                <div>
+                    <img src="{{user.thumbnail}}" alt="" class="img-fluid rounded" style="width: 100%  height:300px">
+                </div>
+                <br>
+                <div class="container">
+                    <h3> Estadisticas</h3>
+                    <div class="mx-auto">
+                        <h5>
+                            Cantidad de recetas creadas: {{cantidadReceta}}
+                        </h5>
+                        <h5>
+                            Recetas en lista de favoritos: {{result}}
+                        </h5>
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>    
