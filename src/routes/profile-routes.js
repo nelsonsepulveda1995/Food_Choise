@@ -16,17 +16,14 @@ const authCheck = (req, res, next) => {
 };
 
 router.get('/', authCheck, async(req, res) =>{
-    const cantidadReceta = await Recetas.find({owen:req.user.id}).count();
-    const cantidadFavoritos=await Favoritos.find({id_usuario:req.user.id},{_id:0, id_favoritos:1});
+    const cantidadReceta = await Recetas.find({owen:req.user.id}).count();  //revisa cuantas recetas creo el usuario
+    const cantidadFavoritos=await Favoritos.find({id_usuario:req.user.id},{_id:0, id_favoritos:1}); //revisa cuantas recetas en favoritos tiene
     var result=0;
-    cantidadFavoritos.forEach(element => {
+    cantidadFavoritos.forEach(element => {  //cuenta el array de favoritos traidos desde la base
         console.log(element);
         result=element.id_favoritos.length;
     });
-    console.log("cantidad  de favoritos", cantidadFavoritos);
-    console.log("cantidad  de Recetas", cantidadReceta);
-    console.log("cantidad  de Recetas", result);
-    res.render('profile', {user: req.user,cantidadReceta,result });
+    res.render('profile', {user: req.user,cantidadReceta,result});
 });
 
 module.exports = router;
