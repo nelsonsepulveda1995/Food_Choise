@@ -95,7 +95,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+    var contador = 0;
     var anterior = '';
     $('#inputBusqueda').on('keyup', function () {
         var key = $(this).val();
@@ -130,6 +130,9 @@ $(document).ready(function () {
                             buildBusqueda(selected,id)
                         }
                         anterior = id;
+                        contador++;
+                        console.log(contador)
+                        $('#contadorInput').val(contador);
                         return false;
                     });
                 }

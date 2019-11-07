@@ -55,7 +55,7 @@
                             {{#if_eq tipo "cat"}}
                                 <li class="nav-item row">
                                     <span class="ml-3 hubicon l positivo hubicon--{{icono}}"></span>
-                                    <a class="dropdown-item col-9" href="/busqueda/3/{{_id}}">{{descripcion}}</a>
+                                    <a class="dropdown-item col-9" href="/categoria/{{_id}}">{{descripcion}}</a>
                                 </li>
                             {{else}}
                                 <li class="nav-item dropdown dropright row">
@@ -63,7 +63,7 @@
                                     <a class="dropdown-item dropdown-toggle col-9" data-toggle="dropdown">{{descripcion}}</a>
                                     <ul class="dropdown-menu">
                                         {{#each subcategorias}}
-                                            <li class="row"><span class="{{icono}} col-2" style="color : rgb(80,80,90)"></span><a class="dropdown-item col-7" href="/busqueda/3/{{_id}}">{{descripcion}}</a></li>    
+                                            <li class="row"><span class="{{icono}} col-2" style="color : rgb(80,80,90)"></span><a class="dropdown-item col-7" href="/categoria/{{_id}}">{{descripcion}}</a></li>    
                                         {{/each}}
                                     </ul>
                                 </li>
@@ -152,10 +152,12 @@
                                         <button class="btn btn-secondary" type="submit">
                                             <i class="fa fa-search"></i>
                                         </button>
+                                        <input type="text" hidden name="contador" id="contadorInput">
                                     </form>
                                 </div>
                                 <div class="row">
                                     <div id="seleccionesBusqueda"></div>
+                                    
                                 </div>
                             </li>
                         </ul>
