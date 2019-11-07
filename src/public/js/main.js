@@ -95,14 +95,54 @@ $(document).ready(function () {
             }
         });
     });
+    
+    var anterior = '';
+    $('#inputBusqueda').on('keyup', function () {
+        var key = $(this).val();
+        var dataString = 'key=' + key;
+        var url = $('#tipoBusqueda').val()
+        if (url != 1) {
+            if (url == 2) {
+                url = "/getIng"
+            } else {
+                url = "/getCat"
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: dataString,
+                success: function (data) {
+                    //Escribimos las sugerencias que nos manda la consulta
+                    $('#suggestionsBusqueda').show().html(data);
+                    //Al hacer click en alguna de las sugerencias
+                    $('.suggest-element').on('click', function () {
+                        //Obtenemos la id unica de la sugerencia pulsada
+                        var id = $(this).attr('id');
+                        var selected = $('#' + id).attr('data')
+                        //Editamos el valor del input con data de la sugerencia pulsada
+                        $('#inputBusqueda').val('');
+                        //Hacemos desaparecer el resto de sugerencias
+                        $('#suggestionsBusqueda').hide();
+                        if (anterior == id) {
+                            alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
+                        } else {
+                            console.log(id);
+                            buildBusqueda(selected,id)
+                        }
+                        anterior = id;
+                        return false;
+                    });
+                }
+            });
+        } 
+    });
 
     $('#listaCat').click(function () {
-        console.log("show lista cat")
         $('#navCat').removeAttr('hidden');
     })
 
     $("#key").focusout(function () {
-        $('#suggestions').fadeOut(1000);
+        $('#suggestions').fadeOut();
     });
 
     $('#inputGroupFile01').change(function(e){
@@ -113,28 +153,22 @@ $(document).ready(function () {
     $('#formBusqueda').submit(function (e) {
         var accion = $("#tipoBusqueda").val();
         $(this).attr('action',`/busqueda/${accion}`);
-        
     });
-    $(function() {
-        // ------------------------------------------------------- //
-        // Multi Level dropdowns
-        // ------------------------------------------------------ //
-        $("ul.dropdown-menu [data-toggle='dropdown']").on("click", function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-      
-          $(this).siblings().toggleClass("show");
-      
-      
-          if (!$(this).next().hasClass('show')) {
-            $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
-          }
-          $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
-            $('.dropdown-submenu .show').removeClass("show");
-          });
-      
-        });
-      });
+
+    $('#tipoBusqueda').change(function(){
+        var accion = $("#tipoBusqueda").val();
+        if (accion != 1) {
+            $('#inputBusqueda').addClass('search_query');
+            if (accion == 2 ) {
+                $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de ingredientes de recetas...');
+            } else {
+                $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de categorías de recetas...');
+            }
+        }else{
+            $('#inputBusqueda').removeClass('search_query');
+            $('#inputBusqueda').attr('placeholder' , 'Ingrese un nombre de receta...');
+        }
+    })
 });
 
 function buildlist(listName, labelName) {
@@ -145,6 +179,21 @@ function buildlist(listName, labelName) {
     for (var i = 0; i < controls.length; i++) {
         label.value += controls[i].value.toString() + ',';
     }
+}
+
+function buildBusqueda(selected, id){
+    var nombre = $('<input>',{
+        'value' : `${selected}`,
+        'name' : `busqueda`,
+        'hidden' : 'hidden'
+    })
+    var input_cantidad = $('<div>', {
+        'html': `<p>${selected}</p>`,
+        'id': `sel-${id}`,
+        'class': 'rounded checkbox'
+    })
+    $('#formBusqueda').append(nombre);
+    $('#seleccionesBusqueda').append(input_cantidad)
 }
 
 function buildCant(selected,id) {

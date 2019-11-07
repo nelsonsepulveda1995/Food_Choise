@@ -24,20 +24,40 @@ const authCheck = (req, res, next) => {
         next();
 
     } else {
-        //console.log(req)
+        //
         //if user is not logged in
         res.redirect('/auth/google');
     }
 };
 
 router.post('/getIng', async (req,res) => {
+    var url = "ing"
+    const ing = await Ingrediente.find();
+    getInput(req,url,ing)
+})
+
+router.post('/getCat', async (req,res) => {
+    var url = "cat"
+    var cat = await Categoria.find();
+    for (let i = 0; i < cat.length; i++) {
+        if (cat[i].tipo == "sub") {
+            for (let j = 1; j < cat[i].subcategorias.length; j++) {
+                cat.push(cat[i].subcategorias[j])
+            }
+            cat[i] = cat[i].subcategorias[0];
+        }
+        
+    }
+    res.send(getInput(req,url,cat));
+})
+
+function getInput(req,url,destino) {
     const {
         key
     } = req.body;
     const errors = [];
-    const ing = await Ingrediente.find();
     var keys = key.split(" ");
-    var ingredientesFinal = []
+    var final = []
     var chars={
         "á":"a", "é":"e", "í":"i", "ó":"o", "ú":"u",
         "à":"a", "è":"e", "ì":"i", "ò":"o", "ù":"u",
@@ -45,14 +65,19 @@ router.post('/getIng', async (req,res) => {
         "À":"A", "È":"E", "Ì":"I", "Ò":"O", "Ù":"U"}
         
     var expr=/[áàéèíìóòúùñ]/ig;
-    for (let j = 0; j < ing.length; j++) {
+    console.log(destino)
+    for (let j = 0; j < destino.length; j++) {
         for (let i = 0; i < keys.length; i++) {
             var input=keys[i].replace(expr,function(e){return chars[e]});
-            var output = ing[j].Descripcion.replace(expr,function(e){return chars[e]});
+            if (url == "ing") {
+                var output = destino[j].Descripcion.replace(expr,function(e){return chars[e]});
+            } else {
+                var output = destino[j].descripcion.replace(expr,function(e){return chars[e]});
+            }
             var _regex = new RegExp(input, "i");
             var match = output.match(_regex);
             if(match){
-                ingredientesFinal.push(ing[j])
+                final.push(destino[j])
                 i = keys.length
             }
             
@@ -60,12 +85,15 @@ router.post('/getIng', async (req,res) => {
         
     }
     var html = '';
-    for (let i = 0; i < ingredientesFinal.length; i++) {
-        html += `<div><a class="suggest-element" data="${ingredientesFinal[i].Descripcion}" id="${ingredientesFinal[i]._id}">${ingredientesFinal[i].Descripcion}</a></div>`;
+    for (let i = 0; i < final.length; i++) {
+        if (url == "ing") {
+            html += `<div><a class="suggest-element" data="${final[i].Descripcion}" id="${final[i]._id}">${final[i].Descripcion}</a></div>`;
+        } else {
+            html += `<div><a class="suggest-element" data="${final[i].descripcion}" id="${final[i]._id}">${final[i].descripcion}</a></div>`;
+        }
     }
-    
-    res.send(html);
-})
+    return html;
+}
 
 router.post('/getRecetasCat', async (req,res) => {
     const {
@@ -98,6 +126,8 @@ router.get('/recetas', async (req, res) => {
         date: 'desc'
     });
     var allCat = await Categoria.find()
+    
+    
     //var categRec = await Categoria.findById(receta.categoria);
     for (let i = 0; i < receta.length; i++) {
         var categRec;
@@ -125,7 +155,7 @@ router.get('/recetas', async (req, res) => {
             }
             var promCal = totalCal / calificacionesProm.length;
             receta[i].calificacion = promCal;
-            console.log(receta[i].calificacion)
+            
         }
     }
     if (req.user) {
@@ -160,9 +190,9 @@ router.get('/recetas/ver/:id', async (req, res) => {
     }
     const verVisitas=await Visitas.findOne({id_receta:req.params.id}); //trae las visitas de la receta elegida
     var visitasTotales= verVisitas.id_visitantes.length;
-    console.log("VISITAS TOTALES"+visitasTotales)
+    
     var visitante = 0
-    console.log(verVisitas.id_visitantes)
+    
     verVisitas.id_visitantes.forEach(id => {
         if (req.user && id == req.user.id) {
             visitante = 1;
@@ -170,7 +200,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
     });
                 //---------------------- SI ESTA LOGUEADO ----------------------
     if(req.user && visitante == 1){
-        console.log('entrar en la parte usuario registrado');   
+        
         const calificaciones = await Calificacion.findOne({
             id_calificante: req.user.id,
             id_receta:req.params.id
@@ -184,9 +214,9 @@ router.get('/recetas/ver/:id', async (req, res) => {
             totalCal = totalCal + calificacionesProm[i].calificacion;
         }
         var promCal = totalCal / calificacionesProm.length;
-        console.log(promCal);
+        
         if (req.user.id && calificaciones) {
-            console.log("califico")
+            
             var allCat = await Categoria.find()
             res.render('recetas/ver-receta', {
                 allCat,
@@ -199,7 +229,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
             });
             
         } else if (req.user) {
-            console.log("no califico")
+            
             var allCat = await Categoria.find()
             res.render('recetas/ver-receta', {
                 allCat,
@@ -213,7 +243,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
     }
     // ---------------------------------- SI NO ESTA LOGUEADO ------------------------- 
     else if (req.user) {
-        console.log("no visito")
+        
         await Visitas.findOneAndUpdate({id_receta:req.params.id},{
             $push : {id_visitantes:req.user.id}
         })
@@ -227,7 +257,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
             visitasTotales
         });
     }else{
-        console.log("no es usuario")
+        
         await Visitas.findOneAndUpdate({id_receta:req.params.id},{
             $push : {id_visitantes:"usuarioTemp"}
         })
@@ -345,9 +375,9 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         const resultado = await cloudinary.v2.uploader.upload(req.file.path); //esta linea sube el archivo a cloudinary y guarda los datos resultantes
         const owen = req.user.id;
         var newReceta = {};
-        console.log("tipo de categoria : " + tipo);
+        
         if (tipo) {
-            console.log("tipo es true")
+            
             newReceta = new Recetas({
                 title,
                 owen,
@@ -360,7 +390,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
                 imagenCloud: resultado.public_id
             });
         } else {
-            console.log("tipo es false")
+            
             newReceta = new Recetas({
                 title,
                 owen,
@@ -372,7 +402,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
                 imagenCloud: resultado.public_id
             });
         }
-        console.log(newReceta)
+        
         await newReceta.save();
         await fs.unlink(req.file.path);
         const crearVisitas = new Visitas({
@@ -387,7 +417,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
 // --------------------------------------- VER MIS RECETAS ---------------------------------------
 
 router.get('/recetas/mis-recetas', authCheck, async (req, res) => { 
-    console.log("llego a mis recetas")
+    
     const usuario = req.user.id;
     const query = {
         owen: usuario
@@ -396,12 +426,12 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
         date: 'desc'
     });
     for (let i = 0; i < resultado.length; i++) {
-        console.log("entro a definir categorias (for)")
+        
         var categRec;
-        console.log(resultado[i].subcategoria)
+        
         if (resultado[i].subcategoria) {
-            console.log("busco padre")
-            console.log(resultado[i].padre)
+            
+            
             categRec = await Categoria.findById(resultado[i].padre);
             for (let j = 0; j < categRec.subcategorias.length; j++) {
                 if (resultado[i].categoria == categRec.subcategorias[j]._id) {
@@ -427,7 +457,7 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
             }
             var promCal = totalCal / calificacionesProm.length;
             resultado[i].calificacion = promCal;
-            console.log(resultado[i].calificacion)
+            
         }
     }
 
@@ -500,16 +530,16 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
         });
     }
     if (ingredientesForm[0]) {
-        console.log("find receta y blanquea ingrediente")
+        
         await Recetas.findByIdAndUpdate(req.query.id, {
             ingredientes : []
         });
         
         for (let i = 0; i < ingredientesForm.length; i++) {
-            console.log(ingredientesForm[i] + " en el bucle for")
+            
             var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
             var index_cant = i+i;
-            console.log("find de receta y update de ingredientes ya con datos")
+            
             await Recetas.findByIdAndUpdate(req.query.id, {
                 $push : {ingredientes : {nombre : nomIngredienteDB.Descripcion , cantidad : cantIng[index_cant], unidad : cantIng[index_cant + 1]}}
             });
@@ -801,7 +831,7 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
     if (req.user) {
         const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
         var favPrev = 0;
-        console.log("hay que ver que pasa: "+ favoritos);
+        
         favoritos.id_favoritos.forEach(fav => {
             if (fav == req.params.id) {
                 favPrev = 1
@@ -823,21 +853,21 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
 router.get('/recetas/favoritos', async (req, res) => {                    //lista favoritos
     if (req.user) {
         const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
-        console.log("FAVORITOS GET")
-        console.log(favoritos)
+        
+        
         var recetasFinal = []
 
         for (let i = 0; i < favoritos.id_favoritos.length; i++) {
             const recetaFav = await Recetas.findById(favoritos.id_favoritos[i]);
-            console.log("find receta")
-            console.log(recetaFav)
+            
+            
             if (recetaFav) {
                 recetasFinal.push(recetaFav);
             }else{
                 await Favoritos.update( {id_usuario : req.user.id}, { $pullAll: {id_favoritos: [favoritos.id_favoritos[i]] } } )
                 var updFavoritos = await Favoritos.findOne({id_usuario : req.user.id})
-                console.log("FAVORITOS GET UPDATED")
-                console.log(updFavoritos)
+                
+                
 
             }
         }
@@ -868,8 +898,8 @@ router.get('/recetas/favoritos', async (req, res) => {                    //list
                 var promCal = totalCal / calificacionesProm.length;
                 recetasFinal[i].calificacion = promCal;
             }
-            console.log("todas las recetas")
-            console.log(recetasFinal);
+            
+            
             var allCat = await Categoria.find()
             res.render('recetas/favoritos', {
                 allCat,

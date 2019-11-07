@@ -10,7 +10,7 @@ body {
     margin: 10px 5px 0 0;
 }
 
-#suggestions {
+.suggestions {
     box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
     height: auto;
     position: absolute;
@@ -19,7 +19,7 @@ body {
     width: 206px;
 }
  
-#suggestions .suggest-element {
+.suggestions .suggest-element {
     background-color: #EEEEEE;
     border-top: 1px solid #d6d4d4;
     cursor: pointer;
@@ -152,10 +152,6 @@ body {
     text-align: center;
     pointer-events: none;
     color: #aaa;
-}
-
-#navbarSupportedContent {
-    height: 51.5px;
 }
 
 .checkbox {
