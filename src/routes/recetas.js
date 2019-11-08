@@ -16,6 +16,9 @@ cloudinary.config({ //sesion de cloudinary
     api_secret: 'AihAtz1kcPn-J5EIMk8AJrvPNzM'
 })
 
+Array.prototype.unique=function(a){
+    return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+  });
 
 //check if logged
 const authCheck = (req, res, next) => {
@@ -297,11 +300,20 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         title,
         descripcion,
         categoria,
+        contador
     } = req.body;
     const ingredientesForm = [];
-    ingredientesForm.push(
-        req.body.ingredientesNom
-    )
+    
+    if (contador > 1) {
+        req.body.ingredientesNom.forEach(element => {
+            ingredientesForm.push(
+                element
+            )
+        });
+    }else{
+        ingredientesForm.push(req.body.ingredientesNom)
+    }
+    
     const cantIng = req.body.cantIng
     const errors = [];
     if (!title) {
@@ -336,7 +348,10 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     }else{
         var ingredientes = [];
         for (let i = 0; i < ingredientesForm.length; i++) {
+            
+            
             var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
+            
             var index_cant = i+i;
             if (parseFloat(cantIng[index_cant]) < 0) {
                 errors.push({
@@ -351,6 +366,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             }
         }
     }
+    
     var valCat = categoria.split("|");
     var tipo = valCat[1];
     var categoriaFinal = valCat[0];
@@ -702,69 +718,106 @@ router.get('/busqueda/2', async (req, res) => { //busqueda por ingredientes
 })
 router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de ingredientes
     const {
-        ingrediente
+        busqueda,
+        contador,
+        strict
     } = req.body;
     const ing = await Ingrediente.find().sort({
-        descripcion: 'asc'
+        Descripcion: 'asc'
     });
+
+    var catBusqueda = []
+    
+    if (contador == '1') {
+        catBusqueda.push(busqueda)
+    }else{
+        catBusqueda = busqueda
+    }
     
 
     const errors = [];
-    if (!ingrediente) {
+    if (!busqueda) {
         errors.push({
-            text: 'seleccione al menos un Ingrediente'
+            text: 'seleccione al menos una categoría'
         });
         var allCat = await Categoria.find()
-        res.render('recetas/buscar-ingredientes', {
+        res.render('recetas/recetas-categoria', {
             allCat,
-            ing,
             errors,
             user: req.user
         })
     } else {
-        const Receta = await Recetas.find({
-            ingredientes: {
-                $in: ingrediente
-            }
-        })
-        for (let i = 0; i < Receta.length; i++) {
-            var categRec;
-        if (Receta[i].subcategoria) {
-            categRec = await Categoria.findById(Receta[i].padre);
-            for (let j = 0; j < categRec.subcategorias.length; j++) {
-                if (Receta[i].categoria == categRec.subcategorias[j]._id) {
-                    Receta[i].categoria = categRec.subcategorias[j].descripcion;
+        var Receta = []
+        var comparador = []
+        for (let i = 0; i < catBusqueda.length; i++) {
+            var tempRec = await Recetas.find({
+                ingredientes: { $elemMatch: { nombre: catBusqueda[i] }}})
+            
+            
+            if (tempRec.length != 0) {
+                for (let j = 0; j < tempRec.length; j++) {
+                    Receta.push(tempRec[j]);
+                    comparador.push(tempRec[j]);
                 }
             }
-        } else {
-            categRec = await Categoria.findById(Receta[i].categoria);
-            Receta[i].categoria = categRec.descripcion;
         }
-            var owenReceta = await Users.findById(Receta[i].owen);
-            Receta[i].owen = owenReceta.username;
-            Receta[i].owenImg = owenReceta.thumbnail;
-            const calificacionesProm = await Calificacion.find({
-                id_receta: Receta[i]._id
-            });
-            var totalCal = 0
-            for (let i = 0; i < calificacionesProm.length; i++) {
-                totalCal = totalCal + calificacionesProm[i].calificacion;
-            }
-            var promCal = totalCal / calificacionesProm.length;
-            Receta[i].calificacion = promCal;
-        }
-        
-        
-        var allCat = await Categoria.find()
-        res.render('recetas/recetas-ingredientes', {
-            allCat,
-            Receta,
-            ing,
-            user: req.user
+        var hash = {};
+        Receta = Receta.filter(function(current) {
+        var exists = !hash[current._id] || false;
+        hash[current._id] = true;
+        return exists;
         });
+        if(Receta.length != 0){
+            for (let i = 0; i < Receta.length; i++) {
+                var categRec;
+                
+            if (Receta[i].subcategoria) {
+                categRec = await Categoria.findById(Receta[i].padre);
+                for (let j = 0; j < categRec.subcategorias.length; j++) {
+                    if (Receta[i].categoria == categRec.subcategorias[j]._id) {
+                        Receta[i].categoria = categRec.subcategorias[j].descripcion;
+                    }
+                }
+            } else {
+                categRec = await Categoria.findById(Receta[i].categoria);
+                Receta[i].categoria = categRec.descripcion;
+            }
+                var owenReceta = await Users.findById(Receta[i].owen);
+                Receta[i].owen = owenReceta.username;
+                Receta[i].owenImg = owenReceta.thumbnail;
+                const calificacionesProm = await Calificacion.find({
+                    id_receta: Receta[i]._id
+                });
+                var totalCal = 0
+                for (let i = 0; i < calificacionesProm.length; i++) {
+                    totalCal = totalCal + calificacionesProm[i].calificacion;
+                }
+                var promCal = totalCal / calificacionesProm.length;
+                Receta[i].calificacion = promCal;
+            }
+            
+            
+            var allCat = await Categoria.find()
+            res.render('recetas/recetas-ingredientes', {
+                allCat,
+                Receta,
+                ing,
+                user: req.user
+            });
+        }else{
+            errors.push({
+                text: 'No se encontraron recetas'
+            });
+            var allCat = await Categoria.find()
+            res.render('recetas/recetas-categoria', {
+                allCat,
+                ing,
+                errors,
+                user: req.user
+            })
+        }
     }
 })
-
 
 router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de ingredientes
     const {
@@ -791,7 +844,7 @@ router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de 
             text: 'seleccione al menos una categoría'
         });
         var allCat = await Categoria.find()
-        res.render('recetas/buscar-categoria', {
+        res.render('recetas/recetas-categoria', {
             allCat,
             ing,
             errors,
@@ -882,7 +935,7 @@ router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de 
                 text: 'No se encontraron recetas'
             });
             var allCat = await Categoria.find()
-            res.render('recetas/buscar-categoria', {
+            res.render('recetas/recetas-categoria', {
                 allCat,
                 ing,
                 errors,
@@ -905,7 +958,7 @@ router.get('/categoria/:id', async (req, res) => { //falta completar !!!!!
             text: 'seleccione al menos una categoria'
         });
         var allCat = await Categoria.find()
-        res.render('recetas/buscar-categoria', {
+        res.render('recetas/recetas-categoria', {
             allCat,
             cat,
             errors,

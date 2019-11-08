@@ -63,6 +63,7 @@ $(document).ready(function () {
         $(`#prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
     }
     var anterior = '';
+    var contadorIng = 0
     $('#key').on('keyup', function () {
         var key = $(this).val();
         var dataString = 'key=' + key;
@@ -90,6 +91,9 @@ $(document).ready(function () {
                         buildCant(selected,id)
                     }
                     anterior = id;
+                    contadorIng++;
+                        console.log(contadorIng)
+                        $('#contadorIngre').val(contadorIng);
                     return false;
                 });
             }
@@ -164,6 +168,22 @@ $(document).ready(function () {
             $('#inputBusqueda').addClass('search_query');
             if (accion == 2 ) {
                 $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de ingredientes de recetas...');
+                var checkbox = $('<input>',{
+                    type : 'checkbox',
+                    id : 'strict',
+                    name : 'strict',
+                    class : 'form-check-input',
+                    value : 'strict'
+                })
+                var label = $('<label>',{
+                    class : 'form-check-label'
+                }).text("Buscar solo ingredientes seleccionados")
+                label.prepend(checkbox)
+                var checkLab = $('<div>',{
+                    class : 'form-check col-2'
+                })
+                checkLab.append(label)
+                $('#formBusqueda').append(checkLab)
             } else {
                 $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de categorías de recetas...');
             }
