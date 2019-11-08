@@ -33,6 +33,8 @@ const authCheck = (req, res, next) => {
     }
 };
 
+//-----------------------------------------  RUTAS AJAXS --------------------------------------------------
+
 router.post('/getIng', async (req,res) => {
     var url = "ing"
     const ing = await Ingrediente.find();
@@ -86,7 +88,7 @@ function getInput(req,url,destino) {
             }
             
         }
-        
+
     }
     var html = '';
     for (let i = 0; i < final.length; i++) {
@@ -126,6 +128,8 @@ router.post('/getRecetasCat', async (req,res) => {
     res.send(html);
 })
 
+//------------------------------------------------ RUTA DE INICIO ---------------------------------------------------
+
 router.get('/recetas', async (req, res) => {
     const receta = await Recetas.find().sort({
         date: 'desc'
@@ -164,20 +168,22 @@ router.get('/recetas', async (req, res) => {
         }
     }
     if (req.user) {
-        var allCat = await Categoria.find()
+        //var allCat = await Categoria.find()  //CODIGO REPETIDO EN LINEA 137
         res.render('recetas/all-recetas', {
             allCat,
             receta,
             user: req.user
         });
     } else {
-        var allCat = await Categoria.find()
+        //var allCat = await Categoria.find() //CODIGO REPETIDO EN LINEA 137
         res.render('recetas/all-recetas', {
             allCat,
             receta
         });
     }
 })
+
+//--------------------------------------- VER UNA RECETA ----------------------------------------------------------
 
 router.get('/recetas/ver/:id', async (req, res) => {
     const receta = await Recetas.findById(req.params.id); //trae la receta elegida
@@ -203,7 +209,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
             visitante = 1;
         }
     });
-                //---------------------- SI ESTA LOGUEADO ----------------------
+
     if(req.user && visitante == 1){
         
         const calificaciones = await Calificacion.findOne({
@@ -246,7 +252,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
             });
         }
     }
-    // ---------------------------------- SI NO ESTA LOGUEADO ------------------------- 
+
     else if (req.user) {
         
         await Visitas.findOneAndUpdate({id_receta:req.params.id},{
@@ -279,16 +285,16 @@ router.get('/recetas/ver/:id', async (req, res) => {
 
     //-------------------------------------- CREACION DE RECETA ---------------------------------------------
 
-    router.get('/recetas/new', authCheck, async (req, res) => {
+router.get('/recetas/new', authCheck, async (req, res) => {
     //Obtengo todas las categorias       
-    const cat = await Categoria.find();
+    const cat = await Categoria.find(); 
 
     //Obtengo todos los ingredientes
     const ing = await Ingrediente.find();
 
-    var allCat = await Categoria.find()
+    //var allCat = await Categoria.find()  <--- CODIGO REPETIDO REPERCUTE EN LINEA 290 REPERCUTE EN 297
     res.render('recetas/new-receta', {
-        allCat,
+        //allCat,  <-- REPETIDO EN "cat"
         user: req.user,
         cat,
         ing
@@ -331,11 +337,13 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             text: 'Selecciona una categoria'
         });
     }
-    if (categoria < 1 || categoria > 5) {
-        errors.push({
-            text: 'Selecciona una categoria valida'
-        });
-    }
+
+    //if (categoria < 1 || categoria > 5) {     deberia validar que el id de categoria exista en la base
+    //    errors.push({
+    //        text: 'Selecciona una categoria valida'
+    //    });
+    //}
+
     if (!req.file) { //valida que se mande una imagen al crear la receta (agregar cuando se edita editar)
         errors.push({
             text: 'Selecciona una imagen'
@@ -367,7 +375,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
         }
     }
     
-    var valCat = categoria.split("|");
+    var valCat = categoria.split("|"); 
     var tipo = valCat[1];
     var categoriaFinal = valCat[0];
     if (tipo == "cat") {
@@ -498,7 +506,7 @@ router.get('/recetas/editar/:id', authCheck, async (req, res) => {
 
         //Obtengo todos los ingredientes
         const ing = await Ingrediente.find();
-        var allCat = await Categoria.find()
+        //var allCat = await Categoria.find()    <--- LINEA REPETIDA EN  505
                 
         var categoriaActual = Object;
         if (!datosEditar.subcategoria){
@@ -510,7 +518,7 @@ router.get('/recetas/editar/:id', authCheck, async (req, res) => {
 
 
         res.render('recetas/editar-receta', { 
-            allCat,
+            //allCat,  DATOS REPETIDOS EN "CAT"
             datosEditar,
             user: req.user,
             cat,
@@ -588,14 +596,14 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
 
 })
 
-router.delete('/recetas/delete', authCheck, async (req, res) => { //hay que hacer que elimine tambien su calificacion si esta en un documento aparte
+router.delete('/recetas/delete', authCheck, async (req, res) => { 
     const usuario = req.user.id;
     const resultado = await Recetas.findById(req.query.id);
     const errors = [];
     if (usuario == resultado.owen) {
         await Recetas.findByIdAndRemove(req.query.id);   //borra la receta de la base
-        await Calificacion.remove({id_receta:resultado._id});
-        await cloudinary.v2.uploader.destroy(resultado.imagenCloud);
+        await Calificacion.remove({id_receta:resultado._id}); //borra la calificacion de la base
+        await cloudinary.v2.uploader.destroy(resultado.imagenCloud); //borra la imagen de la base
         res.redirect('/recetas/mis-recetas');
     } else {
         errors.push({
@@ -603,7 +611,7 @@ router.delete('/recetas/delete', authCheck, async (req, res) => { //hay que hace
         });
     }
     if (errors.length > 0) {
-        var allCat = await Categoria.find()
+        var allCat = await Categoria.find()  //XQ SE LE PASAN LAS CATEGORIAS ??
         res.render(`recetas/error`, {
             allCat,
             errors,
@@ -733,7 +741,7 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
     const {
         busqueda,
         contador,
-        strict
+        strict    //SE USA???
     } = req.body;
     const ing = await Ingrediente.find().sort({
         Descripcion: 'asc'
@@ -1051,22 +1059,17 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
 router.get('/recetas/favoritos', async (req, res) => {                    //lista favoritos
     if (req.user) {
         const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
-        
-        
         var recetasFinal = []
 
         for (let i = 0; i < favoritos.id_favoritos.length; i++) {
             const recetaFav = await Recetas.findById(favoritos.id_favoritos[i]);
             
-            
             if (recetaFav) {
                 recetasFinal.push(recetaFav);
             }else{
                 await Favoritos.update( {id_usuario : req.user.id}, { $pullAll: {id_favoritos: [favoritos.id_favoritos[i]] } } )
-                var updFavoritos = await Favoritos.findOne({id_usuario : req.user.id})
-                
-                
-
+                // var updFavoritos = await Favoritos.findOne({id_usuario : req.user.id}) 
+                // ESTA CONSULTA NUNCA SE USA
             }
         }
         if (recetasFinal) {
