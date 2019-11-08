@@ -48,9 +48,8 @@
                                 <div id="suggestions"></div>
                             </div>
                                 {{#each datosEditar.ingredientes}}
-                                    <div class="col-md-3 col-lg-3 mt-3 ml-3 custom-control custom-checkbox border rounded checkbox">
-                                        <button type="button" class="btn btn-outline-danger">x</button> {{this.nombre}} - {{this.cantidad}}{{this.unidad}}
-                                        
+                                    <div class="col-md-3 col-lg-3 mt-3 ml-3 custom-control custom-checkbox border rounded checkbox" id="{{@index}}">
+                                        <button type="button" class="btn btn-outline-danger borrar" id="{{@index}}">x</button> {{this.nombre}} - {{this.cantidad}}{{this.unidad}}
                                     </div>                                    
                                 {{/each}}    
                         </div>

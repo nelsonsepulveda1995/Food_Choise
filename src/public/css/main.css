@@ -12,6 +12,10 @@ body {
     margin: 10px 5px 0 0;
 }
 
+.hover:hover{
+    cursor: pointer;
+}
+
 .suggestions {
     box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
     height: auto;

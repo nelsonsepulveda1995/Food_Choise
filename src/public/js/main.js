@@ -144,6 +144,14 @@ $(document).ready(function () {
         } 
     });
 
+    $('.borrar').click(function () {
+        var id = $(this).attr('id')
+        var contador = $('#contadorIngre').val()
+        contador--;
+        $(`#${id}`).remove()
+        $('#contadorIngre').val(contador)
+    })
+
     $('#listaCat').click(function () {
         $('#navCat').removeAttr('hidden');
     })

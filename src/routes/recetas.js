@@ -540,6 +540,8 @@ router.get('/recetas/editar/:id', authCheck, async (req, res) => {
     }
 });
 
+// --------------------------------------- EDITAR MIS RECETAS ---------------------------------------
+
 router.put('/recetas/editar', authCheck, async (req, res) => {
     const {
         title,
@@ -595,6 +597,8 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
     res.redirect('/recetas/mis-recetas');
 
 })
+
+// --------------------------------------- BORRAR MIS RECETAS ---------------------------------------
 
 router.delete('/recetas/delete', authCheck, async (req, res) => { 
     const usuario = req.user.id;
@@ -740,8 +744,7 @@ router.get('/busqueda/2', async (req, res) => { //busqueda por ingredientes
 router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de ingredientes
     const {
         busqueda,
-        contador,
-        strict    //SE USA???
+        contador
     } = req.body;
     const ing = await Ingrediente.find().sort({
         Descripcion: 'asc'
@@ -759,10 +762,10 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
     const errors = [];
     if (!busqueda) {
         errors.push({
-            text: 'seleccione al menos una categoría'
+            text: 'seleccione al menos un ingrediente'
         });
         var allCat = await Categoria.find()
-        res.render('recetas/recetas-categoria', {
+        res.render('recetas/recetas-ingredientes', {
             allCat,
             errors,
             user: req.user
@@ -830,7 +833,7 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
                 text: 'No se encontraron recetas'
             });
             var allCat = await Categoria.find()
-            res.render('recetas/recetas-categoria', {
+            res.render('recetas/recetas-ingredientes', {
                 allCat,
                 ing,
                 errors,
@@ -840,7 +843,7 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
     }
 })
 
-router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de ingredientes
+router.post('/busqueda/3', async (req, res) => { //BUSQUEDA POR CATEGORIA
     const {
         busqueda,
         contador
@@ -898,11 +901,6 @@ router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de 
         }
         var Receta = []
         for (let i = 0; i < Categ.length; i++) {
-            var temporal = await Recetas.find();
-            
-            
-            
-            
             var tempRec = await Recetas.find({categoria : Categ[i]._id})
             
             
@@ -945,7 +943,7 @@ router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de 
             
             
             var allCat = await Categoria.find()
-            res.render('recetas/recetas-ingredientes', {
+            res.render('recetas/recetas-categoria', {
                 allCat,
                 Receta,
                 ing,
@@ -966,10 +964,11 @@ router.post('/busqueda/3', async (req, res) => { //donde llega el formulario de 
     }
 })
 
+// --------------------------------------- RECETAS POR CATEGORIA (NAVBAR) ---------------------------------------
 
-router.get('/categoria/:id', async (req, res) => { //falta completar !!!!!
+router.get('/categoria/:id', async (req, res) => { 
     const categoria = req.params.id;
-    const cat = await Categoria.find().sort({ //la busqueda se ordena de la 'a' a la 'z'
+    const cat = await Categoria.find().sort({ 
         descripcion: 'asc'
     }); 
     
@@ -990,7 +989,7 @@ router.get('/categoria/:id', async (req, res) => { //falta completar !!!!!
             categoria: {
                 $in: categoria
             }
-        }) //ingresar parametro de busqueda (revisar si funciona)
+        })
         for (let i = 0; i < Receta.length; i++) {
             var categRec;
             if (Receta[i].subcategoria) {

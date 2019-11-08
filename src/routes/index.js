@@ -5,8 +5,4 @@ router.get('/', (req, res) => {
     res.render('recetas/all-recetas');
 })
 
-router.get('/about' , (req, res) => {
-    res.render('about');
-})
-
 module.exports = router;
