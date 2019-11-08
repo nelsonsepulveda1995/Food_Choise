@@ -29,8 +29,8 @@
                 <div class="form-group">
                     <textarea name="descripcion" class="form-control" placeholder="Preparacion del plato" required></textarea>
                 </div>
-                <div class="form-group">
-                    <select name="categoria" id="selCategoria" class="form-control" required>
+                <div class="form-group">                    
+                    <select name="categoria" id="selCategoria" data-live-search="true" data-live-search-style="startsWith" class="selectpicker" required>
                         {{#each cat }}
                             {{#if_eq tipo "cat"}}
                                 <option value="{{_id}}|{{tipo}}">{{descripcion}}</option>

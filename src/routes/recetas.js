@@ -310,14 +310,16 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     } = req.body;
     const ingredientesForm = [];
     
-    if (contador > 1) {
-        req.body.ingredientesNom.forEach(element => {
-            ingredientesForm.push(
-                element
-            )
-        });
-    }else{
-        ingredientesForm.push(req.body.ingredientesNom)
+    if (req.body.ingredientesNom) {
+        if (contador > 1) {
+            req.body.ingredientesNom.forEach(element => {
+                ingredientesForm.push(
+                    element
+                )
+            });
+        }else{
+            ingredientesForm.push(req.body.ingredientesNom)
+        }
     }
     
     const cantIng = req.body.cantIng
@@ -390,6 +392,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     if (errors.length > 0) {
         var allCat = await Categoria.find()
         res.render('recetas/new-receta', {
+            cat : allCat,
             allCat,
             errors,
             user: req.user,
