@@ -294,7 +294,7 @@ router.get('/recetas/new', authCheck, async (req, res) => {
 
     //var allCat = await Categoria.find()  <--- CODIGO REPETIDO REPERCUTE EN LINEA 290 REPERCUTE EN 297
     res.render('recetas/new-receta', {
-        //allCat,  <-- REPETIDO EN "cat"
+        allCat : cat,
         user: req.user,
         cat,
         ing
@@ -518,7 +518,7 @@ router.get('/recetas/editar/:id', authCheck, async (req, res) => {
 
 
         res.render('recetas/editar-receta', { 
-            //allCat,  DATOS REPETIDOS EN "CAT"
+            allCat:  cat,
             datosEditar,
             user: req.user,
             cat,
