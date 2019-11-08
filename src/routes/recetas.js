@@ -621,10 +621,12 @@ router.post('/recetas/calificar/:id', async (req, res) => {
             calificacion: parseInt(calif)
         });
         await newCalif.save();
-        res.send(`<script>alert("Calificacion de la receta completada"); window.location.href = "/recetas/ver/${receta}"</script>`);
+        //res.send(`<script>alert("Calificacion de la receta completada"); window.location.href = "/recetas/ver/${receta}"</script>`);
+        res.send(`<script>window.location.href = "/recetas/ver/${receta}"</script>`);
     } else {
         
-        res.send(`<script>alert("Ya ha calificado anteriormente esta receta"); window.location.href = "/recetas/ver/${receta}"</script>`);
+        //res.send(`<script>alert("Ya ha calificado anteriormente esta receta"); window.location.href = "/recetas/ver/${receta}"</script>`);
+        res.send(`<script> window.location.href = "/recetas/ver/${receta}"</script>`);
     }
 
 
@@ -1023,12 +1025,15 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
             await Favoritos.findOneAndUpdate({id_usuario : req.user.id},{
                 $push : {id_favoritos: req.params.id}
             })
-            res.send(`<script>alert("Calificacion de la receta completada"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+            //res.send(`<script>alert("Calificacion de la receta completada"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+            res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
         }else{
-            res.send(`<script>alert("Ya ha calificado anteriormente esta receta"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+            //res.send(`<script>alert("Ya ha calificado anteriormente esta receta"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+            res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
         }
     }else{
-        res.send(`<script>alert("Logueate"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+        //res.send(`<script>alert("Logueate"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+        res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
     }
 })
 
@@ -1096,7 +1101,8 @@ router.get('/recetas/favoritos', async (req, res) => {                    //list
             })
         }
     }else{
-        res.send(`<script>alert("Logueate"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+        //res.send(`<script>alert("Logueate"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
+        res.send(`<script>window.location.href = "/recetas/ver/${req.params.id}"</script>`);
     }
 })
 
