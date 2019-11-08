@@ -494,17 +494,28 @@ router.get('/recetas/editar/:id', authCheck, async (req, res) => {
     const errors = [];
     if (req.user.id == datosEditar.owen) {
         //Obtengo todas las categorias       
-        const cat = await Categoria.find();
+        const cat = await Categoria.find();                                         
 
         //Obtengo todos los ingredientes
         const ing = await Ingrediente.find();
         var allCat = await Categoria.find()
-        res.render('recetas/editar-receta', {
+                
+        var categoriaActual = Object;
+        if (!datosEditar.subcategoria){
+            categoriaActual = await Categoria.findById(datosEditar.categoria)
+        }else {            
+            categoriaActual = await Categoria.findOne({
+                subcategorias: { $elemMatch: { _id: datosEditar.categoria } }})                            
+        }                              
+
+
+        res.render('recetas/editar-receta', { 
             allCat,
             datosEditar,
             user: req.user,
             cat,
-            ing
+            ing,
+            categoriaActual
         });
     } else {
         errors.push({
