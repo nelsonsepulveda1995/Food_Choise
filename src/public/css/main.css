@@ -1,5 +1,7 @@
 body {
     background-image: url('/iconos/fondo.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     overflow-x: hidden;
 }
 
@@ -212,6 +214,10 @@ hr {
 .h-divider:hover{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transform: scale(1.05);
+}
+
+.blur{
+    filter: blur(4px);
 }
 
 .dropdown-submenu {
