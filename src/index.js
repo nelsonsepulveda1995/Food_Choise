@@ -26,6 +26,15 @@ Handlebars.registerHelper('if_eq', function(a, b, opts) {
         return opts.inverse(this);
 });
 
+Handlebars.registerHelper('ifIn', function(elem, list, options) {
+    console.log(elem)
+    console.log(list)
+    if(list.indexOf(elem) > -1) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
 //Initializations
 const app = express();
 //require('./database');

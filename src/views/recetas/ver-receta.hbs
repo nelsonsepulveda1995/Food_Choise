@@ -3,24 +3,9 @@
         <a class="close mt-3" href="/recetas/" aria-label="Close">
             <i class="fas fa-times-circle fa-2x text-danger"></i>
         </a>
-        {{#if favoritos.id_favoritos}}
-            {{#each favoritos.id_favoritos}}
-                {{#if_eq this ../receta._id}}
-                    <a class="close fav mt-3" href="/recetas/favoritos/{{../receta._id}}" aria-label="Close">
-                        <i class="fas fa-star fa-2x text-warning" id="fav"></i>
-                    </a>
-                {{else}}
-                    <a class="close fav mt-3" href="/recetas/favoritos/{{../receta._id}}" aria-label="Close">
-                        <i class="fal fa-star fa-2x text-warning" id="fav"></i>
-                    </a>
-                {{/if_eq}}
-            {{/each}}  
-        {{else}}
-             <a class="close fav mt-3" href="/recetas/favoritos/{{receta._id}}" aria-label="Close">
-                <i class="fal fa-star fa-2x text-warning" id="fav"></i>
-            </a>
-        {{/if}}
-        
+        <a class="close fav mt-3" href="/recetas/favoritos/{{receta._id}}" aria-label="Close">
+            <i class="{{#ifIn receta._id favoritos.id_favoritos }}fas {{else}} fal{{/ifIn}} fa-star fa-2x text-warning" id="fav"></i>
+        </a>
         <div class="col-md-8 mx-auto mt-5">
             <h4 class="text-success txt-centrado mt-3">{{receta.title}}</h4>
             <hr>

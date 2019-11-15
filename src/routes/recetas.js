@@ -139,10 +139,17 @@ router.get('/recetas', async (req, res) => {
         receta = await Recetas.find().sort({
             date: 'desc'
         });
-    }else{
+    }
+    else if (key == 2) {
         receta = await Recetas.find().sort({
             visitas: 'desc'
         });
+    }
+    else{
+        receta = await Recetas.find().sort({
+            calificacion: 'desc'
+        });
+            
     }
     console.log(receta)
     var allCat = await Categoria.find()
@@ -210,8 +217,10 @@ router.get('/recetas/porvisitas', async (req, res) => {
 
 router.get('/recetas/ver/:id', async (req, res) => {
     const receta = await Recetas.findById(req.params.id); //trae la receta elegida
-    const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
-    console.log(favoritos)
+    var favoritos = {}
+    if (req.user) {
+        favoritos = await Favoritos.findOne({id_usuario : req.user.id})
+    }
     var categRec;
 
     if (receta.subcategoria) {

@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    $('#ordenamiento').change(ordenar_recetas);
-
     $('#navId a').click(e => {
         e.preventDefault();
         $(this).tab('show');
@@ -296,21 +294,5 @@ function archivo(e) {
         $('#preview').empty();
         $('#preview').append(image);
     };
-
-}
-function ordenar_recetas(){
-    var id = parseInt($("#ordenamiento option:selected").val());
-    if(id !=1 && id != 2){
-        alert("Error al encontrar el tipo de ordenamiento");
-        return false;
-    }
-    else{
-        if(id==1){
-
-        }
-        if(id==2){
-            
-        }
-    }
 
 }
