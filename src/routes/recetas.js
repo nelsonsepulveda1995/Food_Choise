@@ -131,9 +131,20 @@ router.post('/getRecetasCat', async (req,res) => {
 //------------------------------------------------ RUTA DE INICIO ---------------------------------------------------
 
 router.get('/recetas', async (req, res) => {
-    const receta = await Recetas.find().sort({
-        date: 'desc'
-    });
+    const {
+        key
+    } = req.query;
+    var receta = []
+    if (!key || key == 1) {
+        receta = await Recetas.find().sort({
+            date: 'desc'
+        });
+    }else{
+        receta = await Recetas.find().sort({
+            visitas: 'desc'
+        });
+    }
+    console.log(receta)
     var allCat = await Categoria.find()
     
     
@@ -183,11 +194,26 @@ router.get('/recetas', async (req, res) => {
     }
 })
 
+//----------------------------------- Ordenar por visitas -------------------------------------------------------
+
+router.get('/recetas/porvisitas', async (req, res) => {
+    const todasVisitas = await Visitas.find({},{id_receta:1,id_visitantes:1,_id:0});
+    var lista =[];
+    
+    console.log(todasVisitas)
+    res.send(todasVisitas);
+
+})
+
+
 //--------------------------------------- VER UNA RECETA ----------------------------------------------------------
 
 router.get('/recetas/ver/:id', async (req, res) => {
     const receta = await Recetas.findById(req.params.id); //trae la receta elegida
+    const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
+    console.log(favoritos)
     var categRec;
+
     if (receta.subcategoria) {
         categRec = await Categoria.findById(receta.padre);
         for (let j = 0; j < categRec.subcategorias.length; j++) {
@@ -201,6 +227,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
     }
     const verVisitas=await Visitas.findOne({id_receta:req.params.id}); //trae las visitas de la receta elegida
     var visitasTotales= verVisitas.id_visitantes.length;
+    await Recetas.findByIdAndUpdate(req.params.id, {visitas : visitasTotales})
     
     var visitante = 0
     
@@ -235,6 +262,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
                 user: req.user,
                 categRec,
                 calificaciones,
+                favoritos,
                 promCal,
                 visitasTotales
             });
@@ -246,6 +274,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
                 allCat,
                 receta,
                 user: req.user,
+                favoritos,
                 categRec,
                 promCal,
                 visitasTotales
@@ -265,6 +294,7 @@ router.get('/recetas/ver/:id', async (req, res) => {
             categRec,
             promCal,
             user: req.user,
+            favoritos,
             visitasTotales
         });
     }else{
@@ -611,6 +641,7 @@ router.delete('/recetas/delete', authCheck, async (req, res) => {
         await Recetas.findByIdAndRemove(req.query.id);   //borra la receta de la base
         await Calificacion.remove({id_receta:resultado._id}); //borra la calificacion de la base
         await cloudinary.v2.uploader.destroy(resultado.imagenCloud); //borra la imagen de la base
+        await Visitas.findOneAndDelete({id_receta:resultado._id}); //borra las visitas de la receta (revisar si elimina)
         res.redirect('/recetas/mis-recetas');
     } else {
         errors.push({
@@ -1037,18 +1068,21 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
         const favoritos = await Favoritos.findOne({id_usuario : req.user.id})
         var favPrev = 0;
         
-        favoritos.id_favoritos.forEach(fav => {
+        favoritos.id_favoritos.forEach(async fav => {
             if (fav == req.params.id) {
                 favPrev = 1
+                await Favoritos.update( {id_usuario : req.user.id}, { $pullAll: {id_favoritos: [fav] } } )
             }
         });
         if (favPrev == 0) {
             await Favoritos.findOneAndUpdate({id_usuario : req.user.id},{
                 $push : {id_favoritos: req.params.id}
             })
+            console.log("se puso en favoritos")
             //res.send(`<script>alert("Calificacion de la receta completada"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
             res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
         }else{
+            console.log("ya estaba en favoritos")
             //res.send(`<script>alert("Ya ha calificado anteriormente esta receta"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
             res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
         }

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('#ordenamiento').change(ordenar_recetas);
+
     $('#navId a').click(e => {
         e.preventDefault();
         $(this).tab('show');
@@ -176,22 +178,6 @@ $(document).ready(function () {
             $('#inputBusqueda').addClass('search_query');
             if (accion == 2 ) {
                 $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de ingredientes de recetas...');
-                var checkbox = $('<input>',{
-                    type : 'checkbox',
-                    id : 'strict',
-                    name : 'strict',
-                    class : 'form-check-input',
-                    value : 'strict'
-                })
-                var label = $('<label>',{
-                    class : 'form-check-label'
-                }).text("Buscar solo ingredientes seleccionados")
-                label.prepend(checkbox)
-                var checkLab = $('<div>',{
-                    class : 'form-check col-2'
-                })
-                checkLab.append(label)
-                $('#formBusqueda').append(checkLab)
             } else {
                 $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de categorías de recetas...');
             }
@@ -200,6 +186,18 @@ $(document).ready(function () {
             $('#inputBusqueda').attr('placeholder' , 'Ingrese un nombre de receta...');
         }
     })
+
+    $('#ordenamiento').change(function () { 
+        var dataString = 'key='+$(this).val()
+        $.ajax({
+            type: "GET",
+            url: "/recetas",
+            data: dataString,
+            success: function (data) {
+                $('body').html(data)
+            }
+        });
+    });
 });
 
 function buildlist(listName, labelName) {
@@ -298,4 +296,21 @@ function archivo(e) {
         $('#preview').empty();
         $('#preview').append(image);
     };
+
+}
+function ordenar_recetas(){
+    var id = parseInt($("#ordenamiento option:selected").val());
+    if(id !=1 && id != 2){
+        alert("Error al encontrar el tipo de ordenamiento");
+        return false;
+    }
+    else{
+        if(id==1){
+
+        }
+        if(id==2){
+            
+        }
+    }
+
 }

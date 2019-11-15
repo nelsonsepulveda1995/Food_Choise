@@ -1,8 +1,16 @@
-<div class="card">
-<div class="card mt-3 mb-3">
-    <img src="/iconos/bienvenida.jpg" class="rounded banner" alt="">
+<div "row mx-4 my-4" style="padding-top: 20px;">
+    <div class="col-md-4 mt-5 ">
+        <div class="input-group">
+            <select class="custom-select" id="ordenamiento" aria-label="Example select with button addon">
+                <option value="1" selected="true">Mas Recientes</option>
+                <option value="2">Mas Vistos</option>
+            </select>
+            <div class="input-group-append">
+                <label class="input-group-text" for="inputGroupSelect02">Ordenamiento</label>
+            </div>
+        </div>
+    </div>
 </div>
-
 <div class="row mx-4 my-4" id="tarjetaReceta">
     {{#each receta}}
     <div class="col-md-4 mt-5 ">

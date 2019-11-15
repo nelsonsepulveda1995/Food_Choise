@@ -5,6 +5,10 @@ body {
     overflow-x: hidden;
 }
 
+.fav{
+    float: left !important;
+}
+
 .thumb{
     height: 100px;
     width: 100px;
