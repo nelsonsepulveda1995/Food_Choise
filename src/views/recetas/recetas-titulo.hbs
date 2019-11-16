@@ -1,6 +1,21 @@
 <h1 class="text-success">Resultados de busqueda : {{title}}</h1>
+<div "row mx-4 my-4" style="padding-top: 20px;">
+    <div class="col-md-4 mt-5 ">
+        <div class="input-group">
+            <select class="custom-select" id="ordenamientoBus" aria-label="Example select with button addon">
+                <option value="1">Mas Recientes</option>
+                <option value="2">Mas Vistos</option>
+                <option value="3">Mejor Calificados</option>
+            </select>
+            <div class="input-group-append">
+                <label class="input-group-text" for="inputGroupSelect02">Ordenamiento</label>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row mx-auto" id="tarjetaReceta">
     {{#each Receta}}
+    <input type="hidden" name="idRecetas" value="{{_id}}">
     <div class="col-md-4 mt-5 ">
         <div class="card zoom">
             <p id="id_tarjetaReceta" style="display:none">{{_id}}</p>
@@ -8,15 +23,14 @@
                 <h4 class="card-title txt-centrado">
                     {{title}}
                 </h4>
-        
-                {{>calificacion}}
-
+                {{>calificacion}} 
                 <h6 class="txt-centrado txt-categoria">
                     {{categoria}}
                 </h6>
                 <br>
                 <img src="{{imagenURL}}" class="img-fluid img-completa rounded">
                 <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="{{owenImg}}" alt="">{{owen}}</h6>
+                <h5 class="d-flex justify-content-center text-dark mt-2"><i class="fa fa-eye my-auto" aria-hidden="true"></i>{{visitas}}</h5>
             </a>
         </div>
     </div>

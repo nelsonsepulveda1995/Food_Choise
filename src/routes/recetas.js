@@ -109,54 +109,77 @@ router.post('/getRecetasCat', async (req,res) => {
     const recetas = await Recetas.find({categoria : key});
     var html = '';
     for (let i = 0; i < recetas.length; i++) {
-        html += `<div class="col-md-4 mt-5 ">
-                    <div class="card zoom">
-                        <p id="id_tarjetaReceta" style="display:none">${recetas[i]._id}</p>
-                        <a href="/recetas/ver/${recetas[i]._id}" class="card-body">
-                            <h4 class="card-title txt-centrado">
-                                ${recetas[i].title}
-                            </h4>
-                            {{>calificacion}} 
-                            <br>
-                            <img src="${recetas[i].imagenURL}" class="img-fluid img-completa rounded">
-                            <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="${recetas[i].owenImg}" alt="">${recetas[i].owen}</h6>
-                        </a>
-                    </div>
-                </div>`;
+        html += `<input type="hidden" name="idRecetas" value="${recetas[i]._id}">
+                    <div class="col-md-4 mt-5 ">
+                        <div class="card zoom">
+                            <p id="id_tarjetaReceta" style="display:none">${recetas[i]._id}</p>
+                            <a href="/recetas/ver/${recetas[i]._id}" class="card-body">
+                                <h4 class="card-title txt-centrado">
+                                    ${recetas[i].title}
+                                </h4>
+                                {{>calificacion}} 
+                                <br>
+                                <img src="${recetas[i].imagenURL}" class="img-fluid img-completa rounded">
+                                <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="${recetas[i].owenImg}" alt="">${recetas[i].owen}</h6>
+                            </a>
+                        </div>
+                    </div>`;
     }
     
     res.send(html);
 })
 
-//------------------------------------------------ RUTA DE INICIO ---------------------------------------------------
-
-router.get('/recetas', async (req, res) => {
-    const {
-        key
+router.get('/orderBy',async (req,res)=>{
+    var {
+        key,
+        arrayRecetas
     } = req.query;
+    arrayRecetas = arrayRecetas.split(',')
+    console.log(arrayRecetas)
     var receta = []
-    if (!key || key == 1) {
-        receta = await Recetas.find().sort({
-            date: 'desc'
-        });
+    if (!arrayRecetas) {
+        if (key == 1) {
+            receta = await Recetas.find().sort({
+                date: 'desc'
+            });
+        }
+        else if (key == 2) {
+            receta = await Recetas.find().sort({
+                visitas: 'desc'
+            });
+        }
+        else{
+            receta = await Recetas.find().sort({
+                calificacion: 'desc'
+            });
+                
+        }
+    } else {
+        if (key == 1) {
+            console.log("busca por date")
+            receta = await Recetas.find({_id : {$in : arrayRecetas}}).sort({
+                date: 'desc'
+            });
+        }
+        else if (key == 2) {
+            console.log("busca por visitas")
+            receta = await Recetas.find({_id : {$in : arrayRecetas}}).sort({
+                visitas: 'desc'
+            });
+        }
+        else{
+            console.log("busca por calificacion")
+            receta = await Recetas.find({_id : {$in : arrayRecetas}}).sort({
+                calificacion: 'desc'
+            });
+                
+        }
     }
-    else if (key == 2) {
-        receta = await Recetas.find().sort({
-            visitas: 'desc'
-        });
-    }
-    else{
-        receta = await Recetas.find().sort({
-            calificacion: 'desc'
-        });
-            
-    }
-    console.log(receta)
-    var allCat = await Categoria.find()
     
     
     //var categRec = await Categoria.findById(receta.categoria);
     for (let i = 0; i < receta.length; i++) {
+        
         var categRec;
         if (receta[i].subcategoria) {
             categRec = await Categoria.findById(receta[i].padre);
@@ -185,6 +208,96 @@ router.get('/recetas', async (req, res) => {
             
         }
     }
+    
+    res.send(order(receta));
+})
+
+function order(receta) {
+    
+    var html = '';
+    receta.forEach(element => {
+        
+        html += `<input type="hidden" name="idRecetas" value="${element._id}">
+                <div class="col-md-4 mt-5">
+                    <div class="card zoom">
+                        <p id="id_tarjetaReceta" style="display:none">${element._id}</p>
+                        <a href="/recetas/ver/${element._id}" class="card-body">
+                            <h4 class="card-title txt-centrado">
+                                ${element.title}
+                            </h4>
+                            <div class="container">
+                                <div class="row d-flex justify-content-center">
+                                    <p id="promedio_calificacion_${element._id}" style="display:none">${element.calificacion}</p>
+                                        <div class="form-check mr-3">
+                                            <i class="fa fa-star-o fa-xs estrella" id="${element._id}prom1" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fa-xs estrella" id="${element._id}prom2" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fa-xs estrella" id="${element._id}prom3" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fa-xs estrella" id="${element._id}prom4" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fa-xs estrella" id="${element._id}prom5" aria-hidden="true"></i>
+                                        </div>  
+                                    </div>
+                            </div> 
+                            <h6 class="txt-centrado txt-categoria">
+                                ${element.categoria}
+                            </h6>
+                            <br>
+                            <img src="${element.imagenURL}" class="img-fluid img-completa rounded">
+                            <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="${element.owenImg}" alt="">${element.owen}</h6>
+                            <h5 class="d-flex justify-content-center text-dark mt-2"><i class="fa fa-eye my-auto" aria-hidden="true"></i>${element.visitas}</h5>
+                        </a>
+                    </div>
+                </div>`
+    });
+    return html;
+}
+
+//------------------------------------------------ RUTA DE INICIO ---------------------------------------------------
+
+router.get('/recetas', async (req, res) => {
+    const receta = await Recetas.find().sort({
+        date: 'desc'
+    });
+    
+    var allCat = await Categoria.find()
+    
+    
+    //var categRec = await Categoria.findById(receta.categoria);
+    for (let i = 0; i < receta.length; i++) {
+        var categRec;
+        if (receta[i].subcategoria) {
+            categRec = await Categoria.findById(receta[i].padre);
+            for (let j = 0; j < categRec.subcategorias.length; j++) {
+                if (receta[i].categoria == categRec.subcategorias[j]._id) {
+                    receta[i].categoria = categRec.subcategorias[j].descripcion;
+                }
+            }
+        } else {
+            categRec = await Categoria.findById(receta[i].categoria);
+            receta[i].categoria = categRec.descripcion;
+        }
+        var owenReceta = await Users.findById(receta[i].owen);
+        receta[i].owen = owenReceta.username;
+        receta[i].owenImg = owenReceta.thumbnail;
+        const calificacionesProm = await Calificacion.find({
+            id_receta: receta[i]._id
+        });
+        if (calificacionesProm.length > 0 && calificacionesProm) {
+            
+            var totalCal = 0
+            for (let i = 0; i < calificacionesProm.length; i++) {
+                totalCal = totalCal + calificacionesProm[i].calificacion;
+            }
+            var promCal = totalCal / calificacionesProm.length;
+            
+            await Recetas.findByIdAndUpdate(receta[i]._id,{calificacion : promCal})
+            receta[i].calificacion = promCal;
+            
+        }else{
+            
+            await Recetas.findByIdAndUpdate(receta[i]._id,{calificacion : 0})
+        }
+
+    }
     if (req.user) {
         //var allCat = await Categoria.find()  //CODIGO REPETIDO EN LINEA 137
         res.render('recetas/all-recetas', {
@@ -207,7 +320,7 @@ router.get('/recetas/porvisitas', async (req, res) => {
     const todasVisitas = await Visitas.find({},{id_receta:1,id_visitantes:1,_id:0});
     var lista =[];
     
-    console.log(todasVisitas)
+    
     res.send(todasVisitas);
 
 })
@@ -1087,11 +1200,11 @@ router.get('/recetas/favoritos/:id', async (req, res) => { //lista favoritos
             await Favoritos.findOneAndUpdate({id_usuario : req.user.id},{
                 $push : {id_favoritos: req.params.id}
             })
-            console.log("se puso en favoritos")
+            
             //res.send(`<script>alert("Calificacion de la receta completada"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
             res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
         }else{
-            console.log("ya estaba en favoritos")
+            
             //res.send(`<script>alert("Ya ha calificado anteriormente esta receta"); window.location.href = "/recetas/ver/${req.params.id}"</script>`);
             res.send(`<script> window.location.href = "/recetas/ver/${req.params.id}"</script>`);
         }

@@ -4,7 +4,7 @@
             <i class="fas fa-times-circle fa-2x text-danger"></i>
         </a>
         <a class="close fav mt-3" href="/recetas/favoritos/{{receta._id}}" aria-label="Close">
-            <i class="{{#ifIn receta._id favoritos.id_favoritos }}fas {{else}} fal{{/ifIn}} fa-star fa-2x text-warning" id="fav"></i>
+            <i class="fa {{#ifIn receta._id favoritos.id_favoritos }} fa-star {{else}} fa-star-o {{/ifIn}}  fa-2x text-warning" id="fav"></i>
         </a>
         <div class="col-md-8 mx-auto mt-5">
             <h4 class="text-success txt-centrado mt-3">{{receta.title}}</h4>
@@ -126,7 +126,7 @@
                 </div>
             </div>
             {{/if}}
-            <h2>Visualizaciones: {{visitasTotales}}</h2>
+            <h2 class="d-flex justify-content-center text-dark mt-5"><i class="fa fa-eye my-auto" aria-hidden="true"></i>{{visitasTotales}}</h2>
         </div>
     </div>
     {{#if_eq receta.owen user.id}}

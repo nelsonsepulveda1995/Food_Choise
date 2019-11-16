@@ -40,28 +40,7 @@ $(document).ready(function () {
             $(`#rate${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
         }
     }
-    var tarjetas = $('#tarjetaReceta .card')
-    for (let i = 0; i < tarjetas.length; i++) {
-        let stars = $(`#tarjetaReceta .card:eq(${i}) #id_tarjetaReceta`).text()
-
-
-        let calPromAll = parseFloat($('#promedio_calificacion_' + stars).text());
-
-        if (calPromAll % 1 > 0) {
-            $(`#${stars}prom${parseInt(calPromAll)+1}`).toggleClass("fa-star-o fa-star fa fas fa-star-half-alt starSelectedPrev");
-        }
-        for (let i = parseInt(calPromAll); i >= 0; i--) {
-            $(`#${stars}prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
-        }
-
-    }
-    var calificacionProm = parseFloat($('#promedio_calificacion').text());
-    if (calificacionProm % 1 > 0) {
-        $(`#prom${parseInt(calificacionProm)+1}`).toggleClass("fa-star-o fa-star fa fas fa-star-half-alt starSelectedPrev");
-    }
-    for (let i = parseInt(calificacionProm); i >= 0; i--) {
-        $(`#prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
-    }
+    calificate()
     var anterior = '';
     var contadorIng = 0
     $('#key').on('keyup', function () {
@@ -189,14 +168,58 @@ $(document).ready(function () {
         var dataString = 'key='+$(this).val()
         $.ajax({
             type: "GET",
-            url: "/recetas",
+            url: "/orderBy",
             data: dataString,
             success: function (data) {
-                $('body').html(data)
+                $('#tarjetaReceta').html(data)
+                calificate();
+            }
+        });
+    });
+    $('#ordenamientoBus').change(function () {
+        var idRecetas = $('input[name = idRecetas]')
+        var arrayRecetas = []
+        for (let i = 0; i < idRecetas.length; i++) {
+            const element = idRecetas[i];
+            arrayRecetas.push(element.getAttribute('value'))
+        }
+        var dataString = 'key='+$(this).val()+'&arrayRecetas='+arrayRecetas
+        $.ajax({
+            type: "GET",
+            url: "/orderBy",
+            data: dataString,
+            success: function (data) {
+                $('#tarjetaReceta').html(data)
+                calificate();
             }
         });
     });
 });
+
+function calificate() {
+    var tarjetas = $('#tarjetaReceta .card')
+    for (let i = 0; i < tarjetas.length; i++) {
+        let stars = $(`#tarjetaReceta .card:eq(${i}) #id_tarjetaReceta`).text()
+
+
+        let calPromAll = parseFloat($('#promedio_calificacion_' + stars).text());
+
+        if (calPromAll % 1 > 0) {
+            $(`#${stars}prom${parseInt(calPromAll)+1}`).toggleClass("fa-star-o fa-star fa fas fa-star-half-alt starSelectedPrev");
+        }
+        for (let i = parseInt(calPromAll); i >= 0; i--) {
+            $(`#${stars}prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
+        }
+
+    }
+    var calificacionProm = parseFloat($('#promedio_calificacion').text());
+    if (calificacionProm % 1 > 0) {
+        $(`#prom${parseInt(calificacionProm)+1}`).toggleClass("fa-star-o fa-star fa fas fa-star-half-alt starSelectedPrev");
+    }
+    for (let i = parseInt(calificacionProm); i >= 0; i--) {
+        $(`#prom${i}`).toggleClass("fa-star-o fa-star starSelectedPrev");
+    }
+}
 
 function buildlist(listName, labelName) {
 

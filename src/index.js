@@ -12,28 +12,28 @@ const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const keys = require('./keys');
 const Usuario = require('./models/user-model');
-const uuid=require('uuid/v4');
+const uuid = require('uuid/v4');
 
-const morgan=require('morgan'); //trabajar imagenes
-const multer=require('multer');
+const morgan = require('morgan'); //trabajar imagenes
+const multer = require('multer');
 
 
 //helpers custom
-Handlebars.registerHelper('if_eq', function(a, b, opts) {
-    if(a == b) // Or === depending on your needs
+Handlebars.registerHelper('if_eq', function (a, b, opts) {
+    if (a == b) // Or === depending on your needs
         return opts.fn(this);
     else
         return opts.inverse(this);
 });
 
-Handlebars.registerHelper('ifIn', function(elem, list, options) {
-    console.log(elem)
-    console.log(list)
-    if(list.indexOf(elem) > -1) {
-      return options.fn(this);
+Handlebars.registerHelper('ifIn', function (elem, list, options) {
+    if (elem && list) {
+        if (list.indexOf(elem) > -1) {
+            return options.fn(this);
+        }
     }
     return options.inverse(this);
-  });
+});
 
 //Initializations
 const app = express();
@@ -42,7 +42,7 @@ const app = express();
 //Cookie Sessions
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
-    keys:[keys.session.cookieKey]
+    keys: [keys.session.cookieKey]
 }))
 
 //Inicializacion Passport
@@ -54,11 +54,11 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
 //connect to mongodb
-mongoose.connect(keys.mongodb.dbURI, {    
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useFindAndModify: false
-})
+mongoose.connect(keys.mongodb.dbURI, {
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useFindAndModify: false
+    })
     .then(db => console.log('Conectado a MongoDB Atlas'))
     .catch(err => console.log(err));
 
@@ -78,15 +78,19 @@ app.set('view engine', '.hbs');
 
 //MiddleWares
 app.use(morgan('dev'));
-const storage=multer.diskStorage({      //esta funcion toma las fotos y les cambia el nombre por uno ramdom para evitar duplicados
-    destination: path.join(__dirname,'public/uploads'),
-    filename: (req,file,cb,filename)=>{
-        cb(null,uuid()+ path.extname(file.originalname));
+const storage = multer.diskStorage({ //esta funcion toma las fotos y les cambia el nombre por uno ramdom para evitar duplicados
+    destination: path.join(__dirname, 'public/uploads'),
+    filename: (req, file, cb, filename) => {
+        cb(null, uuid() + path.extname(file.originalname));
     }
 })
-app.use(multer({storage}).single('imagen')) //toma una sola foto
+app.use(multer({
+    storage
+}).single('imagen')) //toma una sola foto
 
-app.use(express.urlencoded({extended: false}));     //false ya que multer es quien se encarga de las fotos
+app.use(express.urlencoded({
+    extended: false
+})); //false ya que multer es quien se encarga de las fotos
 app.use(methodOverride('_method'));
 app.use(session({
     secret: 'mysecretapp',
