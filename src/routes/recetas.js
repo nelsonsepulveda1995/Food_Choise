@@ -36,8 +36,10 @@ const authCheck = (req, res, next) => {
 //-----------------------------------------  RUTAS AJAXS --------------------------------------------------
 
 router.post('/getIng', async (req,res) => {
+    console.log("getIng")
     var url = "ing"
     const ing = await Ingrediente.find();
+    console.log("se crea ing")
     res.send(getInput(req,url,ing))
 })
 
@@ -57,48 +59,16 @@ router.post('/getCat', async (req,res) => {
 })
 
 function getInput(req,url,destino) {
-    
-    const {
-        key
-    } = req.body;
-    const errors = [];
-    var keys = key.split(" ");
-    var final = []
-    var chars={
-        "á":"a", "é":"e", "í":"i", "ó":"o", "ú":"u",
-        "à":"a", "è":"e", "ì":"i", "ò":"o", "ù":"u",
-        "Á":"A", "É":"E", "Í":"I", "Ó":"O", "Ú":"U",
-        "À":"A", "È":"E", "Ì":"I", "Ò":"O", "Ù":"U"}
-        
-    var expr=/[áàéèíìóòúùñ]/ig;
-    
-    for (let j = 0; j < destino.length; j++) {
-        for (let i = 0; i < keys.length; i++) {
-            var input=keys[i].replace(expr,function(e){return chars[e]});
-            if (url == "ing") {
-                var output = destino[j].Descripcion.replace(expr,function(e){return chars[e]});
-            } else {
-                var output = destino[j].descripcion.replace(expr,function(e){return chars[e]});
-            }
-            var _regex = new RegExp(input, "i");
-            var match = output.match(_regex);
-            if(match){
-                final.push(destino[j])
-                i = keys.length
-            }
-            
-        }
-
-    }
+    console.log("function getInput")
     var html = '';
-    for (let i = 0; i < final.length; i++) {
+    for (let i = 0; i < destino.length; i++) {
         if (url == "ing") {
-            html += `<div><a class="suggest-element" data="${final[i].Descripcion}" id="${final[i]._id}">${final[i].Descripcion}</a></div>`;
+            html += `<option value="${destino[i]._id}">${destino[i].Descripcion}</option>`;
         } else {
-            html += `<div><a class="suggest-element" data="${final[i].descripcion}" id="${final[i]._id}">${final[i].descripcion}</a></div>`;
+            html += `<option value="${destino[i]._id}">${destino[i].descripcion}</option>`;
         }
     }
-    
+    console.log(html);
     return html;
 }
 
@@ -134,7 +104,7 @@ router.get('/orderBy',async (req,res)=>{
         key,
         arrayRecetas
     } = req.query;
-    arrayRecetas = arrayRecetas.split(',')
+
     console.log(arrayRecetas)
     var receta = []
     if (!arrayRecetas) {
@@ -155,6 +125,7 @@ router.get('/orderBy',async (req,res)=>{
                 
         }
     } else {
+        arrayRecetas = arrayRecetas.split(',')
         if (key == 1) {
             console.log("busca por date")
             receta = await Recetas.find({_id : {$in : arrayRecetas}}).sort({

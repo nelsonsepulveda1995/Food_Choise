@@ -43,40 +43,23 @@ $(document).ready(function () {
     calificate()
     var anterior = '';
     var contadorIng = 0
-    $('#key').on('keyup', function () {
-        var key = $(this).val();
-        var dataString = 'key=' + key;
-        
-        $.ajax({
-            type: "POST",
-            url: "/getIng",
-            data: dataString,
-            success: function (data) {
-                //Escribimos las sugerencias que nos manda la consulta
-                $('#suggestions').show().html(data);
-                //Al hacer click en alguna de las sugerencias
-                $('.suggest-element').on('click', function () {
-                    //Obtenemos la id unica de la sugerencia pulsada
-                    var id = $(this).attr('id');
-                    var selected = $('#' + id).attr('data')
-                    //Editamos el valor del input con data de la sugerencia pulsada
-                    $('#key').val('');
-                    //Hacemos desaparecer el resto de sugerencias
-                    $('#suggestions').hide();
-                    if (anterior == id) {
-                        alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
-                    } else {
-                        console.log(id);
-                        buildCant(selected,id)
-                    }
-                    anterior = id;
-                    contadorIng++;
-                        console.log(contadorIng)
-                        $('#contadorIngre').val(contadorIng);
-                    return false;
-                });
-            }
-        });
+    $('#key').change(function () {
+        console.log("pressed key")
+        console.log("enter pressed")
+        var value = $(this).val().split('|');
+        var id = value[0]
+        var selected = value[1]
+        $('#key').val('');
+        if (anterior == id) {
+            alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
+        } else {
+            buildCant(selected, id)
+        }
+        anterior = id;
+        contadorIng++;
+        console.log(contadorIng)
+        $('#contadorIngre').val(contadorIng);
+        return false;
     });
     var contador = 0;
     var anterior = '';
@@ -110,7 +93,7 @@ $(document).ready(function () {
                             alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
                         } else {
                             console.log(id);
-                            buildBusqueda(selected,id)
+                            buildBusqueda(selected, id)
                         }
                         anterior = id;
                         contador++;
@@ -120,7 +103,7 @@ $(document).ready(function () {
                     });
                 }
             });
-        } 
+        }
     });
 
     $('.borrar').click(function () {
@@ -135,37 +118,42 @@ $(document).ready(function () {
         $('#navCat').removeAttr('hidden');
     })
 
-    $("#key").focusout(function () {
-        $('#suggestions').fadeOut();
-    });
-
-    $('#inputGroupFile01').change(function(e){
+    $('#inputGroupFile01').change(function (e) {
         $('#labelFile').text(e.target.files[0].name)
         archivo(e);
     })
 
     $('#formBusqueda').submit(function (e) {
         var accion = $("#tipoBusqueda").val();
-        $(this).attr('action',`/busqueda/${accion}`);
+        $(this).attr('action', `/busqueda/${accion}`);
     });
 
-    $('#tipoBusqueda').change(function(){
+    $('#tipoBusqueda').change(function () {
         var accion = $("#tipoBusqueda").val();
         if (accion != 1) {
             $('#inputBusqueda').addClass('search_query');
-            if (accion == 2 ) {
-                $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de ingredientes de recetas...');
+            if (accion == 2) {
+                $('#inputBusqueda').attr('placeholder', 'Ingrese nombres de ingredientes de recetas...');
             } else {
-                $('#inputBusqueda').attr('placeholder' , 'Ingrese nombres de categorías de recetas...');
+                $('#inputBusqueda').attr('placeholder', 'Ingrese nombres de categorías de recetas...');
             }
-        }else{
+        } else {
             $('#inputBusqueda').removeClass('search_query');
-            $('#inputBusqueda').attr('placeholder' , 'Ingrese un nombre de receta...');
+            $('#inputBusqueda').attr('placeholder', 'Ingrese un nombre de receta...');
         }
     })
 
-    $('#ordenamiento').change(function () { 
-        var dataString = 'key='+$(this).val()
+    $('#ordenamiento').change(function () {
+        var loader = $('<div>', {
+            id: 'loaderImage',
+            class: 'mx-auto mt-5'
+        })
+        var dataString = 'key=' + $(this).val()
+        $('#tarjetaReceta').empty();
+        $('#tarjetaReceta').append(loader)
+        var numAl = Math.floor((Math.random() * 10) + 1);
+        var cImageSrc = `/js/images/sprites${numAl}.png`
+        new imageLoader(cImageSrc, 'startAnimation()');
         $.ajax({
             type: "GET",
             url: "/orderBy",
@@ -173,17 +161,27 @@ $(document).ready(function () {
             success: function (data) {
                 $('#tarjetaReceta').html(data)
                 calificate();
+                stopAnimation();
             }
         });
     });
     $('#ordenamientoBus').change(function () {
+        var loader = $('<div>', {
+            id: 'loaderImage',
+            class: 'mx-auto mt-5'
+        })
         var idRecetas = $('input[name = idRecetas]')
         var arrayRecetas = []
         for (let i = 0; i < idRecetas.length; i++) {
             const element = idRecetas[i];
             arrayRecetas.push(element.getAttribute('value'))
         }
-        var dataString = 'key='+$(this).val()+'&arrayRecetas='+arrayRecetas
+        var dataString = 'key=' + $(this).val() + '&arrayRecetas=' + arrayRecetas
+        $('#tarjetaReceta').empty();
+        $('#tarjetaReceta').append(loader)
+        var numAl = Math.floor((Math.random() * 10) + 1);
+        var cImageSrc = `/js/images/sprites${numAl}.png`
+        new imageLoader(cImageSrc, 'startAnimation()');
         $.ajax({
             type: "GET",
             url: "/orderBy",
@@ -191,6 +189,7 @@ $(document).ready(function () {
             success: function (data) {
                 $('#tarjetaReceta').html(data)
                 calificate();
+                stopAnimation();
             }
         });
     });
@@ -231,11 +230,11 @@ function buildlist(listName, labelName) {
     }
 }
 
-function buildBusqueda(selected, id){
-    var nombre = $('<input>',{
-        'value' : `${selected}`,
-        'name' : `busqueda`,
-        'hidden' : 'hidden'
+function buildBusqueda(selected, id) {
+    var nombre = $('<input>', {
+        'value': `${selected}`,
+        'name': `busqueda`,
+        'hidden': 'hidden'
     })
     var input_cantidad = $('<div>', {
         'html': `<p>${selected}</p>`,
@@ -246,7 +245,7 @@ function buildBusqueda(selected, id){
     $('#seleccionesBusqueda').append(input_cantidad)
 }
 
-function buildCant(selected,id) {
+function buildCant(selected, id) {
     var select = $('<select>', {
         'html': `  <option value="KG">KG</option>
                     <option value="Gr">Gr</option>
@@ -256,7 +255,7 @@ function buildCant(selected,id) {
         'id': `sel-${id}-tipoCant`,
         'class': 'form-control',
         'name': `cantIng`,
-        'required' : 'required'
+        'required': 'required'
     })
     var divVselect = $('<div>', {
         'class': 'col-6'
@@ -266,8 +265,8 @@ function buildCant(selected,id) {
         'type': 'number',
         'class': 'form-control',
         'name': `cantIng`,
-        'required' : 'required',
-        'min' : '1',
+        'required': 'required',
+        'min': '1',
         'id': `cantidadIng-${id}`
     })
     var divVinput = $('<div>', {
@@ -288,16 +287,16 @@ function buildCant(selected,id) {
         'class': 'col-4 rounded checkbox'
     })
 
-    var row_contenedor_total = $('<div>',{
-        'class' : 'row d-flex justify-content-center'
+    var row_contenedor_total = $('<div>', {
+        'class': 'row d-flex justify-content-center'
     })
-    var ingrediente_completo = row_contenedor_total.append(input_cantidad,div_container_cantidad);
-    var nombre = $('<input>',{
-        'value' : `${id}`,
-        'name' : `ingredientesNom`,
-        'hidden' : 'hidden'
+    var ingrediente_completo = row_contenedor_total.append(input_cantidad, div_container_cantidad);
+    var nombre = $('<input>', {
+        'value': `${id}`,
+        'name': `ingredientesNom`,
+        'hidden': 'hidden'
     })
-    $('#selecciones').append(nombre,ingrediente_completo);
+    $('#selecciones').append(nombre, ingrediente_completo);
 }
 
 function archivo(e) {
@@ -306,13 +305,13 @@ function archivo(e) {
 
     // Leemos el archivo subido y se lo pasamos a nuestro fileReader
     reader.readAsDataURL(e.target.files[0]);
-    
+
 
     // Le decimos que cuando este listo ejecute el código interno
-    reader.onload = function(){
-        let image = $('<img>',{
-            'src' : reader.result,
-            'class' : 'rounded img-receta'
+    reader.onload = function () {
+        let image = $('<img>', {
+            'src': reader.result,
+            'class': 'rounded img-receta'
         })
         $('#preview').empty();
         $('#preview').append(image);

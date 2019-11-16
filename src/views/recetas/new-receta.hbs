@@ -30,7 +30,7 @@
                     <textarea name="descripcion" class="form-control" placeholder="Preparacion del plato" required></textarea>
                 </div>
                 <div class="form-group">                    
-                    <select name="categoria" id="selCategoria" data-live-search="true" data-live-search-style="startsWith" class="selectpicker" required>
+                    <select name="categoria" id="selCategoria" data-live-search="true" data-live-search-style="startsWith" class="selectpicker form-control" required>
                         {{#each cat }}
                             {{#if_eq tipo "cat"}}
                                 <option value="{{_id}}|{{tipo}}">{{descripcion}}</option>
@@ -48,7 +48,11 @@
                     <div class="container">
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-5 col-lg-5 mt-2 ml-2 custom-control custom-checkbox border rounded checkbox">
-                                <input class="search_query form-control" type="text" id="key" placeholder="Ingrese y seleccione un ingrediente">
+                                <select class="selectpicker search_query form-control" data-dropup-auto="false" data-live-search="true" name="key" id="key" placeholder="Ingrese y seleccione un ingrediente">
+                                    {{#each ing}}
+                                        <option value="{{_id}}|{{Descripcion}}">{{Descripcion}}</option>
+                                    {{/each}}
+                                </select>
                                 <div id="suggestions" class="suggestions"></div>
                                 <input type="text" hidden name="contador" id="contadorIngre">
                             </div>    

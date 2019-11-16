@@ -1,5 +1,6 @@
 body {
     background-image: url('/iconos/fondo.png');
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow-x: hidden;
