@@ -35,6 +35,11 @@ Handlebars.registerHelper('ifIn', function (elem, list, options) {
     return options.inverse(this);
 });
 
+Handlebars.registerHelper("inc", function(value, options)
+{
+    return parseInt(value) + 1;
+});
+
 //Initializations
 const app = express();
 //require('./database');

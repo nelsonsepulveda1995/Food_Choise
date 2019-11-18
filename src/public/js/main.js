@@ -1,3 +1,4 @@
+var mensajes = 0;
 $(document).ready(function () {
     $('#navId a').click(e => {
         e.preventDefault();
@@ -42,78 +43,74 @@ $(document).ready(function () {
     }
     calificate()
     var anterior = '';
-    var contadorIng = 0
+    var contadorIng = 1
     $('#key').change(function () {
-        console.log("pressed key")
-        console.log("enter pressed")
-        var value = $(this).val().split('|');
-        var id = value[0]
-        var selected = value[1]
-        $('#key').val('');
-        if (anterior == id) {
-            alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
-        } else {
-            buildCant(selected, id)
+        if ($(this).val() != 0) {
+            var value = $(this).val().split('|');
+            var id = value[0]
+            var selected = value[1]
+            $('#key').val('');
+            if ($('[name = "ingredientesNom"]')) {
+                var flag = 0
+                $('[name = "ingredientesNom"]').each(function (index, element) {
+                    if (anterior == id || $(this).val() == id) {
+                        flag = 1;
+                    } 
+                });
+                if (flag == 0) {
+                    buildCant(selected, id)
+                    accionBorrar(mensajes)
+                }else{
+                    alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
+                }
+            }else{
+                if (anterior == id) {
+                    alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
+                } else {
+                    buildCant(selected, id)
+                    accionBorrar(mensajes)
+                }
+            }
+            
+            anterior = id;
+            console.log(contadorIng)
+
+            var orig = parseInt($('#contadorIngre').val())
+            console.log("contador de ingredientes")
+            console.log(orig)
+            if (!isNaN(orig)) {
+                $('#contadorIngre').val(orig + contadorIng);
+                console.log("no es NaN")
+                console.log(orig+contadorIng)
+            }else{
+                $('#contadorIngre').val(contadorIng);
+                console.log("es NaN")
+                console.log(contadorIng)
+            }
+            return false;
         }
-        anterior = id;
-        contadorIng++;
-        console.log(contadorIng)
-        $('#contadorIngre').val(contadorIng);
-        return false;
     });
     var contador = 0;
     var anterior = '';
-    $('#inputBusqueda').on('keyup', function () {
-        var key = $(this).val();
-        var dataString = 'key=' + key;
-        var url = $('#tipoBusqueda').val()
-        if (url != 1) {
-            if (url == 2) {
-                url = "/getIng"
+    $('#selectBusqueda_cat, #selectBusqueda_ing').on('change', function () {
+        if ($(this).val() != 0) {
+            var value = $(this).val().split('|');
+            var id = value[0]
+            var selected = value[1]
+            $(this).val('');
+            if (anterior == id) {
+                alert("No se pueden repetir los elementos ingresados.");
             } else {
-                url = "/getCat"
+                buildBusqueda(selected, id)
             }
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: dataString,
-                success: function (data) {
-                    //Escribimos las sugerencias que nos manda la consulta
-                    $('#suggestionsBusqueda').show().html(data);
-                    //Al hacer click en alguna de las sugerencias
-                    $('.suggest-element').on('click', function () {
-                        //Obtenemos la id unica de la sugerencia pulsada
-                        var id = $(this).attr('id');
-                        var selected = $('#' + id).attr('data')
-                        //Editamos el valor del input con data de la sugerencia pulsada
-                        $('#inputBusqueda').val('');
-                        //Hacemos desaparecer el resto de sugerencias
-                        $('#suggestionsBusqueda').hide();
-                        if (anterior == id) {
-                            alert("Ya ha seleccionado ese ingrediente, por favor ingrese uno nuevo");
-                        } else {
-                            console.log(id);
-                            buildBusqueda(selected, id)
-                        }
-                        anterior = id;
-                        contador++;
-                        console.log(contador)
-                        $('#contadorInput').val(contador);
-                        return false;
-                    });
-                }
-            });
+            anterior = id;
+            contador++;
+            console.log(contador)
+            $('#contadorInput').val(contador);
+            return false;
         }
     });
-
-    $('.borrar').click(function () {
-        var id = $(this).attr('id')
-        var contador = $('#contadorIngre').val()
-        contador--;
-        $(`#${id}`).remove()
-        $('#contadorIngre').val(contador)
-    })
-
+    accionBorrar(mensajes);
     $('#listaCat').click(function () {
         $('#navCat').removeAttr('hidden');
     })
@@ -127,19 +124,21 @@ $(document).ready(function () {
         var accion = $("#tipoBusqueda").val();
         $(this).attr('action', `/busqueda/${accion}`);
     });
-
     $('#tipoBusqueda').change(function () {
         var accion = $("#tipoBusqueda").val();
         if (accion != 1) {
-            $('#inputBusqueda').addClass('search_query');
+            $('#inputBusqueda').hide();
             if (accion == 2) {
-                $('#inputBusqueda').attr('placeholder', 'Ingrese nombres de ingredientes de recetas...');
+                $('#divSelectcat').hide();
+                $('#divSelecting').show();
             } else {
-                $('#inputBusqueda').attr('placeholder', 'Ingrese nombres de categorías de recetas...');
+                $('#divSelectcat').show();
+                $('#divSelecting').hide();
             }
         } else {
-            $('#inputBusqueda').removeClass('search_query');
-            $('#inputBusqueda').attr('placeholder', 'Ingrese un nombre de receta...');
+            $('#divSelectcat').hide();
+            $('#divSelecting').hide();
+            $('#inputBusqueda').show();
         }
     })
 
@@ -194,6 +193,24 @@ $(document).ready(function () {
         });
     });
 });
+
+function accionBorrar(mensajes) {
+    console.log("llamada funcion accionBorrar")
+    $('.borrar').click(function () {
+        console.log("intento borrar un ingrediente")
+        var id = $(this).attr('id')
+        var contador = parseInt($('#contadorIngre').val())
+        contador--;
+        $(`#ing-all-${id}`).remove()
+        $('#contadorIngre').val(contador)
+        if (contador <= 1) {
+            if (mensajes == 0) {
+                alert("Si modifica la receta sin que ésta posea un minimo de UN (1) ingrediente, no se modificarán los ingredientes que ingresó anteriormente")
+                mensajes = 1;
+            }
+        }
+    })
+}
 
 function calificate() {
     var tarjetas = $('#tarjetaReceta .card')
@@ -288,15 +305,22 @@ function buildCant(selected, id) {
     })
 
     var row_contenedor_total = $('<div>', {
-        'class': 'row d-flex justify-content-center'
+        'class': 'row d-flex justify-content-center',
+        'id': `ing-all-${id}`
     })
-    var ingrediente_completo = row_contenedor_total.append(input_cantidad, div_container_cantidad);
     var nombre = $('<input>', {
         'value': `${id}`,
         'name': `ingredientesNom`,
         'hidden': 'hidden'
     })
-    $('#selecciones').append(nombre, ingrediente_completo);
+    var botonBorrar = $('<button>',{
+        'type' :"button",
+        'class' :"btn btn-outline-danger borrar", 
+        'id' :`${id}`,
+        'html' : 'x'
+    })
+    var ingrediente_completo = row_contenedor_total.append(botonBorrar, input_cantidad, div_container_cantidad, nombre);
+    $('#selecciones').append(ingrediente_completo);
 }
 
 function archivo(e) {

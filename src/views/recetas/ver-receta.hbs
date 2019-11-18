@@ -4,7 +4,7 @@
             <i class="fas fa-times-circle fa-2x text-danger"></i>
         </a>
         <a class="close fav mt-3" href="/recetas/favoritos/{{receta._id}}" aria-label="Close">
-            <i class="fa {{#ifIn receta._id favoritos.id_favoritos }} fa-star {{else}} fa-star-o {{/ifIn}}  fa-2x text-warning" id="fav"></i>
+            <i class="{{#ifIn receta._id favoritos.id_favoritos }} fas {{else}} far {{/ifIn}} fa-heart fa-2x text-danger" id="fav"></i>
         </a>
         <div class="col-md-8 mx-auto mt-5">
             <h4 class="text-success txt-centrado mt-3">{{receta.title}}</h4>

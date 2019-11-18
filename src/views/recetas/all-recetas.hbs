@@ -28,7 +28,15 @@
                 <br>
                 <img src="{{imagenURL}}" class="img-fluid img-completa rounded">
                 <h6 class="txt-centrado txt-categoria my-auto"><img class="img-circular" width="25" height="25" src="{{owenImg}}" alt="">{{owen}}</h6>
-                <h5 class="d-flex justify-content-center text-dark mt-2"><i class="fa fa-eye my-auto" aria-hidden="true"></i>{{visitas}}</h5>
+                <h5 class="txt-centrado text-dark mt-2"><i class="fa fa-eye my-auto" aria-hidden="true"></i>{{visitas}}</h5>
+                <h6 id="date-{{_id}}" class="txt-centrado text-dark mt-2"></h6>
+                <script>
+                    var dateHand = Date.parse("{{date}}"),
+                    dateHand = new Date(dateHand);
+                    var options = {year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true};
+                    dateHand = dateHand.toLocaleString('es-ES', options);
+                    $('#date-{{_id}}').text(dateHand);
+                </script>
             </a>
         </div>
     </div>

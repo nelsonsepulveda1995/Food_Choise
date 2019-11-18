@@ -152,9 +152,36 @@
                                             <option value="3">Categoría</option>
                                         </select>
 
-                                        <input type="text" class="form-control" name="title" id="inputBusqueda"
-                                            placeholder="Ingrese un nombre de receta...">
-                                        <div id='suggestionsBusqueda' class="suggestions"></div>
+                                        <div class="col-7">
+                                            <div id="buscador">
+                                                <input type="text" class="form-control" name="title" id="inputBusqueda" 
+                                                placeholder="Ingrese un nombre de receta...">
+                                            </div>
+                                            <div id="divSelecting" style="display: none;">
+                                                <select class="selectpicker search_query form-control" data-dropup-auto="false" data-live-search="true" id="selectBusqueda_ing" tabindex="-98">
+                                                    <option value="0">Seleccione un ingrediente</option>
+                                                    {{#each ing}}
+                                                        <option value="{{_id}}|{{Descripcion}}">{{Descripcion}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                            <div id="divSelectcat" style="display: none;">
+                                                <select class="selectpicker search_query form-control" data-dropup-auto="false" data-live-search="true" id="selectBusqueda_cat">
+                                                    <option value="0">Seleccione una categoría</option>
+                                                    {{#each allCat}}
+                                                        {{#if_eq tipo "cat"}}
+                                                            <option value="{{_id}}|{{descripcion}}">{{descripcion}}</option>
+                                                        {{else}}
+                                                            {{#each subcategorias}}
+                                                                <option value="{{_id}}|{{descripcion}}">{{descripcion}}</option>
+                                                            {{/each}}
+                                                        {{/if_eq}}
+                                                        
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+
+                                        </div>
                                         <button class="btn btn-secondary mr-3" type="submit">
                                             <i class="fa fa-search"></i>
                                         </button>
