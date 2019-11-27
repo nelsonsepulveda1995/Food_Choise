@@ -1,26 +1,32 @@
 <div class="container" style="margin: 20px;">
     <div class="col-md-10 mx-auto mt-5">
         <div class="card">
-            <div class="card-header">
-                <a href="/recetas/" class="btn btn-danger mr-sm-2">Regresar</a>
+            <div class="card-header text-center">
+                <a class="close mt-3" href="/recetas/" aria-label="Close">
+                    <i class="fas fa-times-circle fa-2x text-danger"></i>
+                </a>
                 <h1>Bienvenido a tu perfil, {{user.username}}</h1>
             </div>
             <div class="card-body mx-auto ">
-                
-                <div>
-                    <img src="{{user.thumbnail}}" alt="" class="img-fluid rounded" style="width: 100%  height:300px">
-                </div>
-                <br>
-                <div class="container">
-                    <h3> Estadisticas</h3>
-                    <div class="mx-auto">
-                        <h5>
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="{{user.thumbnail}}" alt="" class="img-fluid rounded" style="width: 100%  height:300px">
+                    </div>
+                    <div class="col-md-5 text-center mx-auto mt-5">
+                        <h3> Estadísticas</h3>
+                        <hr class="my-3">
+                        <h5 class="mt-4">
                             Cantidad de recetas creadas: {{cantidadReceta}}
                         </h5>
                         <h5>
                             Recetas en lista de favoritos: {{result}}
                         </h5>
                     </div>
+                </div>
+
+                <br>
+                <div class="container">
+                    
                 </div>
             </div>      
         </div>
