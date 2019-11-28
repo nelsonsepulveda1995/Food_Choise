@@ -114,21 +114,21 @@ $(document).ready(function () {
             if ($(this).attr('id') == 'selectBusqueda_cat') {
                 console.log("contador Cat sube")
                 contadorCat++;
-                $('#contadorInput').val(contadorCat);
+                $('#contadorCat').val(contadorCat);
             }else if ($(this).attr('id') == 'selectBusqueda_ing') {
                 console.log("contador Ing sube")
                 IngCounter++;
-                $('#contadorInput').val(IngCounter);
+                $('#contadorIng').val(IngCounter);
             }
             $('.select2-selection__choice__remove').click(function () {
                 if (esto.attr('id') == 'selectBusqueda_cat') {
                     console.log("contador Cat baja (antes sube)")
                     contadorCat= contadorCat-2;
-                    $('#contadorInput').val(contadorCat);
+                    $('#contadorCat').val(contadorCat);
                 }else if (esto.attr('id') == 'selectBusqueda_ing') {
                     console.log("contador ing baja (antes sube)")
                     IngCounter= IngCounter-2;
-                    $('#contadorInput').val(IngCounter);
+                    $('#contadorIng').val(IngCounter);
                 }
             });
             console.log("cat: "+contadorCat)
@@ -148,7 +148,12 @@ $(document).ready(function () {
 
     $('#formBusqueda').submit(function (e) {
         var accion = $("#tipoBusqueda").val();
-        $(this).attr('action', `/busqueda/${accion}`);
+        console.log(accion)
+        if (accion == 2 || accion == 3) {
+            $(this).attr('action', `/busqueda/H`);
+        }else{
+            $(this).attr('action', `/busqueda/${accion}`);
+        }
     });
     $('#tipoBusqueda').change(function () {
         var accion = $("#tipoBusqueda").val();
