@@ -26,7 +26,7 @@ Array.prototype.unique = function (a) {
 
 //check if logged
 const authCheck = (req, res, next) => {
-    if (req.user) {
+    if (req.user || req.query.id_user) {
         //if logged in
         next();
 
@@ -548,10 +548,10 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
 // --------------------------------------- VER MIS RECETAS ---------------------------------------
 
 router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
-    console.log(req.query.id);
+    console.log(req.query.id_user);
     var usuario 
-    if (req.query.id) {
-        usuario = req.query.id;
+    if (req.query.id_user) {
+        usuario = req.query.id_user;
     }else{
         usuario = req.user.id;
     }
