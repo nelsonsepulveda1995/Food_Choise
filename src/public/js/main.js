@@ -1,5 +1,8 @@
 var mensajes = 0;
 $(document).ready(function () {
+    $('.select2').select2({
+        width: '100%'
+    });
     $('#navId a').click(e => {
         e.preventDefault();
         $(this).tab('show');
@@ -90,23 +93,34 @@ $(document).ready(function () {
             return false;
         }
     });
-    var contador = 0;
+    var contadorCat = 0;
+    var IngCounter = 0;
     var anterior = '';
     $('#selectBusqueda_cat, #selectBusqueda_ing').on('change', function () {
         if ($(this).val() != 0) {
-            var value = $(this).val().split('|');
-            var id = value[0]
-            var selected = value[1]
-            $(this).val('');
-            if (anterior == id) {
-                alert("No se pueden repetir los elementos ingresados.");
-            } else {
-                buildBusqueda(selected, id)
+            var esto = $(this);
+            if ($(this).attr('id') == 'selectBusqueda_cat') {
+                console.log("contador Cat sube")
+                contadorCat++;
+                $('#contadorInput').val(contadorCat);
+            }else if ($(this).attr('id') == 'selectBusqueda_ing') {
+                console.log("contador Ing sube")
+                IngCounter++;
+                $('#contadorInput').val(IngCounter);
             }
-            anterior = id;
-            contador++;
-            console.log(contador)
-            $('#contadorInput').val(contador);
+            $('.select2-selection__choice__remove').click(function () {
+                if (esto.attr('id') == 'selectBusqueda_cat') {
+                    console.log("contador Cat baja (antes sube)")
+                    contadorCat= contadorCat-2;
+                    $('#contadorInput').val(contadorCat);
+                }else if (esto.attr('id') == 'selectBusqueda_ing') {
+                    console.log("contador ing baja (antes sube)")
+                    IngCounter= IngCounter-2;
+                    $('#contadorInput').val(IngCounter);
+                }
+            });
+            console.log("cat: "+contadorCat)
+            console.log("ing: "+IngCounter)
             return false;
         }
     });

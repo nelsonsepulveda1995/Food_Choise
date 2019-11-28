@@ -920,24 +920,12 @@ router.post('/busqueda/1', async (req, res) => { //busqueda por titulo
         });
     }
 })
-
-router.get('/busqueda/2', async (req, res) => { //busqueda por ingredientes
-    const ing = await Ingrediente.find().sort({
-        Descripcion: 'asc'
-    });
-
-    var allCat = await Categoria.find()
-    res.render('recetas/buscar-ingredientes', {
-        allCat,
-        ing,
-        user: req.user
-    });
-})
 router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de ingredientes
     const {
-        busqueda,
-        contador
+        selectIngVal,
+        contador,
     } = req.body;
+    console.log(req.body)
     const ing = await Ingrediente.find().sort({
         Descripcion: 'asc'
     });
@@ -945,14 +933,15 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
     var catBusqueda = []
 
     if (contador == '1') {
-        catBusqueda.push(busqueda)
+        catBusqueda.push(selectIngVal)
     } else {
-        catBusqueda = busqueda
+        catBusqueda = selectIngVal
     }
-
-
+    console.log("catBusqueda: ")
+    console.log(catBusqueda);
     const errors = [];
-    if (!busqueda) {
+    if (!selectIngVal) {
+        console.log("no hay selecVal")
         errors.push({
             text: 'seleccione al menos un ingrediente'
         });
@@ -965,22 +954,17 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
         })
     } else {
         var Receta = []
-        var comparador = []
-        for (let i = 0; i < catBusqueda.length; i++) {
-            var tempRec = await Recetas.find({
-                ingredientes: {
-                    $elemMatch: {
-                        nombre: catBusqueda[i]
-                    }
+        var tempRec = await Recetas.find({
+            ingredientes: {
+                $elemMatch: {
+                    nombre: {$in : catBusqueda}
                 }
-            })
-
-
-            if (tempRec.length != 0) {
-                for (let j = 0; j < tempRec.length; j++) {
-                    Receta.push(tempRec[j]);
-                    comparador.push(tempRec[j]);
-                }
+            }
+        })
+        console.log(tempRec)
+        if (tempRec.length != 0) {
+            for (let j = 0; j < tempRec.length; j++) {
+                Receta.push(tempRec[j]);
             }
         }
         var hash = {};
@@ -990,6 +974,7 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
             return exists;
         });
         if (Receta.length != 0) {
+            console.log("rellenamiento de receta")
             for (let i = 0; i < Receta.length; i++) {
                 var categRec;
 
@@ -1041,25 +1026,25 @@ router.post('/busqueda/2', async (req, res) => { //donde llega el formulario de 
 
 router.post('/busqueda/3', async (req, res) => { //BUSQUEDA POR CATEGORIA
     const {
-        busqueda,
+        selectCatVal,
         contador
     } = req.body;
 
     var catBusqueda = []
 
     if (contador == '1') {
-        catBusqueda.push(busqueda)
+        catBusqueda.push(selectCatVal)
     } else {
-        catBusqueda = busqueda
+        catBusqueda = selectCatVal
     }
 
-    const ing = await Categoria.find().sort({
+    const ing = await Ingrediente.find().sort({
         descripcion: 'asc'
     });
 
-
+    console.log(catBusqueda)
     const errors = [];
-    if (!busqueda) {
+    if (!selectCatVal) {
         errors.push({
             text: 'seleccione al menos una categoría'
         });
@@ -1072,33 +1057,32 @@ router.post('/busqueda/3', async (req, res) => { //BUSQUEDA POR CATEGORIA
         })
     } else {
         var Categ = []
-        for (let i = 0; i < catBusqueda.length; i++) {
-
-            var find = await Categoria.findOne({
-                descripcion: catBusqueda[i]
-            })
-            if (!find) {
-                find = await Categoria.findOne({
-                    subcategorias: {
-                        $elemMatch: {
-                            descripcion: catBusqueda[i]
-                        }
-                    }
-                })
-                if (find.length != 0) {
-                    for (let j = 0; j < find.subcategorias.length; j++) {
-                        if (find.subcategorias[j].descripcion == catBusqueda[i]) {
-                            Categ.push(find.subcategorias[j])
-                        }
-
+        var find = await Categoria.find({
+            descripcion: {$in : catBusqueda}
+        })
+        if (find.length > 0) {
+            for (let i = 0; i < find.length; i++) {
+                Categ.push(find[i])
+            }
+        } 
+        find = await Categoria.find({
+            subcategorias: {
+                $elemMatch: {
+                    descripcion: {$in : catBusqueda}
+                }
+            }
+        })
+        if (find.length != 0) {
+            console.log("length no es cero")
+            for (let i = 0; i < find.length; i++) {
+                for (let j = 0; j < find[i].subcategorias.length; j++) {
+                    if (catBusqueda.includes(find[i].subcategorias[j].descripcion)) {
+                        Categ.push(find[i].subcategorias[j])
                     }
                 }
-            } else {
-                Categ.push(find)
             }
-
-
         }
+        console.log(Categ);
         var Receta = []
         for (let i = 0; i < Categ.length; i++) {
             var tempRec = await Recetas.find({
