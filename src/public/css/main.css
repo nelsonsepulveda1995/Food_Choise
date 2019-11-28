@@ -5,6 +5,11 @@ body {
     background-attachment: fixed;
     overflow-x: hidden;
 }
+h1{
+    -webkit-text-stroke: 2px black;
+    color: #ffffff !important;
+    font-weight: bolder;
+}
 
 .fav{
     float: left !important;
