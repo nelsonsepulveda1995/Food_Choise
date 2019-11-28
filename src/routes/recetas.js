@@ -466,7 +466,8 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
                 errors.push({
                     text: 'No puede ingresar un valor negativo en la cantidad a usar del ingrediente'
                 })
-            } else {
+            }
+            else {
                 ingredientes.push({
                     id: ingredientesForm[i],
                     nombre: nomIngredienteDB.Descripcion,
@@ -533,7 +534,8 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
                 imagenCloud: resultado.public_id
             });
         }
-
+        console.log("DATOS DE categoria: " + categoria);
+        console.log("DATOS DE ingredientes: " + ingredientesForm);
         await newReceta.save();
         await fs.unlink(req.file.path);
         const crearVisitas = new Visitas({
