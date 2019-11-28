@@ -150,13 +150,13 @@
                                     <form id="formBusqueda" class="input-group mt-2" method="POST">
 
                                         <label for="tipoBusqueda" class="mr-2 my-auto">Buscar por:</label>
-                                        <select class="form-control mr-3 col-2" name="tipoBusqueda" id="tipoBusqueda">
+                                        <select class="form-control mr-3 col-md-2 col-lg-2 col-sm-8 col-xs-8" name="tipoBusqueda" id="tipoBusqueda">
                                             <option value="1">Título</option>
                                             <option value="2">Ingredientes</option>
                                             <option value="3">Categoría</option>
                                         </select>
 
-                                        <div class="col-7">
+                                        <div class="col-md-7 col-xs-12">
                                             <div id="buscador">
                                                 <input type="text" class="form-control" name="title" id="inputBusqueda"
                                                     placeholder="Ingrese un nombre de receta...">
@@ -193,7 +193,8 @@
                                         <button class="btn btn-secondary mr-3" type="submit">
                                             <i class="fa fa-search"></i>
                                         </button>
-                                        <input type="text" hidden name="contador" id="contadorInput">
+                                        <input type="text" hidden name="contadorCat" id="contadorCat">
+                                        <input type="text" hidden name="contadorIng" id="contadorIng">
                                     </form>
                                 </div>
                                 <div class="row">
