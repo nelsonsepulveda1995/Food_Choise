@@ -443,6 +443,13 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             text: 'Selecciona una imagen'
         });
     }
+    if(req.file){
+        if(req.file.size >5242880){
+            errors.push({
+                text: 'Tamaño de la Imagen Supera los 5MB'
+            });
+        }
+    }
     if (!ingredientesForm[0]) {
         errors.push({
             text: 'Selecciona al menos un ingrediente'
@@ -731,12 +738,14 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
     }
 
     if (req.file) {
-        const resultado = await cloudinary.v2.uploader.upload(req.file.path);
-        await Recetas.findByIdAndUpdate(req.query.id, {
-            imagenURL: resultado.url,
-            imagenCloud: resultado.public_id
-        });
-        await fs.unlink(req.file.path);
+        if(req.file.size < 5242880){
+            const resultado = await cloudinary.v2.uploader.upload(req.file.path);
+            await Recetas.findByIdAndUpdate(req.query.id, {
+                imagenURL: resultado.url,
+                imagenCloud: resultado.public_id
+            });
+            await fs.unlink(req.file.path);
+        }
     }
     res.redirect('/recetas/ver/' + req.query.id);
 
@@ -923,7 +932,7 @@ router.post('/busqueda/H', async (req, res) => { //Busqueda hibrida...
             ing,
             allCat,
             errors,
-            user: req.user
+            user: req.user 
         })
     } else {
         var Receta = []

@@ -3,6 +3,18 @@ $(document).ready(function () {
     $('.select2').select2({
         width: '100%'
     });
+
+    $("#inputGroupFile01").change(function(){
+        var archivoruta= $("#inputGroupFile01").val();
+        var extpermitidas= /(.jpg|.png|.jpeg|.JPG|.PNG|.JPEG)$/i;
+        if(!extpermitidas.exec(archivoruta)){
+            alert("Las imagenes adminitas solo son las jpg ,png y jpeg");
+            $("#inputGroupFile01").val("");
+            return false;
+        }
+
+    })
+
     $('#navId a').click(e => {
         e.preventDefault();
         $(this).tab('show');
