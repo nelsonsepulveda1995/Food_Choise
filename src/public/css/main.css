@@ -5,6 +5,11 @@ body {
     background-attachment: fixed;
     overflow-x: hidden;
 }
+h1{
+    -webkit-text-stroke: 2px black;
+    color: #ffffff !important;
+    font-weight: bolder;
+}
 
 .fav{
     float: left !important;
@@ -80,7 +85,7 @@ body {
   }
 
 #sidebar-wrapper {
-    //position: fixed;
+    /*position: fixed;*/
     min-height: 100vh;
     margin-left: -15rem;
     -webkit-transition: margin .25s ease-out;

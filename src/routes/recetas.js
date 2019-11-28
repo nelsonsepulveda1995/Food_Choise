@@ -112,7 +112,7 @@ router.get('/orderBy', async (req, res) => {
             receta[i].categoria = categRec.descripcion;
         }
         var owenReceta = await Users.findById(receta[i].owen);
-        receta[i].owen = owenReceta.username;
+        receta[i].owenName = owenReceta.username;
         receta[i].owenImg = owenReceta.thumbnail;
         const calificacionesProm = await Calificacion.find({
             id_receta: receta[i]._id
@@ -204,7 +204,7 @@ router.get('/recetas', async (req, res) => {
             receta[i].categoria = categRec.descripcion;
         }
         var owenReceta = await Users.findById(receta[i].owen);
-        receta[i].owen = owenReceta.username;
+        receta[i].owenName = owenReceta.username;
         receta[i].owenImg = owenReceta.thumbnail;
         const calificacionesProm = await Calificacion.find({
             id_receta: receta[i]._id
@@ -550,11 +550,17 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
 // --------------------------------------- VER MIS RECETAS ---------------------------------------
 
 router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
-
-    const usuario = req.user.id;
+    console.log(req.query.id);
+    var usuario 
+    if (req.query.id) {
+        usuario = req.query.id;
+    }else{
+        usuario = req.user.id;
+    }
     const query = {
         owen: usuario
     };
+    var owner_rec = await Users.findById(usuario)
     const resultado = await Recetas.find(query).sort({
         date: 'desc'
     });
@@ -578,7 +584,7 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
         }
 
         var owenReceta = await Users.findById(resultado[i].owen);
-        resultado[i].owen = owenReceta.username;
+        resultado[i].owenName = owenReceta.username;
         resultado[i].owenImg = owenReceta.thumbnail;
         const calificacionesProm = await Calificacion.find({
             id_receta: resultado[i]._id
@@ -595,7 +601,9 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
     }
     var ing = await Ingrediente.find()
     var allCat = await Categoria.find()
+    console.log(owner_rec)
     res.render('recetas/mis-recetas', {
+        header : owner_rec,
         ing,
         allCat,
         resultado,
@@ -861,7 +869,7 @@ router.post('/busqueda/1', async (req, res) => { //busqueda por titulo
                 recetasFinal[i].categoria = categRec.descripcion;
             }
             var owenReceta = await Users.findById(recetasFinal[i].owen);
-            recetasFinal[i].owen = owenReceta.username;
+            recetasFinal[i].owenName = owenReceta.username;
             recetasFinal[i].owenImg = owenReceta.thumbnail;
             const calificacionesProm = await Calificacion.find({
                 id_receta: recetasFinal[i]._id
@@ -1071,7 +1079,7 @@ router.post('/busqueda/H', async (req, res) => { //Busqueda hibrida...
                     Receta[i].categoria = categRec.descripcion;
                 }
                 var owenReceta = await Users.findById(Receta[i].owen);
-                Receta[i].owen = owenReceta.username;
+                Receta[i].owenName = owenReceta.username;
                 Receta[i].owenImg = owenReceta.thumbnail;
                 const calificacionesProm = await Calificacion.find({
                     id_receta: Receta[i]._id
@@ -1147,7 +1155,7 @@ router.get('/categoria/:id', async (req, res) => {
                 Receta[i].categoria = categRec.descripcion;
             }
             var owenReceta = await Users.findById(Receta[i].owen);
-            Receta[i].owen = owenReceta.username;
+            Receta[i].owenName = owenReceta.username;
             Receta[i].owenImg = owenReceta.thumbnail;
             const calificacionesProm = await Calificacion.find({
                 id_receta: Receta[i]._id
@@ -1253,7 +1261,7 @@ router.get('/recetas/favoritos', async (req, res) => { //lista favoritos
                     recetasFinal[i].categoria = categRec.descripcion;
                 }
                 var owenReceta = await Users.findById(recetasFinal[i].owen);
-                recetasFinal[i].owen = owenReceta.username;
+                recetasFinal[i].owenName = owenReceta.username;
                 recetasFinal[i].owenImg = owenReceta.thumbnail;
                 const calificacionesProm = await Calificacion.find({
                     id_receta: recetasFinal[i]._id
