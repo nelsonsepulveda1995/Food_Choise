@@ -188,7 +188,6 @@ router.get('/recetas', async (req, res) => {
     var allCat = await Categoria.find()
     var ing = await Ingrediente.find()
 
-
     //var categRec = await Categoria.findById(receta.categoria);
     for (let i = 0; i < receta.length; i++) {
         var categRec;
@@ -231,7 +230,6 @@ router.get('/recetas', async (req, res) => {
 
     }
     if (req.user) {
-        //var allCat = await Categoria.find()  //CODIGO REPETIDO EN LINEA 137
         res.render('recetas/all-recetas', {
             allCat,
             receta,
@@ -239,7 +237,6 @@ router.get('/recetas', async (req, res) => {
             user: req.user
         });
     } else {
-        //var allCat = await Categoria.find() //CODIGO REPETIDO EN LINEA 137
         res.render('recetas/all-recetas', {
             allCat,
             ing,
@@ -384,6 +381,8 @@ router.get('/recetas/new', authCheck, async (req, res) => {
     //Obtengo todos los ingredientes
     const ing = await Ingrediente.find();
 
+
+
     //var allCat = await Categoria.find()  <--- CODIGO REPETIDO REPERCUTE EN LINEA 290 REPERCUTE EN 297
     res.render('recetas/new-receta', {
         allCat: cat,
@@ -402,6 +401,11 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     } = req.body;
     const ingredientesForm = [];
 
+    const validarcat = await Categoria.find({},{_id:1});  //para validar que existan
+    const validaring = await Ingrediente.find({},{_id:1});
+    console.log("Lista de categorias: " + validarcat);
+    console.log("Lista de ingredientes: " + validaring);
+
     if (req.body.ingredientesNom) {
         if (contador > 1) {
             req.body.ingredientesNom.forEach(element => {
@@ -413,9 +417,41 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             ingredientesForm.push(req.body.ingredientesNom)
         }
     }
+    var contador_val_ingredientes=0;
+
+    for ( x = 0; x < ingredientesForm.length; x++) {
+        for ( y = 0; y < validaring.length; y++) {
+            if(ingredientesForm[x]==validaring[y]._id){
+                contador_val_ingredientes ++;
+            }
+        }    
+    }
 
     const cantIng = req.body.cantIng
     const errors = [];
+
+    console.log(contador_val_ingredientes + " diferencia " +ingredientesForm.length)
+
+    if(contador_val_ingredientes != ingredientesForm.length){
+        errors.push({
+            text: 'Error al cargar los ingredientes'
+        });
+    }
+    if (errors.length > 0) {
+        var ing = await Ingrediente.find()
+        var allCat = await Categoria.find()
+        res.render('recetas/new-receta', {
+            ing,
+            cat: allCat,
+            allCat,
+            errors,
+            user: req.user,
+            title,
+            descripcion,
+            categoria
+        })
+    }
+    
     if (!title) {
         errors.push({
             text: 'Completa el titulo'
@@ -457,8 +493,6 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     } else {
         var ingredientes = [];
         for (let i = 0; i < ingredientesForm.length; i++) {
-
-
             var nomIngredienteDB = await Ingrediente.findById(ingredientesForm[i]);
 
             var index_cant = i + i;
