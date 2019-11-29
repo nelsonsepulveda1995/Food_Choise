@@ -33,7 +33,7 @@ const authCheck = (req, res, next) => {
     } else {
         //
         //if user is not logged in
-        res.redirect('/auth/google');
+        res.send('<script>alert("Necesitas estar logueado para continuar.");window.history.back();</script>');
     }
 };
 
