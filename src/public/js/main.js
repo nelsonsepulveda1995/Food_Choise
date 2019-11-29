@@ -25,7 +25,14 @@ $(document).ready(function () {
             $("#inputGroupFile01").val("");
             return false;
         }
+        var fileSize = this.files[0].size;
 
+	    if(fileSize > 5242880){
+		    alert('El archivo no debe superar los 5MB');
+		    this.value = '';
+            this.files[0].name = '';
+            return false;
+	    }
     })
 
     $('#navId a').click(e => {
