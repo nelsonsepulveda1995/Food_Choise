@@ -419,7 +419,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     }
     var contador_val_ingredientes=0;
 
-    for ( x = 0; x < ingredientesForm.length; x++) {
+    for ( x = 0; x < ingredientesForm.length; x++) { //valida la existencia de los ingredientes
         for ( y = 0; y < validaring.length; y++) {
             if(ingredientesForm[x]==validaring[y]._id){
                 contador_val_ingredientes ++;
@@ -708,6 +708,7 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
     } = req.body; //se toma los datos del form
     const ingredientesForm = [];
     console.log(contador)
+    const errors=[];
     if (req.body.ingredientesNom) {
         if (contador > 1) {
             req.body.ingredientesNom.forEach(element => {
@@ -737,6 +738,57 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
             categoria
         });
     }
+    const datosEditar = await Recetas.findById(req.query.id);
+    
+    const validarcat = await Categoria.find({},{_id:1});  //para validar que existan
+    const validaring = await Ingrediente.find({},{_id:1});
+    console.log("Lista de categorias: " + validarcat);
+    console.log("Lista de ingredientes: " + validaring);
+
+    var categoriaActual = Object;
+        if (!datosEditar.subcategoria) {
+            categoriaActual = await Categoria.findById(datosEditar.categoria)
+        } else {
+            categoriaActual = await Categoria.findOne({
+                subcategorias: {
+                    $elemMatch: {
+                        _id: datosEditar.categoria
+                    }
+                }
+            })
+        }
+
+    var contador_val_ingredientes=0;
+
+    for ( x = 0; x < ingredientesForm.length; x++) { //valida la existencia de los ingredientes
+        for ( y = 0; y < validaring.length; y++) {
+            if(ingredientesForm[x]==validaring[y]._id){
+                contador_val_ingredientes ++;
+            }
+        }    
+    }
+
+    if(contador_val_ingredientes != ingredientesForm.length){
+        errors.push({
+            text: 'Error al cargar los ingredientes'
+        });
+    }
+    if (errors.length > 0) {
+        //Obtengo todas las categorias       
+        const cat = await Categoria.find();
+        //Obtengo todos los ingredientes
+        const ing = await Ingrediente.find();
+        res.render('recetas/editar-receta', {
+            allCat: cat,
+            datosEditar,
+            user: req.user,
+            errors,
+            cat,
+            ing,
+            categoriaActual
+        });
+    }
+
     if (ingredientesForm[0]) {
 
         await Recetas.findByIdAndUpdate(req.query.id, {
