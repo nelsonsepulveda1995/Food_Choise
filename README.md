@@ -1,5 +1,5 @@
 # Food Choice
-Test test
+
 Food Choice se trata de una aplicación web donde compartir y buscar las recetas que más te gustan y/o simplemente publicar tus propias recetas.
 
 ## Comenzando 🚀
