@@ -8,7 +8,7 @@ $(document).ready(function () {
         var archivoruta= $("#inputGroupFile01").val();
         var extpermitidas= /(.jpg|.png|.jpeg|.JPG|.PNG|.JPEG)$/i;
         if(!extpermitidas.exec(archivoruta)){
-            alert("Eltipo de imagen admitidos es: jpg ,png y jpeg");
+            alert("Los tipos de imagen admitidos son: jpg ,png y jpeg");
             $("#inputGroupFile01").val("");
             return false;
         }
