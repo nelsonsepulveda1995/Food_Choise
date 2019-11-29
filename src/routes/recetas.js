@@ -401,8 +401,12 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     } = req.body;
     const ingredientesForm = [];
 
-    const validarcat = await Categoria.find({},{_id:1});  //para validar que existan
-    const validaring = await Ingrediente.find({},{_id:1});
+    const validarcat = await Categoria.find({}, {
+        _id: 1
+    }); //para validar que existan
+    const validaring = await Ingrediente.find({}, {
+        _id: 1
+    });
     console.log("Lista de categorias: " + validarcat);
     console.log("Lista de ingredientes: " + validaring);
 
@@ -417,22 +421,22 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             ingredientesForm.push(req.body.ingredientesNom)
         }
     }
-    var contador_val_ingredientes=0;
+    var contador_val_ingredientes = 0;
 
-    for ( x = 0; x < ingredientesForm.length; x++) { //valida la existencia de los ingredientes
-        for ( y = 0; y < validaring.length; y++) {
-            if(ingredientesForm[x]==validaring[y]._id){
-                contador_val_ingredientes ++;
+    for (x = 0; x < ingredientesForm.length; x++) { //valida la existencia de los ingredientes
+        for (y = 0; y < validaring.length; y++) {
+            if (ingredientesForm[x] == validaring[y]._id) {
+                contador_val_ingredientes++;
             }
-        }    
+        }
     }
 
     const cantIng = req.body.cantIng
     const errors = [];
 
-    console.log(contador_val_ingredientes + " diferencia " +ingredientesForm.length)
+    console.log(contador_val_ingredientes + " diferencia " + ingredientesForm.length)
 
-    if(contador_val_ingredientes != ingredientesForm.length){
+    if (contador_val_ingredientes != ingredientesForm.length) {
         errors.push({
             text: 'Error al cargar los ingredientes'
         });
@@ -451,7 +455,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             categoria
         })
     }
-    
+
     if (!title) {
         errors.push({
             text: 'Completa el titulo'
@@ -479,8 +483,8 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
             text: 'Selecciona una imagen'
         });
     }
-    if(req.file){
-        if(req.file.size >5242880){
+    if (req.file) {
+        if (req.file.size > 5242880) {
             errors.push({
                 text: 'Tamaño de la Imagen Supera los 5MB'
             });
@@ -500,8 +504,7 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
                 errors.push({
                     text: 'No puede ingresar un valor negativo en la cantidad a usar del ingrediente'
                 })
-            }
-            else {
+            } else {
                 ingredientes.push({
                     id: ingredientesForm[i],
                     nombre: nomIngredienteDB.Descripcion,
@@ -515,14 +518,43 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
     var valCat = categoria.split("|");
     var tipo = valCat[1];
     var categoriaFinal = valCat[0];
+    var TrueCateg = {};
     if (tipo == "cat") {
         tipo = false;
-
-    } else {
+        try {
+            TrueCateg = await Categoria.findById(categoriaFinal)
+        } catch {
+            errors.push({
+                text: 'La opción elegida no se admite en el sistema'
+            })
+        }
+    } else if (tipo == "sub") {
         tipo = true
         var padre = valCat[2];
+        try {
+            TrueCateg = await Categoria.find({
+                _id: padre,
+                subcategorias: {
+                    $elemMatch: {
+                        _id: categoriaFinal
+                    }
+                }
+            });
+        } catch {
+            errors.push({
+                text: 'La opción elegida no se admite en el sistema'
+            })
+        }
+    } else {
+        errors.push({
+            text: 'La opción elegida no se admite en el sistema'
+        })
     }
-
+    if (!TrueCateg) {
+        errors.push({
+            text: 'La opción elegida no se admite en el sistema'
+        })
+    }
 
     if (errors.length > 0) {
         var ing = await Ingrediente.find()
@@ -585,10 +617,10 @@ router.post('/recetas/new-receta', authCheck, async (req, res) => {
 
 router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
     console.log(req.query.id_user);
-    var usuario 
+    var usuario
     if (req.query.id_user) {
         usuario = req.query.id_user;
-    }else{
+    } else {
         usuario = req.user.id;
     }
     const query = {
@@ -637,7 +669,7 @@ router.get('/recetas/mis-recetas', authCheck, async (req, res) => {
     var allCat = await Categoria.find()
     console.log(owner_rec)
     res.render('recetas/mis-recetas', {
-        header : owner_rec,
+        header: owner_rec,
         ing,
         allCat,
         resultado,
@@ -657,28 +689,12 @@ router.get('/recetas/editar/:id', authCheck, async (req, res) => {
         //Obtengo todos los ingredientes
         const ing = await Ingrediente.find();
         //var allCat = await Categoria.find()    <--- LINEA REPETIDA EN  505
-
-        var categoriaActual = Object;
-        if (!datosEditar.subcategoria) {
-            categoriaActual = await Categoria.findById(datosEditar.categoria)
-        } else {
-            categoriaActual = await Categoria.findOne({
-                subcategorias: {
-                    $elemMatch: {
-                        _id: datosEditar.categoria
-                    }
-                }
-            })
-        }
-
-
         res.render('recetas/editar-receta', {
             allCat: cat,
             datosEditar,
             user: req.user,
             cat,
-            ing,
-            categoriaActual
+            ing
         });
     } else {
         errors.push({
@@ -708,7 +724,7 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
     } = req.body; //se toma los datos del form
     const ingredientesForm = [];
     console.log(contador)
-    const errors=[];
+    const errors = [];
     if (req.body.ingredientesNom) {
         if (contador > 1) {
             req.body.ingredientesNom.forEach(element => {
@@ -734,45 +750,85 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
         });
     }
     if (categoria) {
-        await Recetas.findByIdAndUpdate(req.query.id, {
-            categoria
-        });
+        var valCat = categoria.split("|");
+        var tipo = valCat[1];
+        var categoriaFinal = valCat[0];
+        var TrueCateg = {};
+        if (tipo == "cat") {
+            tipo = false;
+            try {
+                TrueCateg = await Categoria.findById(categoriaFinal)
+            } catch {
+                errors.push({
+                    text: 'La opción elegida no se admite en el sistema'
+                })
+            }
+        } else if (tipo == "sub") {
+            tipo = true
+            var padre = valCat[2];
+            try {
+                TrueCateg = await Categoria.find({
+                    _id: padre,
+                    subcategorias: {
+                        $elemMatch: {
+                            _id: categoriaFinal
+                        }
+                    }
+                });
+            } catch {
+                errors.push({
+                    text: 'La opción elegida no se admite en el sistema'
+                })
+            }
+        } else {
+            errors.push({
+                text: 'La opción elegida no se admite en el sistema'
+            })
+        }
+        if (errors.length <= 0) {
+            if (tipo) {
+                await Recetas.findByIdAndUpdate(req.query.id, {
+                    categoria: categoriaFinal,
+                    subcategoria: true,
+                    padre
+
+                });
+            }else{
+                await Recetas.findByIdAndUpdate(req.query.id, {
+                    categoria: categoriaFinal,
+                    subcategoria: false,
+                    padre : ''
+                });
+            }
+        }
     }
     const datosEditar = await Recetas.findById(req.query.id);
-    
-    const validarcat = await Categoria.find({},{_id:1});  //para validar que existan
-    const validaring = await Ingrediente.find({},{_id:1});
+
+    const validarcat = await Categoria.find({}, {
+        _id: 1
+    }); //para validar que existan
+    const validaring = await Ingrediente.find({}, {
+        _id: 1
+    });
     console.log("Lista de categorias: " + validarcat);
     console.log("Lista de ingredientes: " + validaring);
 
-    var categoriaActual = Object;
-        if (!datosEditar.subcategoria) {
-            categoriaActual = await Categoria.findById(datosEditar.categoria)
-        } else {
-            categoriaActual = await Categoria.findOne({
-                subcategorias: {
-                    $elemMatch: {
-                        _id: datosEditar.categoria
-                    }
-                }
-            })
-        }
+    var contador_val_ingredientes = 0;
 
-    var contador_val_ingredientes=0;
-
-    for ( x = 0; x < ingredientesForm.length; x++) { //valida la existencia de los ingredientes
-        for ( y = 0; y < validaring.length; y++) {
-            if(ingredientesForm[x]==validaring[y]._id){
-                contador_val_ingredientes ++;
+    for (x = 0; x < ingredientesForm.length; x++) { //valida la existencia de los ingredientes
+        for (y = 0; y < validaring.length; y++) {
+            if (ingredientesForm[x] == validaring[y]._id) {
+                contador_val_ingredientes++;
             }
-        }    
+        }
     }
 
-    if(contador_val_ingredientes != ingredientesForm.length){
+    if (contador_val_ingredientes != ingredientesForm.length) {
         errors.push({
             text: 'Error al cargar los ingredientes'
         });
     }
+
     if (errors.length > 0) {
         //Obtengo todas las categorias       
         const cat = await Categoria.find();
@@ -784,8 +840,7 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
             user: req.user,
             errors,
             cat,
-            ing,
-            categoriaActual
+            ing
         });
     }
 
@@ -826,7 +881,7 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
     }
 
     if (req.file) {
-        if(req.file.size < 5242880){
+        if (req.file.size < 5242880) {
             const resultado = await cloudinary.v2.uploader.upload(req.file.path);
             await Recetas.findByIdAndUpdate(req.query.id, {
                 imagenURL: resultado.url,
@@ -1020,61 +1075,61 @@ router.post('/busqueda/H', async (req, res) => { //Busqueda hibrida...
             ing,
             allCat,
             errors,
-            user: req.user 
+            user: req.user
         })
     } else {
         var Receta = []
         if (selectIngVal && selectCatVal) {
             console.log("ambos select")
             var Categ = []
-                var find = await Categoria.find({
-                    descripcion: {
-                        $in: catBusqueda
-                    }
-                })
-                if (find.length > 0) {
-                    for (let i = 0; i < find.length; i++) {
-                        Categ.push(find[i])
+            var find = await Categoria.find({
+                descripcion: {
+                    $in: catBusqueda
+                }
+            })
+            if (find.length > 0) {
+                for (let i = 0; i < find.length; i++) {
+                    Categ.push(find[i])
+                }
+            }
+            find = await Categoria.find({
+                subcategorias: {
+                    $elemMatch: {
+                        descripcion: {
+                            $in: catBusqueda
+                        }
                     }
                 }
-                find = await Categoria.find({
-                    subcategorias: {
+            })
+            if (find.length != 0) {
+                console.log("length no es cero")
+                for (let i = 0; i < find.length; i++) {
+                    for (let j = 0; j < find[i].subcategorias.length; j++) {
+                        if (catBusqueda.includes(find[i].subcategorias[j].descripcion)) {
+                            Categ.push(find[i].subcategorias[j])
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < Categ.length; i++) {
+                var tempRec = await Recetas.find({
+                    categoria: Categ[i]._id,
+                    ingredientes: {
                         $elemMatch: {
-                            descripcion: {
-                                $in: catBusqueda
+                            nombre: {
+                                $in: ingBusqueda
                             }
                         }
                     }
                 })
-                if (find.length != 0) {
-                    console.log("length no es cero")
-                    for (let i = 0; i < find.length; i++) {
-                        for (let j = 0; j < find[i].subcategorias.length; j++) {
-                            if (catBusqueda.includes(find[i].subcategorias[j].descripcion)) {
-                                Categ.push(find[i].subcategorias[j])
-                            }
-                        }
-                    }
-                }
-                for (let i = 0; i < Categ.length; i++) {
-                    var tempRec = await Recetas.find({
-                        categoria: Categ[i]._id,
-                        ingredientes: {
-                            $elemMatch: {
-                                nombre: {
-                                    $in: ingBusqueda
-                                }
-                            }
-                        }
-                    })
 
 
-                    if (tempRec.length != 0) {
-                        for (let j = 0; j < tempRec.length; j++) {
-                            Receta.push(tempRec[j]);
-                        }
+                if (tempRec.length != 0) {
+                    for (let j = 0; j < tempRec.length; j++) {
+                        Receta.push(tempRec[j]);
                     }
                 }
+            }
         } else {
             if (selectIngVal) {
                 console.log("solo selectIng")
