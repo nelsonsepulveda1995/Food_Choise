@@ -4,6 +4,19 @@ $(document).ready(function () {
         width: '100%'
     });
 
+    $('#selectBusqueda_ing').select2({
+        placeholder: "Seleccione un ingrediente...",
+        allowClear: true,
+        width: '100%'
+    });
+
+    $('#selectBusqueda_cat').select2({
+        placeholder: "Seleccione una categoría...",
+        allowClear: true,
+        width: '100%'
+    });
+    $('.select2-search__field').css('width', '150%');
+
     $("#inputGroupFile01").change(function(){
         var archivoruta= $("#inputGroupFile01").val();
         var extpermitidas= /(.jpg|.png|.jpeg|.JPG|.PNG|.JPEG)$/i;
@@ -159,13 +172,8 @@ $(document).ready(function () {
         var accion = $("#tipoBusqueda").val();
         if (accion != 1) {
             $('#inputBusqueda').hide();
-            if (accion == 2) {
-                $('#divSelectcat').hide();
-                $('#divSelecting').show();
-            } else {
-                $('#divSelectcat').show();
-                $('#divSelecting').hide();
-            }
+            $('#divSelecting').show();
+            $('#divSelectcat').show();
         } else {
             $('#divSelectcat').hide();
             $('#divSelecting').hide();

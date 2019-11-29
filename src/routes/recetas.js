@@ -964,7 +964,7 @@ router.post('/busqueda/H', async (req, res) => { //Busqueda hibrida...
             text: 'Seleccione al menos un ingrediente o una categoría'
         });
         var allCat = await Categoria.find()
-        res.render('recetas/recetas-ingredientes', {
+        res.render('recetas/recetas-resultado', {
             ing,
             allCat,
             errors,
@@ -1126,7 +1126,9 @@ router.post('/busqueda/H', async (req, res) => { //Busqueda hibrida...
                 Receta[i].calificacion = promCal;
             }
             var allCat = await Categoria.find()
-            res.render('recetas/recetas-ingredientes', {
+            res.render('recetas/recetas-resultado', {
+                selectCatVal,
+                selectIngVal,
                 allCat,
                 Receta,
                 ing,
@@ -1137,7 +1139,9 @@ router.post('/busqueda/H', async (req, res) => { //Busqueda hibrida...
                 text: 'No se encontraron recetas'
             });
             var allCat = await Categoria.find()
-            res.render('recetas/recetas-ingredientes', {
+            res.render('recetas/recetas-resultado', {
+                selectCatVal,
+                selectIngVal,
                 allCat,
                 ing,
                 errors,

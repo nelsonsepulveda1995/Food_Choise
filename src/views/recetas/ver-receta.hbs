@@ -1,12 +1,12 @@
-<div class="card">
-    <div class="col-md-12 mt-5">
-        <a class="close mt-3" href="/recetas/" aria-label="Close">
+<div class="card mt-4">
+    <div class="col-md-12 mt-2">
+        <a class="close" href="/recetas/" aria-label="Close">
             <i class="fas fa-times-circle fa-2x text-danger"></i>
         </a>
-        <a class="close fav mt-3" href="/recetas/favoritos/{{receta._id}}" aria-label="Close">
+        <a class="close fav" href="/recetas/favoritos/{{receta._id}}" aria-label="Close">
             <i class="{{#ifIn receta._id favoritos.id_favoritos }} fas {{else}} far {{/ifIn}} fa-heart fa-2x text-danger" id="fav"></i>
         </a>
-        <div class="col-md-8 mx-auto mt-5">
+        <div class="col-md-8 mx-auto">
             <h4 class="text-success txt-centrado mt-3">{{receta.title}}</h4>
             <hr>
 

@@ -152,8 +152,8 @@
                                         <label for="tipoBusqueda" class="mr-2 my-auto">Buscar por:</label>
                                         <select class="form-control mr-3 col-md-2 col-lg-2 col-sm-8 col-xs-8" name="tipoBusqueda" id="tipoBusqueda">
                                             <option value="1">Título</option>
-                                            <option value="2">Ingredientes</option>
-                                            <option value="3">Categoría</option>
+                                            <option value="2">Ingredientes/Categoría</option>
+                                            
                                         </select>
 
                                         <div class="col-9 col-sm-6 ">
@@ -162,20 +162,18 @@
                                                     placeholder="Ingrese un nombre de receta...">
                                             </div>
                                             <div id="divSelecting" style="display: none;">
-                                                <select class="select2 search_query form-control"
-                                                    name="selectIngVal" multiple="multiple" data-dropup-auto="false" data-live-search="true"
-                                                    id="selectBusqueda_ing" tabindex="-98">
-                                                    <option value="0">Seleccione un ingrediente</option>
+                                                <select class="js-states form-control"
+                                                    name="selectIngVal" multiple="multiple"
+                                                    id="selectBusqueda_ing">
                                                     {{#each ing}}
                                                     <option value="{{Descripcion}}">{{Descripcion}}</option>
                                                     {{/each}}
                                                 </select>
                                             </div>
                                             <div id="divSelectcat" style="display: none;">
-                                                <select class="select2 search_query form-control"
-                                                    name="selectCatVal" multiple="multiple" data-dropup-auto="false" data-live-search="true"
+                                                <select class="js-states form-control"
+                                                    name="selectCatVal" multiple="multiple"
                                                     id="selectBusqueda_cat">
-                                                    <option value="0">Seleccione una categoría</option>
                                                     {{#each allCat}}
                                                     {{#if_eq tipo "cat"}}
                                                     <option value="{{descripcion}}">{{descripcion}}</option>
