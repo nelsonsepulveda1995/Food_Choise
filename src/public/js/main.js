@@ -314,7 +314,9 @@ function buildCant(selected, id) {
                     <option value="Gr">Gr</option>
                     <option value="MG">MG</option>
                     <option value="L">L</option>
-                    <option value="ML">ML</option>`,
+                    <option value="ML">ML</option>
+                    <option value="U">Unidad</option>
+                    <option value="Cda">Cucharada</option>`,
         'id': `sel-${id}-tipoCant`,
         'class': 'form-control',
         'name': `cantIng`,
