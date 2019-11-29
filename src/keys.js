@@ -4,7 +4,7 @@ module.exports = {
         clientSecret:'dFufROLsMj-4eWzmg9_rfqNZ'
     },
     mongodb:{
-        dbURI:'mongodb+srv://eelliiaass:eelliiaass@foodchoise-sybkf.gcp.mongodb.net/foodchoisedb?retryWrites=true&w=majority'
+        dbURI:'mongodb+srv://eelliiaass:eelliiaass@foodchoise-sybkf.gcp.mongodb.net/foodchoisedb2?retryWrites=true&w=majority'
     },
     session:{
         cookieKey:'adfhjwueibvcxnhfdjsañ'

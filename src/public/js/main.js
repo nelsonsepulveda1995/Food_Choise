@@ -341,13 +341,13 @@ function buildCant(selected, id) {
     })
     var div_row_appended = div_row.append(div_input, option_select)
     div_container = $('<div>', {
-        'class': 'col-5'
+        'class': 'col-12 col-sm-12 col-md-5 col-lg-5'
     });
     var div_container_cantidad = div_container.append(div_row_appended)
     var input_cantidad = $('<div>', {
         'html': `<p>${selected}</p>`,
         'id': `sel-${id}`,
-        'class': 'col-4 rounded checkbox'
+        'class': 'col-10 col-md-4 col-lg-4 rounded checkbox'
     })
 
     var row_contenedor_total = $('<div>', {
