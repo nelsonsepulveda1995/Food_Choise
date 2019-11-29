@@ -782,6 +782,7 @@ router.put('/recetas/editar', authCheck, async (req, res) => {
             allCat: cat,
             datosEditar,
             user: req.user,
+            errors,
             cat,
             ing,
             categoriaActual
