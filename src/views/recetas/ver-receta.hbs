@@ -13,7 +13,7 @@
             <p><img class="foto-plato rounded" src="{{receta.imagenURL}}" alt=""></p>
             <h4 class="text-muted txt-centrado">Ingredientes</h4>
             <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="row d-flex justify-content-center text-center">
                     {{#each receta.ingredientes}}
                     <div class="col-md-3 col-lg-3 mt-3 ml-3 custom-control custom-checkbox border rounded checkbox">
                         {{this.nombre}} - {{this.cantidad}}{{this.unidad}}
