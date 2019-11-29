@@ -1231,6 +1231,7 @@ router.get('/categoria/:id', async (req, res) => {
                 $in: categoria
             }
         })
+        var categBusqueda;
         for (let i = 0; i < Receta.length; i++) {
             var categRec;
             if (Receta[i].subcategoria) {
@@ -1238,11 +1239,13 @@ router.get('/categoria/:id', async (req, res) => {
                 for (let j = 0; j < categRec.subcategorias.length; j++) {
                     if (Receta[i].categoria == categRec.subcategorias[j]._id) {
                         Receta[i].categoria = categRec.subcategorias[j].descripcion;
+                        categBusqueda = categRec.subcategorias[j].descripcion;
                     }
                 }
             } else {
                 categRec = await Categoria.findById(Receta[i].categoria);
                 Receta[i].categoria = categRec.descripcion;
+                categBusqueda = categRec.descripcion;
             }
             var owenReceta = await Users.findById(Receta[i].owen);
             Receta[i].owenName = owenReceta.username;
@@ -1261,6 +1264,7 @@ router.get('/categoria/:id', async (req, res) => {
         var ing = await Ingrediente.find()
         var allCat = await Categoria.find()
         res.render("recetas/recetas-categoria", {
+            categBusqueda,
             allCat,
             Receta,
             cat,
